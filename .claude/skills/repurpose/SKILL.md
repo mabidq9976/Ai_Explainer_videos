@@ -24,6 +24,8 @@ Post 1 = the hook, reworded for text. Each post ≤ 270 chars, one idea each. La
 - **YouTube Shorts** — title ≤ 60 chars (hook-led, no clickbait), description: 2 lines + sources list + 3 hashtags.
 - **Instagram Reels** — caption: hook line, 2–3 short lines, CTA, then 5–8 hashtags.
 - **Cover text** — 2–5 words for the cover frame.
+- **AI disclosure** — end the YouTube description and the Reels caption with "Voice: AI-generated." (Magnific and
+  Google terms forbid presenting AI output as human-made) and remind the user to tick the platform's AI-content label.
 - **Subtitles** — remind the user to upload `out/captions.srt` to YouTube/X (exported automatically after the voice step).
 - **Attribution** — if `episodes/$ARGUMENTS/assets/manifest.json` exists, list each clip's author + source + license.
 

@@ -221,7 +221,7 @@ function magnific(model: string, voice: string): Provider {
 
 export function pickProvider(scene: SceneFile): Provider {
   const name = env("TTS_PROVIDER") || scene.voice.provider || "gemini";
-  if (name === "magnific") return magnific(env("MAGNIFIC_TTS_MODEL", "eleven_v3"), env("MAGNIFIC_VOICE_ID", "1213"));
+  if (name === "magnific") return magnific(env("MAGNIFIC_TTS_MODEL", "gemini_v3_1_flash_tts"), env("MAGNIFIC_VOICE_ID", "714"));
   if (name === "local") return local(env("LOCAL_VOICE", "Daniel"));
   if (name === "elevenlabs") return elevenlabs(env("ELEVENLABS_VOICE_ID"));
   const model = env("GEMINI_TTS_MODEL") || scene.voice.model || "gemini-3.8-flash-tts";

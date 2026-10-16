@@ -13,8 +13,9 @@ motion graphics, a little 3D and stock footage where they earn it.
 npm run dashboard        # http://localhost:4400 — progress, episodes, roadmap, setup
 ```
 
-1. **Setup page** → paste your Gemini API key (and Pexels / Pixabay / Magnific when you have them).
-   Until your replicated voice exists, `GEMINI_VOICE_ID=Kore` (a prebuilt voice) works; `TTS_PROVIDER=local` uses the free macOS voice.
+1. **Voice** → production voice is **Gemini 3.1 Flash TTS · Puck** (upbeat), made by Claude through the Magnific MCP
+   (`/voice`, about 100 credits per 30 s; cached, so re-renders are free). Change it on the Setup page.
+   Commercial use: fine on an active paid Magnific plan — keep "Voice: AI-generated" in descriptions (the repurpose skill adds it).
 2. **Avatar** → export your layered SVG to `avatar/avatar.svg` (layer names in `avatar/README.md`). The Avatar page checks every layer.
 3. **Inbox** → write a brief (your angle is the one field Claude can't fill).
 

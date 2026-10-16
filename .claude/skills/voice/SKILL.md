@@ -1,13 +1,14 @@
 ---
 name: voice
-description: Generates an episode's voice-over with the Magnific MCP text-to-speech (ElevenLabs v3 by default) from the prepared request, then imports it into the pipeline. Use when the voice step says "Voice needed", or to regenerate a voice.
+description: Generates an episode's voice-over with the Magnific MCP text-to-speech (production voice: Gemini 3.1 Flash TTS · Puck) from the prepared request, then imports it into the pipeline. Use when the voice step says "Voice needed", or to regenerate a voice.
 argument-hint: [episode-slug]
 allowed-tools: Read Bash(npm run tts *) mcp__magnific__audio_voices_list mcp__magnific__audio_tts mcp__magnific__creations_wait mcp__magnific__simulate_cost mcp__magnific__account_balance mcp__magnific__audio_tts_direction
 ---
 
 # Voice (Magnific)
 
-Models: ElevenLabs v3 (default; works with the user's cloned voice — `source: "mine"`) or Gemini
+**Production voice: Gemini 3.1 Flash TTS, Google voice Puck (714), energy upbeat** — confirmed by the owner.
+Other options: ElevenLabs v3 (works with the owner's cloned voice — `source: "mine"`) or Gemini
 (`gemini_v3_1_flash_tts` / `gemini_v2_5_pro`) which needs a Google voice (714 Puck upbeat, 702 Charon clear) and is
 directed through `systemInstruction`. A cloned ElevenLabs voice cannot be used with Gemini — say so if asked.
 
