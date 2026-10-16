@@ -60,13 +60,9 @@ You add the accents, timed to words:
   the one 3D moment, a full-layout aside, a stock clip).
 
 ## 5. Captions
-Set top-level `captions`:
-- `"keywords"` (good default for engagement) — only key words pop up big beside the narrator as they're spoken.
-  Give each scene 0–2 `pop` entries: words/phrases from the line that carry the punch ("free", "10M views", "first two sentences").
-  Not every scene needs one; never pop words that are already written on the board at that moment.
-- `"full"` — running 2–4 word captions (busy scenes, or when the user asks).
-- `"off"` — the pure reference look.
-`.srt`/`.vtt` subtitle files are always exported for the platforms, whatever you pick here.
+Run `/caption-designer <slug>` after you finish the visuals — it sets the headline, fact tags and subtitles
+(professional presets, fixed positions). Leave a clear band at the top (y < 24) in the hook scene if the hook
+deserves a headline.
 
 ## 6. When the library lacks a graphic
 If a moment truly needs a new motion graphic (e.g. a "loading bar filling", "phone notification stack"):

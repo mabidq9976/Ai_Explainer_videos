@@ -258,7 +258,7 @@ async function episodeView(slug, tab) {
         <button class="btn primary" data-act="produce" data-slug="${slug}" ${e.scene ? "" : "disabled"}>${I.play} Run pipeline</button>
       </div></div>
     <div id="skill-menu" class="card" style="display:none;margin-bottom:14px"><h2>Run a skill with Claude <span class="sub">headless · same as typing it in Claude Code</span></h2><div class="row">
-      ${[["draft", "Full draft"], ["research-brief", "Research brief"], ["hook-writer", "Redo hooks"], ["script-writer", "Redo script"], ["director", "Redo direction"], ["produce", "Producer pass + render"], ["critic", "Critic review"], ["repurpose", "Blog · thread · captions"], ["geo-optimizer", "GEO check"]].map(([k, l]) => `<button class="btn sm" data-act="skill" data-skill="${k}" data-slug="${slug}">/${k} <span class="muted">${l}</span></button>`).join("")}
+      ${[["draft", "Full draft"], ["research-brief", "Research brief"], ["hook-writer", "Redo hooks"], ["script-writer", "Redo script"], ["director", "Redo direction"], ["produce", "Producer pass + render"], ["caption-designer", "Design captions"], ["voice", "Make voice-over"], ["critic", "Critic review"], ["repurpose", "Blog · thread · captions"], ["geo-optimizer", "GEO check"]].map(([k, l]) => `<button class="btn sm" data-act="skill" data-skill="${k}" data-slug="${slug}">/${k} <span class="muted">${l}</span></button>`).join("")}
     </div></div>
     <div class="stepper">${STEPS.map((s) => {
       const x = st[s] ?? {};
@@ -296,8 +296,9 @@ function scriptTab(e, catalog) {
     <div class="grid g3">
       <div class="span2">
         <div class="card flat" style="margin-bottom:12px"><div class="row" style="justify-content:space-between">
-          <div><b>Hook</b> <span class="pill">${esc(s.hook.pattern)}</span><div class="hint">Scene 1's line must match the hook text.</div></div>
-          <div class="row"><label class="row hint"><input type="checkbox" id="cam-toggle" ${s.camera === false ? "" : "checked"}/> camera moves</label><label class="row hint">captions <select id="cap-mode" style="width:auto;padding:4px 8px">${["off", "keywords", "full"].map((m) => `<option ${(s.captions === true ? "full" : s.captions || "off") === m ? "selected" : ""}>${m}</option>`).join("")}</select></label><span class="hint" id="totals"></span></div></div></div>
+          <div style="flex:1;min-width:260px"><b>Hook</b> <span class="pill">${esc(s.hook.pattern)}</span><div class="hint">Scene 1's line must match the hook text.</div>
+            <div class="row" style="margin-top:8px;flex-wrap:nowrap"><input type="text" id="cap-title" placeholder="Caption headline, e.g. WHAT IF YOU COULD BREATHE UNDERWATER?" value="${esc(capCfg(s.captions).title?.text ?? "")}"/><input type="text" id="cap-until" style="width:110px" placeholder="until s1" value="${esc(capCfg(s.captions).title?.until ?? "")}"/></div></div>
+          <div class="row"><label class="row hint"><input type="checkbox" id="cam-toggle" ${s.camera === false ? "" : "checked"}/> camera moves</label><label class="row hint">captions <select id="cap-preset" style="width:auto;padding:4px 8px">${["off", "editorial", "bold"].map((m) => `<option ${capCfg(s.captions).preset === m ? "selected" : ""}>${m}</option>`).join("")}</select></label><label class="row hint"><input type="checkbox" id="cap-subs" ${capCfg(s.captions).subtitles ? "checked" : ""}/> subtitles</label><span class="hint" id="totals"></span></div></div></div>
         <div id="scenes">${s.scenes.map((sc, i) => {
           const v = sc.visual;
           return `<div class="scene" data-i="${i}">
@@ -307,7 +308,7 @@ function scriptTab(e, catalog) {
                 <div class="field"><label class="f">Spoken line (read verbatim — only &lt;short pause&gt; &lt;breath&gt; &lt;laugh&gt;)</label><textarea data-k="line" rows="2">${esc(sc.line)}</textarea></div>
                 <div class="grid g2" style="gap:8px"><div><label class="f">Delivery style (≤ 8 words)</label><input type="text" data-k="style" value="${esc(sc.style)}"/></div>
                 <div><label class="f">Emphasis (comma-separated)</label><input type="text" data-k="emphasis" value="${esc((sc.emphasis ?? []).join(", "))}"/></div>
-                <div class="span2"><label class="f">Pop-up words (keywords captions, comma-separated)</label><input type="text" data-k="pop" value="${esc((sc.pop ?? []).join(", "))}"/></div>
+                <div class="span2"><label class="f">Fact tag (text @ word) — orange bar, hard facts only</label><input type="text" data-k="tag" value="${esc(sc.tag ? `${sc.tag.text}${sc.tag.at !== undefined ? ` @ ${sc.tag.at}` : ""}` : (sc.pop ?? []).join(", "))}" placeholder="3 STEPS @ steps"/></div>
                 <div><label class="f">Camera punch-in words</label><input type="text" data-k="punch" value="${esc((sc.punch ?? []).join(", "))}" placeholder="e.g. ChatGPT"/></div>
                 <div><label class="f">Sound cues (kind@word)</label><input type="text" data-k="sfx" value="${esc((sc.sfx ?? []).map((c) => `${c.kind}@${c.at}`).join(", "))}" placeholder="riser@three, hush@Clear"/></div></div>
               </div>
@@ -369,8 +370,9 @@ function collectScene() {
     sc.style = g("style").trim();
     const em = g("emphasis").split(",").map((x) => x.trim()).filter(Boolean);
     if (em.length) sc.emphasis = em; else delete sc.emphasis;
-    const pops = g("pop").split(",").map((x) => x.trim()).filter(Boolean);
-    if (pops.length) sc.pop = pops; else delete sc.pop;
+    const tagIn = g("tag").trim();
+    delete sc.pop;
+    if (tagIn) { const [text, at] = tagIn.split("@").map((x) => x.trim()); sc.tag = at ? { text, at } : { text }; } else delete sc.tag;
     const punch = g("punch").split(",").map((x) => x.trim()).filter(Boolean);
     if (punch.length) sc.punch = punch; else delete sc.punch;
     const cues = g("sfx").split(",").map((x) => x.trim()).filter(Boolean).map((c) => {
@@ -385,8 +387,9 @@ function collectScene() {
   s.cta.line = $("#cta-line").value.trim();
   s.hook.text = s.scenes[0].line.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
   if ($("#cam-toggle").checked) delete s.camera; else s.camera = false;
-  const cap = $("#cap-mode").value;
-  if (cap === "off") delete s.captions; else s.captions = cap;
+  const preset = $("#cap-preset").value, titleText = $("#cap-title").value.trim(), until = $("#cap-until").value.trim();
+  if (preset === "off") delete s.captions;
+  else s.captions = { preset, subtitles: $("#cap-subs").checked, tags: true, ...(titleText ? { title: { text: titleText, ...(until ? { until: /^\d+(\.\d+)?$/.test(until) ? +until : until } : {}) } } : {}) };
   return s;
 }
 
@@ -455,6 +458,8 @@ function postTab(e) {
         <div class="span2"><button class="btn primary" type="submit">Add row</button></div>
       </form></div></div>`;
 }
+/** scene.json captions (old shorthands or the object form) → { preset, subtitles, tags, title }. */
+const capCfg = (c) => (!c || c === "off" ? { preset: "off", subtitles: false } : c === true || c === "full" ? { preset: "editorial", subtitles: true } : c === "keywords" ? { preset: "editorial", subtitles: false } : { preset: c.preset ?? "editorial", subtitles: c.subtitles ?? true, title: c.title });
 const mostCommon = (arr) => Object.entries(arr.reduce((a, x) => ((a[x] = (a[x] ?? 0) + 1), a), {})).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "";
 
 // ---------------------------------------------------------------- inbox
@@ -629,7 +634,7 @@ views.setup = async () => {
           <p class="hint">Gemini: aistudio.google.com → API keys. Pexels: pexels.com/api. Pixabay: pixabay.com/api/docs. Magnific runs through the Magnific MCP in Claude — no key needed (the field is only for the optional API).</p></div>
         <div class="card"><h2>Voice & settings</h2>
           ${s.plain.map((k) => `<div class="field"><label class="f">${k.key}</label><div class="row" style="flex-wrap:nowrap">${k.key === "TTS_PROVIDER" ? `<select data-env="${k.key}">${["magnific", "gemini", "elevenlabs", "local"].map((o) => `<option ${o === (k.value || "gemini") ? "selected" : ""}>${o}</option>`).join("")}</select>` : `<input type="text" data-env="${k.key}" value="${esc(k.value)}"/>`}<button class="btn" data-act="save-env" data-key="${k.key}">Save</button></div></div>`).join("")}
-          <p class="hint"><b>TTS_PROVIDER=magnific</b>: Claude makes the voice-over with the Magnific MCP (ElevenLabs v3); <b>MAGNIFIC_VOICE_ID</b> is a Magnific catalog voice id (1213 = Fletcher Rowan Whitaker, Indian-English explainer narrator). <b>GEMINI_VOICE_ID</b>: a prebuilt voice (e.g. Kore) until your replicated <span class="kbd">voice_…</span> ID is ready. <b>TTS_PROVIDER=local</b> uses the free macOS voice to test the pipeline. <b>LOCAL_VOICE</b>: a macOS voice name (default Daniel).</p></div>
+          <p class="hint"><b>TTS_PROVIDER=magnific</b>: Claude makes the voice-over with the Magnific MCP (ElevenLabs v3); <b>MAGNIFIC_VOICE_ID</b> is a Magnific voice id (1213 = Fletcher Rowan Whitaker). For your own cloned voice set <b>MAGNIFIC_VOICE_SOURCE=mine</b>. <b>GEMINI_VOICE_ID</b>: a prebuilt voice (e.g. Kore) until your replicated <span class="kbd">voice_…</span> ID is ready. <b>TTS_PROVIDER=local</b> uses the free macOS voice to test the pipeline. <b>LOCAL_VOICE</b>: a macOS voice name (default Daniel).</p></div>
       </div></div>`;
 };
 

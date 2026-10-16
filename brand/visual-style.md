@@ -39,13 +39,10 @@ changes pose every beat, and simple graphics that build up piece by piece. Calm,
 - Risers build into reveals; dings reward wins; a scratch marks a myth. Keep each special: 1–2 per video.
 
 ## Captions
-Per episode, `captions` in scene.json:
-- `"keywords"` — 1–2 key words per scene pop up big (black on marker-yellow, slight tilt) beside the narrator as
-  they're spoken. Words come from each scene's `pop` list (default: its `emphasis`). Engaging without clutter.
-- `"full"` — running 2–4 word captions, emphasis words on a yellow marker.
-- `"off"` (default) — the pure reference look; labels on the board carry the text.
-Subtitle files (`out/captions.srt`, `out/captions.vtt`) are exported every time for YouTube/X/blog players —
-upload them as platform captions (accessibility + search) instead of burning in full captions.
+Designed by `/caption-designer` (rules: `.claude/skills/caption-designer/style-guide.md`):
+headline in condensed caps at the top during the hook, orange fact tags for hard numbers, lower-third subtitles
+in Montserrat ExtraBold. Presets: `editorial` (ink on white) and `bold` (white with dark outline, the reference look).
+`.srt`/`.vtt` files are exported every time for the platforms.
 
 ## Narrator
 Small, line-drawn, always alive: lip-synced mouth, blinks, breathing, gentle sway and weight shifts, nods at

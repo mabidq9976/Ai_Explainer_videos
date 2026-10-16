@@ -16,6 +16,7 @@ For each slug:
 3. `/hook-writer <slug>`
 4. `/script-writer <slug>`
 5. `/director <slug>` — picks the look, plans word-timed boards and narrator beats, builds missing graphics
+5b. `/caption-designer <slug>` — headline, fact tags, subtitles
 6. `npm run validate <slug>` — fix and re-run until it passes (max 3 rounds; if still failing, report the errors and move on).
 7. `/critic <slug>` — if `VERDICT: FIX`, apply the fixes that keep validation passing, then re-validate. One round only.
 8. `/repurpose <slug>`

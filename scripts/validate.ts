@@ -151,6 +151,28 @@ export function validateScene(data: unknown): { errors: string[]; warnings: stri
       warnings.push(`${sc.id}: avatar has no "${g}" gesture or pose-${g} — it will show rest.`);
   }
 
+  // Caption design (see the caption-designer skill).
+  const cap: any = (s as any).captions;
+  if (cap && typeof cap === "object") {
+    const tw = cap.title?.text ? cap.title.text.split(/\s+/).length : 0;
+    if (tw > 7) warnings.push(`caption title is ${tw} words — 3–7 reads at a glance.`);
+    if (cap.title?.until && typeof cap.title.until === "string" && !s.scenes.some((x) => x.id === cap.title.until)) errors.push(`captions.title.until "${cap.title.until}" is not a scene id.`);
+    if (cap.title?.text) {
+      // The headline covers roughly the top 20% while it's up: board items there will be hidden.
+      const until = typeof cap.title.until === "string" ? s.scenes.findIndex((x) => x.id === cap.title.until) : 0;
+      s.scenes.slice(0, Math.max(0, until) + 1).forEach((sc) => {
+        const v: any = sc.visual;
+        if (v.type === "board") for (const el of v.elements) if (el.kind !== "arrow" && (el.y ?? 30) < 24) warnings.push(`${sc.id}.${el.id}: y=${el.y} sits under the caption headline — move it below y≈24 while the title is up.`);
+      });
+    }
+  }
+  const tagged = s.scenes.filter((x: any) => x.tag || x.pop?.length);
+  if (tagged.length > Math.max(3, Math.ceil(s.scenes.length / 2))) warnings.push(`${tagged.length} scenes with fact tags — keep them for real facts/numbers (about one every other scene at most).`);
+  for (const sc of s.scenes as any[]) {
+    if (sc.tag?.text && sc.tag.text.split(/\s+/).length > 6) warnings.push(`${sc.id}: tag "${sc.tag.text}" — keep tags to 2–6 words.`);
+    if (sc.tag?.at !== undefined && !anchorOk(sc.tag.at, sc.line)) errors.push(`${sc.id}: tag at "${sc.tag.at}" — that word isn't in the line.`);
+  }
+
   // Engagement cues: keep them special.
   const punches = s.scenes.reduce((n, x) => n + ((x as any).punch?.length ?? 0), 0);
   if (punches > Math.max(3, Math.round(s.scenes.length / 2))) warnings.push(`${punches} camera punches — more than ~1 every other scene stops feeling like emphasis.`);

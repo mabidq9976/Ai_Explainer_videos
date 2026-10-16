@@ -35,12 +35,14 @@ const assetsFor = (id: string, m: Record<string, ManifestEntry>) =>
   Object.fromEntries(Object.entries(m).filter(([k, e]) => k.startsWith(`${id}.`) && e.file).map(([k, e]) => [k.slice(id.length + 1), e.file!]));
 
 /** One block's visual inside its layout zone: a catalog component, a 3D scene or stock media. */
-export const VisualLayer: React.FC<{ block: Block; manifest: Record<string, ManifestEntry> }> = ({ block, manifest }) => {
+export const VisualLayer: React.FC<{ block: Block; manifest: Record<string, ManifestEntry>; topInset?: number }> = ({ block, manifest, topInset = 0 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const v = block.visual;
   if (!v) return null;
-  const zone: Rect = zones(block.layout, block.position).visual;
+  const base: Rect = zones(block.layout, block.position).visual;
+  // Leave room for the caption headline when it's on screen.
+  const zone: Rect = topInset > base.y ? { ...base, y: topInset, h: Math.max(300, base.h - (topInset - base.y)) } : base;
   const dur = block.endFrame - block.startFrame;
   const enter = spring({ frame, fps, config: { damping: 15, mass: 0.6 } });
 

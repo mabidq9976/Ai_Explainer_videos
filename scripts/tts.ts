@@ -196,6 +196,8 @@ export async function tts(slug: string, opts: { force?: boolean; importUrl?: str
       provider: "magnific",
       model: provider.model,
       voiceId: Number(provider.voice),
+      // Cloned "My Voices" share ids with the catalog, so Magnific needs source=mine for them.
+      ...(env("MAGNIFIC_VOICE_SOURCE") === "mine" ? { source: "mine" } : {}),
       text,
       chars: text.length,
       ...(provider.model.startsWith("gemini") ? { systemInstruction: "Friendly, confident explainer narrator for short social videos: clear, warm, a little playful, natural pace." } : {}),

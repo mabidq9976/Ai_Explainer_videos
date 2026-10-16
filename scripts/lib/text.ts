@@ -27,6 +27,7 @@ export type Scene = {
   line: string;
   emphasis?: string[];
   pop?: string[];
+  tag?: { text: string; at?: string | number; until?: string | number };
   punch?: string[];
   sfx?: { at: number | string; kind: string }[];
   style: string;

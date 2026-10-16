@@ -129,9 +129,52 @@
             "full",
             "keywords"
           ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "preset": {
+              "enum": [
+                "editorial",
+                "bold",
+                "off"
+              ],
+              "description": "editorial = ink on the white page; bold = white with dark outline (the reference look)"
+            },
+            "subtitles": {
+              "type": "boolean"
+            },
+            "tags": {
+              "type": "boolean"
+            },
+            "title": {
+              "type": "object",
+              "required": [
+                "text"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "until": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ],
+                  "description": "scene id (default: the hook scene) or seconds"
+                }
+              }
+            }
+          }
         }
       ],
-      "description": "off (default) · full = running captions · keywords = key words pop up big as they're spoken"
+      "description": "Caption design — see the caption-designer skill"
     },
     "look": {
       "enum": [
@@ -422,6 +465,25 @@
               }
             }
           }
+        },
+        "tag": {
+          "type": "object",
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "at": {
+              "$ref": "#/definitions/at"
+            },
+            "until": {
+              "$ref": "#/definitions/at"
+            }
+          },
+          "description": "fact tag: orange bar, condensed caps"
         }
       }
     },

@@ -23,7 +23,7 @@ export function zones(layout: Layout, position: Position = "left") {
     case "hidden":
       return { visual: { x: 0, y: 140, w: W, h: 1380 }, captionY: 1560, avatar: { x: cornerX[position], y: H + 80, w: AV, h: AV } };
     default:
-      return { visual: { x: 0, y: 140, w: W, h: 1060 }, captionY: 1150, avatar: { x: cornerX[position], y: 1200, w: AV, h: AV } };
+      return { visual: { x: 0, y: 140, w: W, h: 1060 }, captionY: 1122, avatar: { x: cornerX[position], y: 1200, w: AV, h: AV } };
   }
 }
 

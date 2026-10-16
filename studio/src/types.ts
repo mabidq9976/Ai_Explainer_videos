@@ -33,6 +33,8 @@ export type SceneDef = {
   emphasis?: string[];
   /** Words/phrases from the line that pop up in "keywords" caption mode (default: emphasis). */
   pop?: string[];
+  /** A fact tag (orange bar) — text can differ from the spoken words; `at` = the word it lands on. */
+  tag?: { text: string; at?: string | number; until?: string | number };
   /** Words where the camera punches in (quick zoom). */
   punch?: string[];
   /** Sound cues on words: riser (builds up to the word), scratch, ding, pop, whoosh, hush (music drops out just before the word). */
@@ -50,7 +52,7 @@ export type SceneFile = {
   length?: number;
   hook: { text: string; pattern: string };
   /** off (default) · full = running 2–4 word captions · keywords = only key words pop up big. `true` = full. */
-  captions?: boolean | "off" | "full" | "keywords";
+  captions?: boolean | "off" | "full" | "keywords" | { preset?: "editorial" | "bold" | "off"; subtitles?: boolean; tags?: boolean; title?: { text: string; until?: string | number } };
   /** Sound design: music bed level and UI sound effects (pop on element entrances, whoosh on scene changes). */
   sound?: { music?: boolean; musicVolume?: number; sfx?: boolean; sfxVolume?: number };
   look?: "reference" | "mixed";

@@ -4,7 +4,9 @@ import type { Block, EpisodeProps, Word } from "./types";
 import { buildBlocks } from "./load";
 import { layoutAt } from "./layout";
 import { VisualLayer } from "./VisualLayer";
-import { Captions, KeywordPops, findPops } from "./Captions";
+import { captionConfig } from "./captions/config";
+import { FactTag, Subtitles, TitleCard, TITLE_TOP, titleLayout } from "./captions/Layers";
+import { buildTags, titleWindow } from "./captions/tags";
 import { Avatar } from "./avatar/Avatar";
 import { Board, type PlacedElement } from "./Board";
 import { avatarEvents, resolveAt } from "./timeline";
@@ -38,16 +40,6 @@ function buildChains(blocks: Block[], words: Word[]) {
   return { chains, owner };
 }
 
-/** Where pop words appear: beside the narrator, on the side with room (above its head when centred). */
-function popAnchor(av: { x: number; y: number; w: number; h: number }, layout: string, captionY: number) {
-  if (layout !== "corner") return { x: W / 2, y: captionY, maxW: W * 0.86 };
-  const cx = av.x + av.w / 2;
-  if (Math.abs(cx - W / 2) < 80) return { x: W / 2, y: av.y - 95, maxW: W * 0.8 };
-  // Beside the head, clear of gesturing hands (which reach out past the avatar box at chest height).
-  const free = cx < W / 2 ? { from: av.x + av.w + 40, to: W - 30 } : { from: 30, to: av.x - 40 };
-  return { x: (free.from + free.to) / 2, y: av.y + av.h * 0.12, maxW: free.to - free.from };
-}
-
 /** Reads scene.json (+ timing, mouth, assets) and lays every scene on the timeline. No per-episode code. */
 export const Episode: React.FC<EpisodeProps> = (props) => {
   const frame = useCurrentFrame();
@@ -62,7 +54,9 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
     ...blocks.filter((b) => b.visual?.type !== "board").map((b) => ({ start: b.startFrame, end: b.endFrame })),
   ], [chains, blocks]);
   const punches = useMemo(() => (props.scene ? punchFrames(blocks, props.scene.scenes, words) : []), [blocks, props.scene, words]);
-  const pops = useMemo(() => (props.scene ? findPops(props.scene.scenes, words) : []), [props.scene, words]);
+  const cap = captionConfig(props.scene?.captions);
+  const tags = useMemo(() => (props.scene && cap.tags ? buildTags(props.scene.scenes as any, blocks, words) : []), [props.scene, cap.tags, blocks, words]);
+  const title = cap.preset !== "off" && cap.title?.text ? { text: cap.title.text, ...titleWindow(cap.title.until, blocks), ...titleLayout(cap.title.text) } : null;
   const sounds = useMemo(
     () => soundCues({ chains, blocks, scenes: props.scene?.scenes ?? [], words, sfxDur: props.sfxDur, fps: 30 }),
     [chains, blocks, props.scene, words, props.sfxDur],
@@ -79,7 +73,9 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
   const L = layoutAt(frame, events, props.rig.flipWhenRight);
   const curBlock = blocks.find((b) => frame >= b.startFrame && frame < b.endFrame) ?? blocks[blocks.length - 1];
   const stockFull = curBlock.visual?.type === "stock" && curBlock.visual.frame === "full" && !!props.manifest[curBlock.id]?.file;
-  const capMode = props.scene.captions === true ? "full" : props.scene.captions || "off";
+  const titleOn = !!title && frame >= title.from && frame <= title.to;
+  // While the headline is up, motion-graphic scenes start below it.
+  const topInset = title ? TITLE_TOP + title.height + 40 : 0;
 
   const cam = props.scene.camera === false ? 1 : cameraScale(frame, shots, punches);
   const vz = zones(curBlock.layout, curBlock.position).visual;
@@ -88,7 +84,7 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
       <AbsoluteFill style={{ transform: `scale(${cam.toFixed(4)})`, transformOrigin: `${W / 2}px ${vz.y + vz.h / 2}px` }}>
       {blocks.filter((b) => b.visual?.type !== "board").map((b) => (
         <Sequence key={b.id} from={b.startFrame} durationInFrames={Math.max(1, b.endFrame - b.startFrame)} layout="none">
-          <VisualLayer block={b} manifest={props.manifest} />
+          <VisualLayer block={b} manifest={props.manifest} topInset={title && b.startFrame < title.to ? topInset : 0} />
         </Sequence>
       ))}
       {chains.map((c, i) => (
@@ -98,8 +94,9 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
       ))}
       </AbsoluteFill>
 
-      {capMode === "full" && <Captions words={words} y={L.captionY} onImage={stockFull} />}
-      {capMode === "keywords" && <KeywordPops pops={pops} {...popAnchor(L.avatar, L.cur.layout, L.captionY)} />}
+      {cap.preset !== "off" && title && <TitleCard text={title.text} from={title.from} to={title.to} preset={cap.preset} />}
+      {cap.preset !== "off" && cap.tags && <FactTag tags={tags} top={titleOn && title ? TITLE_TOP + title.height + 22 : 34} preset={cap.preset} />}
+      {cap.preset !== "off" && cap.subtitles && <Subtitles words={words} y={L.captionY} preset={stockFull ? "bold" : cap.preset} />}
 
       {props.avatarSvg && (
         <div style={{ position: "absolute", left: L.avatar.x, top: L.avatar.y, width: L.avatar.w, height: L.avatar.h, zIndex: 20, transform: L.facing !== 1 ? `scaleX(${L.facing.toFixed(3)})` : undefined }}>

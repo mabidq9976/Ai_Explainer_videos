@@ -5,7 +5,15 @@
   "format": "tutorial",
   "length": 30,
   "look": "mixed",
-  "captions": "keywords",
+  "captions": {
+    "preset": "editorial",
+    "subtitles": true,
+    "tags": true,
+    "title": {
+      "text": "How to get quoted by AI",
+      "until": "s1"
+    }
+  },
   "sound": {
     "music": true,
     "musicVolume": 0.14,
@@ -21,9 +29,6 @@
       "id": "s1",
       "line": "Here's how to get ChatGPT to quote your website.",
       "punch": [
-        "ChatGPT"
-      ],
-      "pop": [
         "ChatGPT"
       ],
       "style": "curious, a little conspiratorial",
@@ -48,20 +53,10 @@
             "kind": "image",
             "src": "assets/manual/s1.photo.jpg",
             "x": 50,
-            "y": 23,
+            "y": 38,
             "w": 70,
-            "h": 22,
+            "h": 20,
             "frame": "rounded"
-          },
-          {
-            "id": "t",
-            "kind": "text",
-            "text": "How to get quoted by AI",
-            "x": 50,
-            "y": 40,
-            "size": "md",
-            "weight": 600,
-            "at": "quote"
           },
           {
             "id": "new",
@@ -71,7 +66,10 @@
             "at": "website"
           }
         ]
-      }
+      },
+      "emphasis": [
+        "quote"
+      ]
     },
     {
       "id": "s2",
@@ -138,9 +136,10 @@
     {
       "id": "s3",
       "line": "Put the plain answer in your first two sentences.",
-      "pop": [
-        "first two sentences"
-      ],
+      "tag": {
+        "text": "Answer in 2 sentences",
+        "at": "first"
+      },
       "style": "calm, explaining to a friend",
       "avatar": {
         "layout": "corner",
@@ -161,7 +160,10 @@
           "query": "how do ai engines pick sources",
           "answer": "They quote pages that answer in the first two sentences."
         }
-      }
+      },
+      "emphasis": [
+        "plain"
+      ]
     },
     {
       "id": "s4",
@@ -256,6 +258,10 @@
     {
       "id": "s6",
       "line": "Step three, get mentioned where AI already looks.",
+      "tag": {
+        "text": "Step 3: get mentioned",
+        "at": "three"
+      },
       "sfx": [
         {
           "at": "three",
@@ -264,9 +270,6 @@
       ],
       "punch": [
         "mentioned"
-      ],
-      "pop": [
-        "AI already looks"
       ],
       "style": "building, a little excited",
       "avatar": {
@@ -326,7 +329,10 @@
             "Get mentioned"
           ]
         }
-      }
+      },
+      "emphasis": [
+        "Clear"
+      ]
     }
   ],
   "cta": {
