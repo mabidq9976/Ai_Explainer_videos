@@ -8,7 +8,7 @@ import { theme } from "../theme";
  *   "logo:youtube"   brand logo tile (any simple-icons slug: instagram, x, google, openai, tiktok…)
  *   "emoji:🎓"       emoji sticker
  *   "line:users"     outline icon from the small built-in set below
- *   "assets/..."     an image/clip file inside the episode folder
+ *   "assets/..."     an image/clip file inside the episode folder (assets/manual/logo-*.png → rounded app tile)
  *   "text:+10M"      big bold text in place of an icon
  */
 const bySlug: Record<string, { path: string; hex: string }> = {};
@@ -48,6 +48,9 @@ export const iconExists = (spec: string) => {
 export const Icon: React.FC<{ spec?: string; src?: string; size: number }> = ({ spec, src, size }) => {
   if (src) return <Img src={staticFile(src)} style={{ maxWidth: size * 1.5, maxHeight: size, objectFit: "contain", borderRadius: 8 }} />;
   if (!spec) return null;
+  // Saved brand icons (assets/manual/logo-*) get the same rounded app-tile shape as `logo:` tiles.
+  if (spec.startsWith("assets/") && /\/logo-[^/]+$/.test(spec))
+    return <Img src={staticFile(spec)} style={{ width: size, height: size, objectFit: "cover", borderRadius: size * 0.24 }} />;
   if (spec.startsWith("assets/")) return <Img src={staticFile(spec)} style={{ maxWidth: size * 1.5, maxHeight: size, objectFit: "contain", borderRadius: 8 }} />;
   const [kind, val] = spec.split(/:(.*)/s);
   if (kind === "emoji") return <div style={{ fontSize: size * 0.82, lineHeight: 1, height: size, display: "grid", placeItems: "center" }}>{val}</div>;

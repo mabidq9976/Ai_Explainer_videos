@@ -62,7 +62,7 @@ export function eventAt(events: AvatarEvent[], frame: number) {
   return { cur: events[i], prev: events[i - 1] ?? events[i], index: i };
 }
 
-const AT_KEYS = /^(at|cardAt|typeAt|citedAt|flipAt)$/;
+const AT_KEYS = /^(at|cardAt|typeAt|citedAt|flipAt|markAt|stampAt|growAt|pickAt)$/;
 
 /**
  * Let a graphic's own animation follow the voice: any `at` / `cardAt` / `typeAt` / `citedAt` / `flipAt` inside a

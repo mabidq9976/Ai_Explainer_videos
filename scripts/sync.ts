@@ -109,7 +109,7 @@ for (const sc of scene.scenes) {
   if ((v.type === "component" || v.type === "three") && v.props) {
     const p = v.props;
     if (Array.isArray(p.items)) p.items.forEach((it: any, i: number) => {
-      const text = typeof it === "string" ? it : it.text ?? it.title;
+      const text = typeof it === "string" ? it : it.text ?? it.title ?? it.name;
       if (!text) return;
       check(`${sc.id} ${v.name} item ${i + 1}`, text, typeof it === "object" ? it.at : undefined, sc.id, start + 0.2 + i * 0.4, (w) => {
         p.items[i] = typeof it === "string" ? { text: it, at: w } : { ...it, at: w };

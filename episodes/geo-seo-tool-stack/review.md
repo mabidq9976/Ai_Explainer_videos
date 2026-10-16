@@ -1,0 +1,1 @@
+Critic review addressed before voice generation: added official Semrush capability evidence; arrows now appear only when both endpoints are visible; closing question made specific and actionable. Retained the selected jargon-free dashboard hook and immediate starter-stack promise as the editorial choice. Final script 134 words; validation must pass before production.

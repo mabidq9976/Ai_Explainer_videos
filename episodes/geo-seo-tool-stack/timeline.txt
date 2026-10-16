@@ -1,0 +1,97 @@
+geo-seo-tool-stack · 57.8s · look: reference · 13 scenes
+
+[s1] 0.00–4.04 (4.0s)
+  words: Don't@0.27 buy@0.54 a@0.69 bigger@0.77 dashboard.@1.29 Buy@2.36 the@2.63 right@2.94 one.@3.43
+  cues: punch@2.94
+  narrator: corner/left arms-crossed raised
+    0.77  dashboard icon line:chart @(34,33)
+    2.94  choose arrow "dashboard"→"right"
+    2.94  right icon line:check @(70,33)
+[s2] 4.04–7.34 (3.3s)
+  words: Here's@4.04 my@4.38 starter@4.41 stack,@4.97 and@5.32 the@5.73 upgrade@6.19 I'd@6.40 skip.@6.80
+  narrator: corner/left open-palm raised
+    4.41  starter text "Starter stack" @(50,12)
+    4.41  stack icon line:laptop @(32,30)
+    6.19  later text "Upgrade later" @(50,45)
+    6.80  skip icon line:cross @(71,30)
+[s3] 7.34–12.36 (5.0s)
+  words: First,@7.34 GEO:@8.31 tracking@9.06 whether@9.59 your@9.85 brand@10.11 appears@10.36 in@11.07 AI@11.39 answers.@11.40
+  narrator: corner/right count neutral
+    8.31  geo text "1.) GEO" @(50,10)
+   10.11  brand icon line:globe @(25,31)
+   11.39  ai icon line:robot @(74,31)
+   11.39  visibility arrow "brand"→"ai"
+[s4] 12.36–16.53 (4.2s)
+  words: Shortlist@12.36 Profound,@13.18 Peec@13.79 AI,@14.21 or@14.71 Promptwatch@14.77 for@15.55 that@15.76 job.@16.11
+  narrator: corner/right open-palm neutral | @14.77 count
+   12.36  shortlist text "GEO shortlist" @(50,9)
+   12.36  tools component @(50,31)
+[s5] 16.53–21.22 (4.7s)
+  words: Compare@16.53 which@17.09 AI@17.58 platforms@17.59 and@18.28 prompts@18.55 each@19.12 plan@19.41 actually@19.74 covers.@20.63
+  narrator: corner/center thinking neutral
+   16.53  coverage text "Compare coverage" @(50,10)
+   17.59  platform icon line:robot @(28,30)
+   18.55  prompt icon line:doc @(72,30)
+   19.41  plan text "Check the plan" @(50,47)
+[s6] 21.22–24.95 (3.7s)
+  words: For@21.22 SEO,@21.43 I'd@21.82 start@22.23 with@22.48 Ahrefs@22.82 or@23.46 Semrush.@23.51 Pick@24.36 one.@24.63
+  cues: punch@24.36
+  narrator: corner/left count neutral
+   21.22  seo text "2.) SEO" @(50,10)
+   22.82  ahrefs text "Ahrefs" @(27,30)
+   23.46  or text "or" @(50,30)
+   23.51  semrush icon logo:semrush @(74,29)
+   23.51  pick text "Pick one." @(50,47)
+[s7] 24.95–28.71 (3.8s)
+  words: Research@24.95 keywords,@25.51 track@26.16 rankings,@26.71 and@27.13 audit@27.39 your@27.67 site.@27.93
+  narrator: corner/left open-palm neutral | @26.71 count
+   24.95  jobs component @(50,29)
+[s8] 28.71–33.39 (4.7s)
+  words: Already@28.71 subscribed?@29.04 Check@29.68 the@30.14 AI@30.28 visibility@30.43 features@31.24 before@31.68 buying@32.06 another@32.44 tool.@32.89
+  narrator: corner/center thinking raised
+   28.71  already text "Already subscribed?" @(50,10)
+   29.04  subscription icon line:money @(28,30)
+   29.68  check icon line:robot @(72,30)
+   29.68  checkfirst arrow "subscription"→"check"
+   32.06  first text "Use what you have" @(50,47)
+[s9] 33.39–38.48 (5.1s)
+  words: Then@33.39 there's@33.82 seoClarity,@34.43 BrightEdge,@35.37 and@35.98 Conductor:@36.35 the@37.05 enterprise@37.16 shortlist.@37.75
+  narrator: corner/right open-palm neutral | @35.37 thinking
+   33.39  enterprise-tools component @(50,32)
+   37.16  enterprise text "The enterprise shortlist" @(50,10)
+[s10] 38.48–42.36 (3.9s)
+  words: I'd@38.48 skip@38.75 those@38.89 until@39.22 team@39.55 workflows@40.01 and@40.28 scale@40.55 justify@40.93 the@41.35 investment.@41.47
+  cues: scratch@38.75
+  narrator: corner/right arms-crossed neutral
+   38.48  later text "Upgrade when it fits" @(50,10)
+   39.55  teams icon line:users @(28,30)
+   40.55  scale icon line:chart @(72,30)
+   40.93  investment text "Justify the investment" @(50,47)
+[s11] 42.36–47.36 (5.0s)
+  words: My@42.36 beginner@42.63 rule?@43.13 One@43.68 SEO@43.96 tool@44.24 you'll@44.75 actually@45.31 use@46.03 every@46.35 week.@46.67
+  cues: punch@43.68 hush@43.68
+  narrator: corner/center count raised
+   42.36  rule text "My beginner rule" @(50,10)
+   43.68  one text "ONE" @(50,28)
+   43.96  tool text "SEO tool" @(50,39)
+   46.35  weekly icon line:clock @(80,44)
+[s12] 47.36–51.54 (4.2s)
+  words: Add@47.36 dedicated@47.63 GEO@48.43 tracking@48.65 when@49.36 you@49.63 need@49.90 deeper@50.08 AI@50.43 visibility.@50.55
+  narrator: corner/left open-palm neutral
+   47.36  add text "Add GEO when needed" @(50,10)
+   47.36  base icon line:search @(27,30)
+   48.43  extra icon line:robot @(73,30)
+   48.43  addgeo arrow "base"→"extra"
+   50.08  deeper text "Deeper visibility" @(50,48)
+[s13] 51.54–55.19 (3.6s)
+  words: Before@51.54 your@51.72 next@51.98 subscription,@52.14 ask:@52.92 will@53.50 you@53.96 actually@54.02 use@54.56 it?@54.77
+  narrator: corner/center thinking neutral
+   51.54  before text "Before you subscribe…" @(50,12)
+   53.50  question text "Will you use it?" @(50,32)
+   54.02  eye icon line:eye @(50,47)
+[cta] 55.19–57.75 (2.6s)
+  words: Save@55.19 this@55.43 shortlist.@55.70 Keep@56.44 your@56.67 stack@56.94 simple.@57.50
+  narrator: full/left wave 
+  visual: component CTAEnd
+
+validation: 0 errors, 0 warnings

@@ -1,0 +1,841 @@
+{
+  "slug": "geo-seo-tool-stack",
+  "title": "GEO vs SEO: Buy the Right Tool",
+  "pillar": "GEO",
+  "format": "comparison",
+  "length": 58,
+  "look": "mixed",
+  "cardStyle": "chat",
+  "captions": {
+    "preset": "boxed",
+    "subtitles": true,
+    "tags": false,
+    "title": {
+      "text": "BUY THE RIGHT TOOL",
+      "until": "s1"
+    }
+  },
+  "sound": {
+    "music": true,
+    "musicVolume": 0.055,
+    "sfx": true,
+    "sfxVolume": 0.2
+  },
+  "camera": true,
+  "hook": {
+    "text": "Don't buy a bigger dashboard. Buy the right one.",
+    "pattern": "warning"
+  },
+  "scenes": [
+    {
+      "id": "s1",
+      "line": "Don't buy a bigger dashboard. Buy the right one.",
+      "style": "confident, dry and punchy",
+      "emphasis": [
+        "right one"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "arms-crossed",
+        "expression": "raised"
+      },
+      "visual": {
+        "type": "component",
+        "name": "DashboardBloat",
+        "props": {
+          "growAt": "bigger",
+          "pickAt": "right",
+          "pickLabel": "The right one",
+          "pickSub": "Built for the job you have",
+          "pickIcon": "line:chart"
+        }
+      },
+      "punch": [
+        "right"
+      ]
+    },
+    {
+      "id": "s2",
+      "line": "Here's my starter stack, and the upgrade I'd skip.",
+      "style": "curious, promise a useful payoff",
+      "emphasis": [
+        "starter stack",
+        "skip"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "open-palm",
+        "expression": "raised"
+      },
+      "visual": {
+        "type": "component",
+        "name": "ToolStack",
+        "props": {
+          "title": "My starter stack",
+          "items": [
+            {
+              "name": "SEO tool",
+              "sub": "Keywords · rankings · audits",
+              "icon": "line:search",
+              "at": "starter",
+              "mark": "check"
+            },
+            {
+              "name": "GEO tracker",
+              "sub": "Your brand in AI answers",
+              "icon": "line:robot",
+              "at": "stack",
+              "mark": "check"
+            },
+            {
+              "name": "Enterprise suite",
+              "sub": "The upgrade I'd skip",
+              "icon": "line:users",
+              "at": "the",
+              "mark": "skip",
+              "markAt": "I'd"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "s3",
+      "line": "First, GEO: tracking whether your brand appears in AI answers.",
+      "style": "clear, explain simply",
+      "emphasis": [
+        "AI answers"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "right",
+        "gesture": "count",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "geo",
+            "kind": "text",
+            "text": "1.) GEO",
+            "x": 50,
+            "y": 8,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": "GEO"
+          },
+          {
+            "id": "answer",
+            "kind": "component",
+            "name": "SerpVsAiAnswer",
+            "props": {
+              "query": "best tool for small teams",
+              "answer": "For small teams, most reviews point to YourBrand.",
+              "label": "AI answer",
+              "sources": [
+                "yourbrand.com",
+                "reddit.com"
+              ],
+              "cardAt": "tracking",
+              "typeAt": "whether"
+            },
+            "x": 50,
+            "y": 32,
+            "w": 92,
+            "h": 42,
+            "at": "GEO"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s4",
+      "line": "Shortlist Profound, Peec AI, or Promptwatch for that job.",
+      "style": "brisk, useful recommendations",
+      "emphasis": [
+        "Profound",
+        "Promptwatch"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "right",
+        "gesture": "open-palm",
+        "expression": "neutral",
+        "beats": [
+          {
+            "at": "Promptwatch",
+            "gesture": "count"
+          }
+        ]
+      },
+      "visual": {
+        "type": "component",
+        "name": "ToolStack",
+        "props": {
+          "title": "GEO shortlist",
+          "items": [
+            {
+              "name": "Profound",
+              "sub": "Answer engine insights",
+              "icon": "assets/manual/logo-profound.png",
+              "at": "Profound"
+            },
+            {
+              "name": "Peec AI",
+              "sub": "AI search visibility",
+              "icon": "assets/manual/logo-peec.png",
+              "at": "Peec"
+            },
+            {
+              "name": "Promptwatch",
+              "sub": "Prompt tracking & citations",
+              "icon": "assets/manual/logo-promptwatch.png",
+              "at": "Promptwatch"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "s5",
+      "line": "Compare which AI platforms and prompts each plan actually covers.",
+      "style": "steady, practical advice",
+      "emphasis": [
+        "platforms",
+        "prompts"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "center",
+        "gesture": "thinking",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "coverage",
+            "kind": "text",
+            "text": "Compare coverage",
+            "x": 50,
+            "y": 8,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": 0
+          },
+          {
+            "id": "platforms",
+            "kind": "component",
+            "name": "Diagram",
+            "props": {
+              "layout": "row",
+              "connector": "none",
+              "nodes": [
+                {
+                  "icon": "assets/manual/logo-chatgpt.png",
+                  "label": "ChatGPT",
+                  "at": "which"
+                },
+                {
+                  "icon": "logo:perplexity",
+                  "label": "Perplexity",
+                  "at": "AI"
+                },
+                {
+                  "icon": "logo:googlegemini",
+                  "label": "Gemini",
+                  "at": "platforms"
+                },
+                {
+                  "icon": "logo:google",
+                  "label": "AI Overviews",
+                  "at": "and"
+                }
+              ]
+            },
+            "x": 50,
+            "y": 26,
+            "w": 92,
+            "h": 22,
+            "at": 0
+          },
+          {
+            "id": "prompts",
+            "kind": "text",
+            "text": "+ the prompts you track",
+            "x": 50,
+            "y": 43,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": "prompts"
+          },
+          {
+            "id": "plan",
+            "kind": "text",
+            "text": "Check the plan",
+            "x": 50,
+            "y": 51,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": "plan",
+            "color": "#FF5A1F"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s6",
+      "line": "For SEO, I'd start with Ahrefs or Semrush. Pick one.",
+      "style": "confident, friendly recommendation",
+      "emphasis": [
+        "Ahrefs",
+        "Semrush"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "count",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "seo",
+            "kind": "text",
+            "text": "2.) SEO",
+            "x": 50,
+            "y": 8,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": 0
+          },
+          {
+            "id": "ahrefs",
+            "kind": "icon",
+            "icon": "assets/manual/logo-ahrefs.png",
+            "x": 28,
+            "y": 26,
+            "w": 24,
+            "label": "Ahrefs",
+            "at": "Ahrefs"
+          },
+          {
+            "id": "or",
+            "kind": "text",
+            "text": "or",
+            "x": 50,
+            "y": 26,
+            "w": 10,
+            "size": "md",
+            "weight": 700,
+            "at": "or"
+          },
+          {
+            "id": "semrush",
+            "kind": "icon",
+            "icon": "logo:semrush",
+            "x": 72,
+            "y": 26,
+            "w": 24,
+            "label": "Semrush",
+            "at": "Semrush"
+          },
+          {
+            "id": "pick",
+            "kind": "text",
+            "text": "Pick one.",
+            "x": 50,
+            "y": 47,
+            "w": 86,
+            "size": "lg",
+            "weight": 900,
+            "at": "Pick",
+            "color": "#FF5A1F"
+          }
+        ]
+      },
+      "punch": [
+        "Pick"
+      ]
+    },
+    {
+      "id": "s7",
+      "line": "Research keywords, track rankings, and audit your site.",
+      "style": "brisk, count each action",
+      "emphasis": [
+        "rankings",
+        "audit"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "open-palm",
+        "expression": "neutral",
+        "beats": [
+          {
+            "at": "rankings",
+            "gesture": "count"
+          }
+        ]
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "jobs",
+            "kind": "component",
+            "name": "Checklist",
+            "props": {
+              "title": "Your weekly checks",
+              "items": [
+                {
+                  "text": "Research keywords",
+                  "at": "Research"
+                },
+                {
+                  "text": "Track rankings",
+                  "at": "track"
+                },
+                {
+                  "text": "Audit your site",
+                  "at": "audit"
+                }
+              ]
+            },
+            "x": 50,
+            "y": 29,
+            "w": 88,
+            "h": 35,
+            "at": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "s8",
+      "line": "Already subscribed? Check the AI visibility features before buying another tool.",
+      "style": "playful, helpful money saving aside",
+      "emphasis": [
+        "Already subscribed",
+        "before"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "center",
+        "gesture": "thinking",
+        "expression": "raised"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "already",
+            "kind": "text",
+            "text": "Already subscribed?",
+            "x": 50,
+            "y": 8,
+            "w": 86,
+            "size": "lg",
+            "weight": 700,
+            "at": 0
+          },
+          {
+            "id": "toggle",
+            "kind": "component",
+            "name": "Toggle",
+            "props": {
+              "label": "AI visibility",
+              "flipAt": "visibility"
+            },
+            "x": 50,
+            "y": 29,
+            "w": 92,
+            "h": 26,
+            "at": 0
+          },
+          {
+            "id": "first",
+            "kind": "text",
+            "text": "Use what you have first",
+            "x": 50,
+            "y": 48,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": "buying",
+            "color": "#FF5A1F"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s9",
+      "line": "Then there's seoClarity, BrightEdge, and Conductor: the enterprise shortlist.",
+      "style": "matter of fact, clear names",
+      "emphasis": [
+        "enterprise"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "right",
+        "gesture": "open-palm",
+        "expression": "neutral",
+        "beats": [
+          {
+            "at": "BrightEdge",
+            "gesture": "thinking"
+          }
+        ]
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "enterprise",
+            "kind": "text",
+            "text": "The enterprise shortlist",
+            "x": 50,
+            "y": 8,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": "enterprise"
+          },
+          {
+            "id": "ent",
+            "kind": "component",
+            "name": "ToolStack",
+            "props": {
+              "items": [
+                {
+                  "name": "seoClarity",
+                  "icon": "assets/manual/logo-seoclarity.png",
+                  "tag": "Enterprise",
+                  "at": "seoClarity"
+                },
+                {
+                  "name": "BrightEdge",
+                  "tag": "Enterprise",
+                  "at": "BrightEdge"
+                },
+                {
+                  "name": "Conductor",
+                  "icon": "assets/manual/logo-conductor.png",
+                  "tag": "Enterprise",
+                  "at": "Conductor"
+                }
+              ]
+            },
+            "x": 50,
+            "y": 33,
+            "w": 92,
+            "h": 40,
+            "at": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "s10",
+      "line": "I'd skip those until team workflows and scale justify the investment.",
+      "style": "dry, firm and measured",
+      "emphasis": [
+        "skip",
+        "scale"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "right",
+        "gesture": "arms-crossed",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "ent2",
+            "kind": "component",
+            "name": "ToolStack",
+            "props": {
+              "still": true,
+              "stamp": "LATER",
+              "stampAt": "until",
+              "items": [
+                {
+                  "name": "seoClarity",
+                  "icon": "assets/manual/logo-seoclarity.png",
+                  "mark": "skip",
+                  "markAt": "skip"
+                },
+                {
+                  "name": "BrightEdge",
+                  "mark": "skip",
+                  "markAt": "skip"
+                },
+                {
+                  "name": "Conductor",
+                  "icon": "assets/manual/logo-conductor.png",
+                  "mark": "skip",
+                  "markAt": "skip"
+                }
+              ]
+            },
+            "x": 50,
+            "y": 21,
+            "w": 92,
+            "h": 26,
+            "at": 0
+          },
+          {
+            "id": "when",
+            "kind": "text",
+            "text": "Upgrade when you have",
+            "x": 50,
+            "y": 38,
+            "w": 86,
+            "size": "sm",
+            "weight": 700,
+            "at": "until"
+          },
+          {
+            "id": "teams",
+            "kind": "icon",
+            "icon": "line:users",
+            "x": 33,
+            "y": 45,
+            "w": 8,
+            "label": "Team workflows",
+            "at": "team"
+          },
+          {
+            "id": "scale",
+            "kind": "icon",
+            "icon": "line:chart",
+            "x": 67,
+            "y": 45,
+            "w": 8,
+            "label": "Scale",
+            "at": "scale"
+          }
+        ]
+      },
+      "sfx": [
+        {
+          "at": "skip",
+          "kind": "scratch"
+        }
+      ]
+    },
+    {
+      "id": "s11",
+      "line": "My beginner rule? One SEO tool you'll actually use every week.",
+      "style": "warm, decisive payoff",
+      "emphasis": [
+        "One",
+        "every week"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "center",
+        "gesture": "count",
+        "expression": "raised"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "rule",
+            "kind": "text",
+            "text": "My beginner rule",
+            "x": 50,
+            "y": 8,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": 0
+          },
+          {
+            "id": "one",
+            "kind": "text",
+            "text": "ONE",
+            "x": 50,
+            "y": 21,
+            "w": 86,
+            "size": "xl",
+            "weight": 900,
+            "at": "One",
+            "color": "#FF5A1F"
+          },
+          {
+            "id": "tool",
+            "kind": "text",
+            "text": "SEO tool",
+            "x": 50,
+            "y": 31,
+            "w": 86,
+            "size": "lg",
+            "weight": 700,
+            "at": "SEO"
+          },
+          {
+            "id": "weeks",
+            "kind": "component",
+            "name": "Streak",
+            "props": {
+              "at": "actually"
+            },
+            "x": 50,
+            "y": 45,
+            "w": 90,
+            "h": 12,
+            "at": "you'll"
+          }
+        ]
+      },
+      "punch": [
+        "One"
+      ],
+      "sfx": [
+        {
+          "at": "One",
+          "kind": "hush"
+        }
+      ]
+    },
+    {
+      "id": "s12",
+      "line": "Add dedicated GEO tracking when you need deeper AI visibility.",
+      "style": "clear, calm recommendation",
+      "emphasis": [
+        "when you need"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "open-palm",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "add",
+            "kind": "text",
+            "text": "Add GEO when you need it",
+            "x": 50,
+            "y": 8,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": 0
+          },
+          {
+            "id": "stack",
+            "kind": "component",
+            "name": "ToolStack",
+            "props": {
+              "items": [
+                {
+                  "name": "Your SEO tool",
+                  "sub": "Ahrefs or Semrush",
+                  "icon": "line:search"
+                },
+                {
+                  "name": "GEO tracking",
+                  "sub": "Profound · Peec AI · Promptwatch",
+                  "icon": "line:robot",
+                  "at": "GEO",
+                  "mark": "plus"
+                }
+              ]
+            },
+            "x": 50,
+            "y": 28,
+            "w": 92,
+            "h": 28,
+            "at": 0
+          },
+          {
+            "id": "deeper",
+            "kind": "text",
+            "text": "Deeper AI visibility",
+            "x": 50,
+            "y": 47,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": "deeper",
+            "color": "#FF5A1F"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s13",
+      "line": "Before your next subscription, ask: will you actually use it?",
+      "style": "confident, lead into replay",
+      "emphasis": [
+        "actually use"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "center",
+        "gesture": "thinking",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "before",
+            "kind": "text",
+            "text": "Before your next subscription…",
+            "x": 50,
+            "y": 9,
+            "w": 86,
+            "size": "md",
+            "weight": 700,
+            "at": 0
+          },
+          {
+            "id": "q",
+            "kind": "component",
+            "name": "BigQuestion",
+            "props": {
+              "text": "Will you actually use it?"
+            },
+            "x": 50,
+            "y": 32,
+            "w": 92,
+            "h": 30,
+            "at": "will"
+          }
+        ]
+      }
+    }
+  ],
+  "cta": {
+    "line": "Save this shortlist. Keep your stack simple.",
+    "style": "warm, concise",
+    "visual": "CTAEnd",
+    "props": {
+      "text": "Save the tool shortlist",
+      "handle": "@thewebguy"
+    }
+  },
+  "voice": {
+    "provider": "gemini",
+    "model": "gemini-3.8-flash-tts",
+    "voiceId": "env:GEMINI_VOICE_ID",
+    "energy": "upbeat"
+  }
+}

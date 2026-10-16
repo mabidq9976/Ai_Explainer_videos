@@ -166,5 +166,37 @@
     "props": {
       "posts": "[{sub: 'r/smallbusiness', title, age?: '5h', flair?, at?: '<spoken word>'}] (max 4)"
     }
+  },
+  "ToolStack": {
+    "type": "component",
+    "use": "App cards for tools / plans / options with real logo tiles, each arriving on its word; mark one picked (check), skipped (greys + strike) or added (+ ADD), optional stamp over the stack",
+    "props": {
+      "title": "string? (small caps label above)",
+      "items": "[{name, sub?, icon?: 'assets/manual/logo-x.png' | 'logo:semrush' | 'line:search', tag?, at?: word, mark?: 'check' | 'skip' | 'plus', markAt?: word}]",
+      "stamp": "string? e.g. 'LATER'",
+      "stampAt": "word?",
+      "still": "boolean? (cards already in place: a follow-up beat on the same stack)",
+      "look": "brutal | soft | line | chat ?"
+    }
+  },
+  "DashboardBloat": {
+    "type": "component",
+    "use": "Hook graphic for 'more tools/features isn't better': a tidy analytics dashboard bloats (bigger, more widgets, alert dots) then collapses into one clean picked card",
+    "props": {
+      "growAt": "word? - dashboard bloats",
+      "pickAt": "word? - clutter collapses into the picked card",
+      "pickLabel": "string? (default 'The right one')",
+      "pickSub": "string?",
+      "pickIcon": "icon spec?"
+    }
+  },
+  "Streak": {
+    "type": "component",
+    "use": "Consistency / habit: a row of weeks or days ticking orange one after another",
+    "props": {
+      "labels": "string[]? (default Wk 1..Wk 4)",
+      "label": "string? (above the row)",
+      "at": "word? - ticking starts"
+    }
   }
 }

@@ -15,6 +15,9 @@ import { DeviceFrame } from "./DeviceFrame";
 import { ProfileList } from "./ProfileList";
 import { Waveform } from "./Waveform";
 import { RedditFeed } from "./RedditFeed";
+import { ToolStack } from "./ToolStack";
+import { DashboardBloat } from "./DashboardBloat";
+import { Streak } from "./Streak";
 import { SearchBar3D } from "../three/SearchBar3D";
 import { NodeNetwork3D } from "../three/NodeNetwork3D";
 
@@ -36,6 +39,9 @@ export const registry: Record<string, React.FC<any>> = {
   ProfileList,
   Waveform,
   RedditFeed,
+  ToolStack,
+  DashboardBloat,
+  Streak,
   SearchBar3D,
   NodeNetwork3D,
 };
