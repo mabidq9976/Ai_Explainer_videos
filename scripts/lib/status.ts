@@ -39,6 +39,11 @@ export async function track<T>(slug: string, step: Step, fn: () => Promise<T>): 
     setStep(slug, step, "done", { ms: Date.now() - t0 });
     return out;
   } catch (e: any) {
+    // Waiting on Claude (e.g. a Magnific voice) isn't a failure — show it as pending with the reason.
+    if (e?.constructor?.name === "NeedsClaude") {
+      setStep(slug, step, "idle", { ms: Date.now() - t0, note: String(e.message).slice(0, 400) });
+      throw e;
+    }
     setStep(slug, step, "failed", { ms: Date.now() - t0, note: String(e?.message ?? e).slice(0, 400) });
     throw e;
   }

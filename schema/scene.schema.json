@@ -106,7 +106,8 @@
           "enum": [
             "gemini",
             "elevenlabs",
-            "local"
+            "local",
+            "magnific"
           ]
         },
         "model": {

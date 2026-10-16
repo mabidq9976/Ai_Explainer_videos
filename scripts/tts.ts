@@ -120,8 +120,39 @@ async function writeWavParts(parts: Buffer[], outWav: string) {
   files.forEach((f) => fs.rmSync(f, { force: true }));
 }
 
+// ---------- Magnific (through the Magnific MCP) ----------
+// Scripts can't call MCP tools, so this provider is two-step: the voice step writes audio/tts-request.json
+// (exact text + voice + model), Claude generates it with the Magnific MCP (`/voice <slug>`), then
+// `npm run tts <slug> -- --import "<url>"` converts and caches it. Cached by hash, so re-renders are free.
+export class NeedsClaude extends Error {}
+
+/** ElevenLabs v3 notation: one short [tag] per block from its style; inline tags converted. */
+export function magnificText(blocks: Block[], model: string) {
+  const conv = (t: string) =>
+    t.replace(/<short pause>/gi, "...").replace(/<breath>/gi, model.startsWith("gemini") ? "[pause 0.3s]" : "[exhales]").replace(/<laugh>/gi, "[laughs]").replace(/\s+/g, " ").trim();
+  return blocks
+    .map((b) => {
+      const first = (b.style ?? "").split(",")[0].trim().split(/\s+/).filter(Boolean);
+      const tag = (first.length <= 3 ? first : first.slice(0, 1)).join(" ").toLowerCase(); // "matter of fact" stays whole
+      return `${tag ? `[${tag}] ` : ""}${conv(b.text)}`;
+    })
+    .join("\n\n");
+}
+
+function magnific(model: string, voice: string): Provider {
+  return {
+    name: "magnific",
+    model,
+    voice,
+    async synth() {
+      throw new NeedsClaude("needs-claude");
+    },
+  };
+}
+
 export function pickProvider(scene: SceneFile): Provider {
   const name = env("TTS_PROVIDER") || scene.voice.provider || "gemini";
+  if (name === "magnific") return magnific(env("MAGNIFIC_TTS_MODEL", "eleven_v3"), env("MAGNIFIC_VOICE_ID", "1213"));
   if (name === "local") return local(env("LOCAL_VOICE", "Daniel"));
   if (name === "elevenlabs") return elevenlabs(env("ELEVENLABS_VOICE_ID"));
   const model = env("GEMINI_TTS_MODEL") || scene.voice.model || "gemini-3.8-flash-tts";
@@ -129,7 +160,7 @@ export function pickProvider(scene: SceneFile): Provider {
   return gemini(model, voice);
 }
 
-export async function tts(slug: string, opts: { force?: boolean } = {}) {
+export async function tts(slug: string, opts: { force?: boolean; importUrl?: string } = {}) {
   const scene = readJson<SceneFile>(ep(slug, "scene.json"));
   const provider = pickProvider(scene);
   const blocks: Block[] = spokenBlocks(scene).map((b) => ({ id: b.id, text: applyPronunciations(b.line), style: b.style }));
@@ -143,8 +174,34 @@ export async function tts(slug: string, opts: { force?: boolean } = {}) {
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.mkdirSync(path.dirname(cached), { recursive: true });
 
-  if (fs.existsSync(cached) && !opts.force) {
+  const reqFile = ep(slug, "audio", "tts-request.json");
+  if (opts.importUrl) {
+    // Import a voice Claude generated through the Magnific MCP.
+    const req = fs.existsSync(reqFile) ? readJson(reqFile) : null;
+    if (!req || req.hash !== hash) throw new Error("The script changed since the voice was requested — run the voice step again so the request matches.");
+    const res = await fetch(opts.importUrl);
+    if (!res.ok) throw new Error(`download failed: HTTP ${res.status}`);
+    const tmp = path.join(CACHE, "tmp", `${hash}.src`);
+    fs.mkdirSync(path.dirname(tmp), { recursive: true });
+    fs.writeFileSync(tmp, Buffer.from(await res.arrayBuffer()));
+    await run("ffmpeg", ["-y", "-loglevel", "error", "-i", tmp, "-ar", "24000", "-ac", "1", "-sample_fmt", "s16", cached], { quiet: true });
+    fs.rmSync(tmp, { force: true });
+    log(`Imported Magnific voice (${hash})`);
+  } else if (fs.existsSync(cached) && !opts.force) {
     log(`TTS cache hit (${hash}) — no API call`);
+  } else if (provider.name === "magnific") {
+    const text = magnificText(blocks, provider.model);
+    writeJson(reqFile, {
+      hash,
+      provider: "magnific",
+      model: provider.model,
+      voiceId: Number(provider.voice),
+      text,
+      chars: text.length,
+      ...(provider.model.startsWith("gemini") ? { systemInstruction: "Friendly, confident explainer narrator for short social videos: clear, warm, a little playful, natural pace." } : {}),
+      importWith: `npm run tts ${slug} -- --import "<url>"`,
+    });
+    throw new NeedsClaude(`Voice needed: audio/tts-request.json is ready. Ask Claude to run /voice ${slug} (Magnific MCP), or /produce ${slug}.`);
   } else {
     log(`TTS: ${provider.name} · ${provider.model} · voice ${provider.voice} · ${blocks.length} blocks`);
     await provider.synth(blocks, cached);
@@ -165,8 +222,10 @@ export async function tts(slug: string, opts: { force?: boolean } = {}) {
 
 if (isMain(import.meta.url)) {
   const slug = requireSlug();
-  await track(slug, "tts", () => tts(slug, { force: process.argv.includes("--force") })).catch((e) => {
+  const imp = process.argv.indexOf("--import");
+  const importUrl = imp >= 0 ? process.argv[imp + 1] : process.argv.find((a) => a.startsWith("--import="))?.slice(9);
+  await track(slug, "tts", () => tts(slug, { force: process.argv.includes("--force"), importUrl })).catch((e) => {
     console.error(e.message);
-    process.exit(1);
+    process.exit(e instanceof NeedsClaude ? 3 : 1);
   });
 }

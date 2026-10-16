@@ -35,8 +35,9 @@ export function healthCheck(): Check[] {
   const key = (k: string, level: Check["level"], why: string) =>
     add({ group: "Keys (.env)", name: k, ok: !!env(k), level, detail: env(k) ? "set" : why, fix: "Add it on the Setup page or in .env" });
   const provider = env("TTS_PROVIDER", "gemini");
-  key("GEMINI_API_KEY", provider === "gemini" ? "required" : "recommended", "empty — needed for Gemini TTS");
-  add({ group: "Keys (.env)", name: "GEMINI_VOICE_ID", ok: !!env("GEMINI_VOICE_ID"), level: "required", detail: env("GEMINI_VOICE_ID") ? (env("GEMINI_VOICE_ID").startsWith("voice_") ? "replicated voice" : `prebuilt voice: ${env("GEMINI_VOICE_ID")}`) : "empty" });
+  key("GEMINI_API_KEY", provider === "gemini" ? "required" : "optional", provider === "magnific" ? "not needed — voice comes from Magnific" : "empty — needed for Gemini TTS");
+  if (provider === "magnific") add({ group: "Keys (.env)", name: "Magnific voice", ok: true, level: "optional", detail: `voice ${env("MAGNIFIC_VOICE_ID", "1213")} · ${env("MAGNIFIC_TTS_MODEL", "eleven_v3")} · made by Claude via the Magnific MCP (/voice)` });
+  if (provider === "gemini") add({ group: "Keys (.env)", name: "GEMINI_VOICE_ID", ok: !!env("GEMINI_VOICE_ID"), level: "required", detail: env("GEMINI_VOICE_ID") ? (env("GEMINI_VOICE_ID").startsWith("voice_") ? "replicated voice" : `prebuilt voice: ${env("GEMINI_VOICE_ID")}`) : "empty" });
   add({ group: "Keys (.env)", name: "TTS_PROVIDER", ok: true, level: "optional", detail: provider });
   key("PEXELS_API_KEY", "recommended", "empty — stock scenes will use fallbacks");
   key("PIXABAY_API_KEY", "recommended", "empty");

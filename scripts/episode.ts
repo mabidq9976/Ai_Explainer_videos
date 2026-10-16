@@ -10,7 +10,7 @@
 import { ep, requireSlug, readJson } from "./lib/paths.ts";
 import { track, type Step } from "./lib/status.ts";
 import { validateScene } from "./validate.ts";
-import { tts } from "./tts.ts";
+import { tts, NeedsClaude } from "./tts.ts";
 import { timing } from "./timing.ts";
 import { lipsync } from "./lipsync.ts";
 import { fetchAssets } from "./fetch-assets.ts";
@@ -49,6 +49,10 @@ for (const [step, fn] of chain) {
   try {
     await track(slug, step, fn);
   } catch (e: any) {
+    if (e instanceof NeedsClaude) {
+      console.log(`\n⏸ ${e.message}\n  Then continue with: npm run episode ${slug} -- --from=timing`);
+      process.exit(3);
+    }
     console.error(`\n✗ ${step} failed: ${e.message}`);
     process.exit(1);
   }

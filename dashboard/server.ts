@@ -20,7 +20,7 @@ const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const TEXT_FILES = ["brief.md", "hooks.md", "blog.md", "thread.md", "captions.md", "component-requests.md", "schema.json"];
 const ENV_KEYS = {
   secret: ["GEMINI_API_KEY", "ELEVENLABS_API_KEY", "PEXELS_API_KEY", "PIXABAY_API_KEY", "MAGNIFIC_API_KEY"],
-  plain: ["GEMINI_TTS_MODEL", "GEMINI_VOICE_ID", "TTS_PROVIDER", "ELEVENLABS_VOICE_ID", "MAGNIFIC_API_BASE", "LOCAL_VOICE"],
+  plain: ["TTS_PROVIDER", "MAGNIFIC_VOICE_ID", "MAGNIFIC_TTS_MODEL", "GEMINI_TTS_MODEL", "GEMINI_VOICE_ID", "ELEVENLABS_VOICE_ID", "MAGNIFIC_API_BASE", "LOCAL_VOICE"],
 };
 
 // ---------------------------------------------------------------- helpers
@@ -235,7 +235,12 @@ const tsx = (script: string, ...args: string[]) => [r("node_modules", ".bin", "t
 
 const JOB_KINDS: Record<string, { title: string; needsSlug?: boolean; cmd: (slug: string, opts: any) => readonly [string, readonly string[]] }> = {
   validate: { title: "Validate", needsSlug: true, cmd: (s) => tsx("validate.ts", s) },
-  tts: { title: "Voice (TTS)", needsSlug: true, cmd: (s, o) => tsx("tts.ts", s, ...(o.force ? ["--force"] : [])) },
+  // Magnific voices are made by Claude through the MCP, so the Voice button runs /voice in that case.
+  tts: {
+    title: "Voice (TTS)", needsSlug: true, cmd: (s, o) => env("TTS_PROVIDER") === "magnific"
+      ? ["claude", ["-p", `/voice ${s}`, "--output-format", "stream-json", "--verbose", "--permission-mode", "acceptEdits", "--allowedTools", "Read Bash(npm run tts *) mcp__magnific"]]
+      : tsx("tts.ts", s, ...(o.force ? ["--force"] : [])),
+  },
   timing: { title: "Word timing", needsSlug: true, cmd: (s) => tsx("timing.ts", s) },
   lipsync: { title: "Lip sync", needsSlug: true, cmd: (s) => tsx("lipsync.ts", s) },
   assets: { title: "Fetch assets", needsSlug: true, cmd: (s) => tsx("fetch-assets.ts", s) },
