@@ -1,0 +1,46 @@
+{
+  "phases": [
+    {
+      "id": "core", "title": "Week 1 · Core", "gate": "Avatar speaks a 10-second line in a render",
+      "items": [
+        { "id": "repo", "text": "Create the repo, install Remotion, render a blank 1080×1920 test video", "auto": "testRender" },
+        { "id": "env", "text": "Add .env with Gemini TTS, Pexels, Pixabay and Magnific keys", "auto": "keys" },
+        { "id": "avatar", "text": "Draw the layered avatar SVG with all nine mouths and the arm poses", "auto": "avatar" },
+        { "id": "voice", "text": "Recording session + replicated voice in Google AI Studio (voice_… ID in .env)", "auto": "voiceId" },
+        { "id": "tts", "text": "tts.ts with Gemini 3.8 Flash TTS, per-scene styles, caching and pronunciations", "auto": "built" },
+        { "id": "rhubarb", "text": "Install Rhubarb, build lipsync.ts, render the avatar speaking a 10-second line", "auto": "rhubarb" }
+      ]
+    },
+    {
+      "id": "pipeline", "title": "Week 2 · Pipeline", "gate": "Five practice briefs pass validation via /draft",
+      "items": [
+        { "id": "schema", "text": "scene.schema.json and validate.ts", "auto": "built" },
+        { "id": "episode-tsx", "text": "Episode.tsx with avatar layer, captions and the three layouts", "auto": "built" },
+        { "id": "components", "text": "First six components (rest during the pilot)", "auto": "built" },
+        { "id": "assets", "text": "fetch-assets.ts with library cache and manifest", "auto": "built" },
+        { "id": "episode-ts", "text": "episode.ts and npm run episode", "auto": "built" },
+        { "id": "skills", "text": "CLAUDE.md, brand files and all eleven skills", "auto": "built" },
+        { "id": "brand-voice", "text": "Personalise brand/voice.md (tone, banned phrases, your opinions)" },
+        { "id": "evals", "text": "Test hook-writer and script-writer descriptions with skill-creator evals" },
+        { "id": "practice", "text": "/draft on five practice briefs until all five pass validation", "auto": "practice" }
+      ]
+    },
+    {
+      "id": "pilot", "title": "Pilot · first five videos", "gate": "Under 30 minutes per video",
+      "highlight": true,
+      "items": [
+        { "id": "published5", "text": "Publish five videos (rotate the five formats)", "auto": "published5" },
+        { "id": "reserve", "text": "Bank two finished episodes in reserve for busy weeks", "auto": "reserve" },
+        { "id": "minutes", "text": "Log minutes per video; fix the slowest step after each" }
+      ]
+    }
+  ],
+  "blocks": [
+    { "from": 1, "to": 5, "phase": "Pilot", "changes": "Nothing — rotate the five formats for a baseline", "held": "System settings" },
+    { "from": 6, "to": 10, "phase": "Test", "changes": "Hook pattern: bold claim, question, or number", "held": "Format, length, layout" },
+    { "from": 11, "to": 15, "phase": "Test", "changes": "Avatar layout: mostly full vs mostly corner", "held": "Hook pattern, length" },
+    { "from": 16, "to": 20, "phase": "Test", "changes": "Length: 30, 45 or 60 seconds", "held": "Hook pattern, layout" },
+    { "from": 21, "to": 25, "phase": "Test", "changes": "Pillar: SEO vs GEO vs AIO", "held": "Winning hook, layout, length" },
+    { "from": 26, "to": 999, "phase": "Scale", "changes": "Run the winners; test one blog GEO tactic per block", "held": "Video settings" }
+  ]
+}

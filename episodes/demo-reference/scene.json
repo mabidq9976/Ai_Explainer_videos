@@ -1,0 +1,92 @@
+{
+  "slug": "demo-reference",
+  "title": "How to get cited by AI answers",
+  "pillar": "GEO",
+  "format": "tutorial",
+  "length": 25,
+  "look": "reference",
+  "hook": { "text": "Here's how to get ChatGPT to quote your website.", "pattern": "question" },
+  "scenes": [
+    {
+      "id": "s1",
+      "line": "Here's how to get ChatGPT to quote your website.",
+      "style": "curious, a little conspiratorial",
+      "avatar": { "layout": "corner", "position": "left", "gesture": "point-right", "expression": "raised",
+        "beats": [{ "at": "website", "gesture": "open-palm", "expression": "neutral" }] },
+      "visual": { "type": "board", "elements": [
+        { "id": "img", "kind": "image", "query": "laptop website on screen", "x": 50, "y": 22, "w": 62, "frame": "plain" },
+        { "id": "t", "kind": "text", "text": "How to get quoted by AI", "x": 50, "y": 37, "size": "md", "weight": 600, "at": "quote" }
+      ] }
+    },
+    {
+      "id": "s2",
+      "line": "Step one, answer first.",
+      "style": "clear, steady",
+      "avatar": { "layout": "corner", "position": "center", "gesture": "count", "expression": "neutral" },
+      "visual": { "type": "board", "elements": [
+        { "id": "h1", "kind": "text", "text": "1.) Answer first", "x": 50, "y": 10, "size": "md" },
+        { "id": "a1", "kind": "arrow", "from": "h1", "to": "pic", "at": "answer" },
+        { "id": "pic", "kind": "icon", "icon": "emoji:💬", "x": 50, "y": 30, "w": 22, "at": "answer" }
+      ] }
+    },
+    {
+      "id": "s3",
+      "line": "Put the plain answer in your first two sentences.",
+      "style": "calm, explaining to a friend",
+      "avatar": { "layout": "corner", "position": "right", "gesture": "open-palm", "expression": "neutral",
+        "beats": [{ "at": "two", "gesture": "count" }] },
+      "visual": { "type": "board", "elements": [
+        { "id": "doc", "kind": "icon", "icon": "line:doc", "x": 36, "y": 26, "w": 22, "label": "Your page" },
+        { "id": "a2", "kind": "arrow", "from": "doc", "to": "ans", "style": "curve", "at": "answer" },
+        { "id": "ans", "kind": "text", "text": "Answer in\nsentence 1–2", "x": 70, "y": 44, "size": "md", "weight": 600, "at": "answer" },
+        { "id": "free", "kind": "badge", "text": "EASY", "on": "doc", "at": "sentences" }
+      ] }
+    },
+    {
+      "id": "s4",
+      "line": "Step two, add structure.",
+      "style": "brisk, upbeat",
+      "avatar": { "layout": "corner", "position": "left", "gesture": "count", "expression": "neutral" },
+      "visual": { "type": "board", "elements": [
+        { "id": "h2", "kind": "text", "text": "2.) Structure", "x": 50, "y": 10, "size": "md" }
+      ] }
+    },
+    {
+      "id": "s5",
+      "line": "Schema markup, plus headings that are real questions.",
+      "style": "matter of fact",
+      "avatar": { "layout": "corner", "position": "left", "gesture": "point-right", "expression": "neutral",
+        "beats": [{ "at": "headings", "gesture": "open-palm", "position": "center" }] },
+      "visual": { "type": "board", "continue": true, "elements": [
+        { "id": "sch", "kind": "icon", "icon": "line:doc", "x": 30, "y": 30, "w": 18, "label": "Schema", "at": "Schema" },
+        { "id": "plus", "kind": "text", "text": "+", "x": 50, "y": 29, "size": "xl", "at": "plus" },
+        { "id": "q", "kind": "icon", "icon": "line:search", "x": 70, "y": 30, "w": 18, "label": "Question\nheadings", "at": "headings" }
+      ] }
+    },
+    {
+      "id": "s6",
+      "line": "Step three, get mentioned where AI already looks.",
+      "style": "building, a little excited",
+      "avatar": { "layout": "corner", "position": "right", "gesture": "count", "expression": "raised" },
+      "visual": { "type": "board", "elements": [
+        { "id": "h3", "kind": "text", "text": "3.) Get mentioned", "x": 50, "y": 10, "size": "md" },
+        { "id": "root", "kind": "icon", "icon": "line:robot", "x": 50, "y": 22, "w": 14, "at": "AI" },
+        { "id": "r", "kind": "icon", "icon": "logo:reddit", "x": 25, "y": 44, "w": 16, "label": "Reddit", "at": "looks" },
+        { "id": "y", "kind": "icon", "icon": "logo:youtube", "x": 50, "y": 46, "w": 16, "label": "YouTube", "at": "looks" },
+        { "id": "w", "kind": "icon", "icon": "logo:wikipedia", "x": 75, "y": 44, "w": 16, "label": "Wikipedia", "at": "looks" },
+        { "id": "a3", "kind": "arrow", "from": "root", "to": "r", "at": "looks" },
+        { "id": "a4", "kind": "arrow", "from": "root", "to": "y", "at": "looks" },
+        { "id": "a5", "kind": "arrow", "from": "root", "to": "w", "at": "looks" }
+      ] }
+    },
+    {
+      "id": "s7",
+      "line": "That's it. Clear beats clever.",
+      "style": "warm, satisfied",
+      "avatar": { "layout": "full", "gesture": "thumbs-up", "expression": "raised" },
+      "visual": { "type": "component", "name": "BigQuestion", "props": { "text": "Clear beats clever." } }
+    }
+  ],
+  "cta": { "line": "Comment GEO and I'll send you the checklist.", "visual": "CTAEnd", "props": { "text": "Comment “GEO” for the checklist", "handle": "@thewebguy" } },
+  "voice": { "provider": "gemini", "model": "gemini-3.8-flash-tts", "voiceId": "env:GEMINI_VOICE_ID" }
+}

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+  <!-- PLACEHOLDER narrator. Replace with your own avatar/avatar.svg using the same group ids (see avatar/README.md). -->
+  <g id="body">
+    <path d="M330 1060 C318 860 330 700 400 640 L680 640 C750 700 762 860 750 1060" fill="#fff" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M470 1060 L470 960 M610 1060 L610 960" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="arm-left">
+    <g id="arm-left-rest"><path d="M392 700 Q350 820 360 930" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M360 930 l-14 22 M360 930 l12 22" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="arm-left-open-palm"><path d="M392 700 Q290 760 250 650" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M250 650 l-30 -30 M250 650 l-8 -42 M250 650 l18 -36" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="arm-left-count"><path d="M392 700 Q300 740 300 600" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M300 600 l-12 -44 M300 600 l6 -46 M300 600 l22 -40" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+  </g>
+  <g id="arm-right">
+    <g id="arm-right-rest"><path d="M688 700 Q730 820 720 930" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M720 930 l14 22 M720 930 l-12 22" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="arm-right-point-right"><path d="M688 700 Q820 720 930 650" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M930 650 l58 -26 M930 650 l20 18" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="arm-right-open-palm"><path d="M688 700 Q790 760 830 650" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M830 650 l30 -30 M830 650 l8 -42 M830 650 l-18 -36" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="arm-right-count"><path d="M688 700 Q780 740 780 600" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M780 600 l12 -44 M780 600 l-6 -46 M780 600 l-22 -40" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="arm-right-thumbs-up"><path d="M688 700 Q790 770 800 640" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M800 640 l0 -52" fill="none" stroke="#111" stroke-width="20" stroke-linecap="round"/></g>
+    <g id="arm-right-wave"><path d="M688 700 Q850 690 870 470" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M870 470 l30 -36 M870 470 l6 -46 M870 470 l-22 -38" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+  </g>
+  <g id="head">
+    <path d="M400 690 C330 560 360 300 540 290 C720 300 750 560 680 690 Z" fill="#fff" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <g id="eyes-open"><circle cx="490" cy="470" r="15" fill="#111"/><circle cx="600" cy="470" r="15" fill="#111"/></g>
+    <g id="eyes-closed"><path d="M470 472 Q490 486 510 472 M580 472 Q600 486 620 472" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="brows-neutral"><path d="M466 420 L512 420 M578 420 L624 420" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="brows-raised"><path d="M466 404 Q489 386 512 404 M578 404 Q601 386 624 404" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="brows-frown"><path d="M466 410 L512 428 M578 428 L624 410" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="mouth-A"><path d="M500 560 L580 560" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="mouth-B"><rect x="500" y="545" width="80" height="30" rx="12" fill="#fff" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M504 560 L576 560" fill="none" stroke="#111" stroke-width="6"/></g>
+    <g id="mouth-C"><ellipse cx="540" cy="562" rx="38" ry="24" fill="#111" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="mouth-D"><ellipse cx="540" cy="566" rx="44" ry="38" fill="#111" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="540" cy="586" rx="22" ry="11" fill="#FF7A59"/></g>
+    <g id="mouth-E"><ellipse cx="540" cy="562" rx="26" ry="26" fill="#111" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="mouth-F"><ellipse cx="540" cy="562" rx="14" ry="16" fill="#fff" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="mouth-G"><path d="M500 568 Q540 584 580 568" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><rect x="516" y="546" width="48" height="16" rx="4" fill="#fff" stroke="#111" stroke-width="7"/></g>
+    <g id="mouth-H"><ellipse cx="540" cy="564" rx="36" ry="26" fill="#111" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="540" cy="552" rx="18" ry="9" fill="#FF7A59"/></g>
+    <g id="mouth-X"><path d="M505 556 Q540 578 575 556" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+  </g>
+</svg>

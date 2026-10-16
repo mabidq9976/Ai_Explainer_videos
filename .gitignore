@@ -1,0 +1,14 @@
+node_modules/
+.env
+tools/*
+!tools/.gitkeep
+library/*
+!library/.gitkeep
+episodes/*/out/
+episodes/*/audio/
+episodes/*/assets/
+episodes/*/_render/
+.cache/
+.DS_Store
+out/
+dashboard/roadmap-state.json.bak

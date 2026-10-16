@@ -1,0 +1,20 @@
+{
+  "music/lofi-curious": {
+    "file": "music/lofi-curious.mp3",
+    "source": "magnific",
+    "credit": "Magnific · Google Lyria 3 · mild curious lo-fi bed (generated)",
+    "savedAt": "2026-10-16T06:35:41.092Z"
+  },
+  "sfx/pop": {
+    "file": "sfx/pop.mp3",
+    "source": "magnific",
+    "credit": "Magnific · ElevenLabs SFX · soft UI pop (generated)",
+    "savedAt": "2026-10-16T06:38:55.958Z"
+  },
+  "sfx/whoosh": {
+    "file": "sfx/whoosh.mp3",
+    "source": "magnific",
+    "credit": "Magnific · ElevenLabs SFX · airy whoosh (generated)",
+    "savedAt": "2026-10-16T06:35:42.327Z"
+  }
+}

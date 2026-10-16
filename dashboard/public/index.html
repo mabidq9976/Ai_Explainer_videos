@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Director Studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111'/%3E%3Ccircle cx='16' cy='14' r='7' fill='none' stroke='%23fff' stroke-width='2.5'/%3E%3Cpath d='M9 27c1.5-4 4-5 7-5s5.5 1 7 5' fill='none' stroke='%23FF5A1F' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="side">
+      <div class="brand"><div class="brand-mark">D</div><div>AI Director Studio<small>Thewebguy · local</small></div></div>
+      <nav class="nav" id="nav"></nav>
+      <div class="side-foot" id="side-foot"></div>
+    </aside>
+    <main class="main" id="view"><div class="empty">Loading…</div></main>
+  </div>
+
+  <div class="console" id="console">
+    <div class="console-head">
+      <span class="dot" id="console-dot"></span>
+      <span class="grow" id="console-title">Job</span>
+      <span id="console-link"></span>
+      <button id="console-stop">Stop</button>
+      <button id="console-min">–</button>
+      <button id="console-close">✕</button>
+    </div>
+    <div class="console-body" id="console-body"></div>
+  </div>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

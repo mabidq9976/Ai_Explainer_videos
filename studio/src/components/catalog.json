@@ -1,0 +1,151 @@
+{
+  "HookTitle": {
+    "type": "component",
+    "use": "Kinetic text for the first 2 seconds",
+    "props": {
+      "text": "string",
+      "emphasis": "string[]?"
+    }
+  },
+  "SerpVsAiAnswer": {
+    "type": "component",
+    "use": "Split screen: blue links versus an AI answer card",
+    "props": {
+      "query": "string",
+      "answer": "string",
+      "links": "string[]?"
+    }
+  },
+  "CitationCards": {
+    "type": "component",
+    "use": "Source cards stacking, one highlighted as cited",
+    "props": {
+      "sources": "string[]",
+      "cited": "number (index)"
+    }
+  },
+  "StatCounter": {
+    "type": "component",
+    "use": "A number counting up with its source",
+    "props": {
+      "value": "number",
+      "label": "string",
+      "source": "string?",
+      "prefix": "string?",
+      "suffix": "string?"
+    }
+  },
+  "KeywordCloud": {
+    "type": "component",
+    "use": "Floating terms, one pulsing; the default fallback",
+    "props": {
+      "words": "string[]",
+      "focus": "string?"
+    }
+  },
+  "Checklist": {
+    "type": "component",
+    "use": "Items ticking in one by one",
+    "props": {
+      "items": "string[]",
+      "title": "string?"
+    }
+  },
+  "QuoteCard": {
+    "type": "component",
+    "use": "A quote with attribution",
+    "props": {
+      "text": "string",
+      "source": "string"
+    }
+  },
+  "BrowserFrame": {
+    "type": "component",
+    "use": "Footage or a screenshot inside a browser window",
+    "props": {
+      "src": "string? (assets/ path)",
+      "url": "string",
+      "title": "string?"
+    }
+  },
+  "BigQuestion": {
+    "type": "component",
+    "use": "Podus-style: one big plain question in black type on paper",
+    "props": {
+      "text": "string"
+    }
+  },
+  "Diagram": {
+    "type": "component",
+    "use": "THE default explainer graphic (reference style): icons, logos, emoji stickers or fetched photos with short labels, joined by arrows/curves, '+' signs or a brace, building in one by one",
+    "props": {
+      "layout": "row | plus | column | tree | grid",
+      "root": "{icon,label}? (tree only)",
+      "nodes": "[{icon?: 'logo:youtube' | 'emoji:🎓' | 'line:users' | 'text:+10M', query?: 'photo search', label?, sub?, at?: seconds}]",
+      "connector": "arrow | curve | dotted | none",
+      "brace": "string | true (brace under a row, optional caption)",
+      "title": "string?"
+    }
+  },
+  "Toggle": {
+    "type": "component",
+    "use": "A settings switch flipping on, e.g. 'Monetization', optional icon above",
+    "props": {
+      "label": "string",
+      "icon": "icon spec?",
+      "on": "boolean?"
+    }
+  },
+  "DeviceFrame": {
+    "type": "component",
+    "use": "Phone or laptop showing a clip/screenshot, optional sticker + big text beside it",
+    "props": {
+      "device": "phone | laptop",
+      "query": "string? (stock search for the screen)",
+      "kind": "video | photo",
+      "src": "assets/... ?",
+      "label": "string?",
+      "side": "icon spec?",
+      "sideLabel": "string? e.g. '+10M\\nViews'"
+    }
+  },
+  "ProfileList": {
+    "type": "component",
+    "use": "Header icon + cards appearing one by one (channels, accounts, tools, niches)",
+    "props": {
+      "header": "icon spec?",
+      "items": "[{icon?, query?, title, sub?}]"
+    }
+  },
+  "CTAEnd": {
+    "type": "component",
+    "use": "Follow card with the avatar waving (use as cta.visual)",
+    "props": {
+      "text": "string?",
+      "handle": "string?"
+    }
+  },
+  "SearchBar3D": {
+    "type": "three",
+    "use": "A 3D search box typing a query",
+    "props": {
+      "query": "string"
+    }
+  },
+  "NodeNetwork3D": {
+    "type": "three",
+    "use": "Entities linking into a knowledge graph",
+    "props": {
+      "labels": "string[]"
+    }
+  },
+  "Waveform": {
+    "type": "component",
+    "use": "Gradient audio bars pulsing — voice, podcast, sound, dialogue",
+    "props": {
+      "bars": "number?",
+      "from": "color?",
+      "to": "color?"
+    }
+  }
+}

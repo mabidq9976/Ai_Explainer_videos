@@ -1,0 +1,570 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "scene.schema.json",
+  "title": "AI Director Studio scene.json",
+  "type": "object",
+  "required": [
+    "slug",
+    "pillar",
+    "format",
+    "hook",
+    "scenes",
+    "cta",
+    "voice"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "pillar": {
+      "enum": [
+        "SEO",
+        "GEO",
+        "AIO"
+      ]
+    },
+    "format": {
+      "enum": [
+        "explainer",
+        "myth-bust",
+        "tutorial",
+        "news-take",
+        "comparison"
+      ]
+    },
+    "length": {
+      "type": "number",
+      "minimum": 15,
+      "maximum": 90,
+      "description": "Target seconds"
+    },
+    "hook": {
+      "type": "object",
+      "required": [
+        "text",
+        "pattern"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "pattern": {
+          "enum": [
+            "bold-claim",
+            "myth-bust",
+            "number",
+            "question",
+            "before-after",
+            "warning"
+          ]
+        }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "$ref": "#/definitions/scene"
+      }
+    },
+    "cta": {
+      "type": "object",
+      "required": [
+        "line",
+        "visual"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "line": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string"
+        },
+        "visual": {
+          "type": "string"
+        },
+        "props": {
+          "type": "object"
+        }
+      }
+    },
+    "voice": {
+      "type": "object",
+      "required": [
+        "provider"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "enum": [
+            "gemini",
+            "elevenlabs",
+            "local"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "voiceId": {
+          "type": "string"
+        }
+      }
+    },
+    "captions": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "enum": [
+            "off",
+            "full",
+            "keywords"
+          ]
+        }
+      ],
+      "description": "off (default) · full = running captions · keywords = key words pop up big as they're spoken"
+    },
+    "look": {
+      "enum": [
+        "reference",
+        "mixed"
+      ],
+      "description": "reference = exactly the Podus-style look (boards, photos, logos, arrows); mixed = adds 3D, custom motion graphics, stock video"
+    },
+    "sound": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Music bed + UI sound effects",
+      "properties": {
+        "music": {
+          "type": "boolean"
+        },
+        "musicVolume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "sfx": {
+          "type": "boolean"
+        },
+        "sfxVolume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  },
+  "definitions": {
+    "scene": {
+      "type": "object",
+      "required": [
+        "id",
+        "line",
+        "style",
+        "avatar",
+        "visual"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^s[0-9]+$"
+        },
+        "line": {
+          "type": "string",
+          "minLength": 1
+        },
+        "emphasis": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "style": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "object",
+          "required": [
+            "layout"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "layout": {
+              "enum": [
+                "full",
+                "corner",
+                "hidden"
+              ]
+            },
+            "gesture": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$",
+              "description": "rest | point-right | open-palm | count | thumbs-up | wave, or any pose-<name> drawn in the avatar"
+            },
+            "expression": {
+              "enum": [
+                "neutral",
+                "raised",
+                "frown"
+              ]
+            },
+            "position": {
+              "enum": [
+                "left",
+                "center",
+                "right"
+              ]
+            },
+            "beats": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "at"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "at": {
+                    "$ref": "#/definitions/at"
+                  },
+                  "gesture": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]+$"
+                  },
+                  "expression": {
+                    "enum": [
+                      "neutral",
+                      "raised",
+                      "frown"
+                    ]
+                  },
+                  "position": {
+                    "enum": [
+                      "left",
+                      "center",
+                      "right"
+                    ]
+                  },
+                  "layout": {
+                    "enum": [
+                      "full",
+                      "corner",
+                      "hidden"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "visual": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "elements"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "board"
+                },
+                "continue": {
+                  "type": "boolean",
+                  "description": "keep the previous board's elements on screen"
+                },
+                "elements": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/element"
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "name"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "component"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "props": {
+                  "type": "object"
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "name"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "three"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "props": {
+                  "type": "object"
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "query",
+                "fallback"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "stock"
+                },
+                "query": {
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": [
+                    "video",
+                    "photo"
+                  ]
+                },
+                "frame": {
+                  "enum": [
+                    "card",
+                    "full",
+                    "cutout"
+                  ]
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Bold line shown under a framed card"
+                },
+                "fallback": {
+                  "type": "string"
+                },
+                "fallbackProps": {
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        },
+        "pop": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "keywords mode: words/phrases from the line that pop up (default: emphasis)"
+        }
+      }
+    },
+    "at": {
+      "oneOf": [
+        {
+          "type": "number",
+          "minimum": 0
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "description": "seconds from scene start, or a word/phrase from this scene's line"
+    },
+    "element": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_-]+$"
+        },
+        "kind": {
+          "enum": [
+            "text",
+            "image",
+            "icon",
+            "arrow",
+            "badge",
+            "component"
+          ]
+        },
+        "at": {
+          "$ref": "#/definitions/at"
+        },
+        "until": {
+          "$ref": "#/definitions/at"
+        },
+        "x": {
+          "type": "number",
+          "minimum": -10,
+          "maximum": 110
+        },
+        "y": {
+          "type": "number",
+          "minimum": -10,
+          "maximum": 110
+        },
+        "w": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "h": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "enter": {
+          "enum": [
+            "pop",
+            "fade",
+            "slide",
+            "type",
+            "draw",
+            "none"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "size": {
+          "enum": [
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
+        },
+        "weight": {
+          "type": "number"
+        },
+        "color": {
+          "type": "string"
+        },
+        "align": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "icon": {
+          "type": "string"
+        },
+        "query": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https?://"
+        },
+        "src": {
+          "type": "string"
+        },
+        "media": {
+          "enum": [
+            "photo",
+            "video"
+          ]
+        },
+        "frame": {
+          "enum": [
+            "plain",
+            "card",
+            "rounded",
+            "cutout",
+            "phone",
+            "laptop",
+            "circle"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "from": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ]
+        },
+        "to": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ]
+        },
+        "style": {
+          "enum": [
+            "straight",
+            "curve",
+            "dotted"
+          ]
+        },
+        "bend": {
+          "type": "number"
+        },
+        "on": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "props": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

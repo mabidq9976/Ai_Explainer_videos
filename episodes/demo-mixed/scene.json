@@ -1,0 +1,302 @@
+{
+  "slug": "demo-mixed",
+  "title": "How to get quoted by AI (mixed look)",
+  "pillar": "GEO",
+  "format": "tutorial",
+  "length": 30,
+  "look": "mixed",
+  "captions": "keywords",
+  "sound": {
+    "music": true,
+    "musicVolume": 0.14,
+    "sfx": true,
+    "sfxVolume": 0.22
+  },
+  "hook": {
+    "text": "Here's how to get ChatGPT to quote your website.",
+    "pattern": "question"
+  },
+  "scenes": [
+    {
+      "id": "s1",
+      "line": "Here's how to get ChatGPT to quote your website.",
+      "pop": [
+        "ChatGPT"
+      ],
+      "style": "curious, a little conspiratorial",
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "open-palm",
+        "expression": "raised",
+        "beats": [
+          {
+            "at": "quote",
+            "gesture": "point-right",
+            "expression": "neutral"
+          }
+        ]
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "photo",
+            "kind": "image",
+            "src": "assets/manual/s1.photo.jpg",
+            "x": 50,
+            "y": 23,
+            "w": 70,
+            "h": 22,
+            "frame": "rounded"
+          },
+          {
+            "id": "t",
+            "kind": "text",
+            "text": "How to get quoted by AI",
+            "x": 50,
+            "y": 40,
+            "size": "md",
+            "weight": 600,
+            "at": "quote"
+          },
+          {
+            "id": "new",
+            "kind": "badge",
+            "text": "2026",
+            "on": "photo",
+            "at": "website"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s2",
+      "line": "Step one, answer first.",
+      "style": "clear, steady",
+      "avatar": {
+        "layout": "corner",
+        "position": "center",
+        "gesture": "count",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "h1",
+            "kind": "text",
+            "text": "1.) Answer first",
+            "x": 50,
+            "y": 10,
+            "size": "md"
+          },
+          {
+            "id": "a1",
+            "kind": "arrow",
+            "from": "h1",
+            "to": "pic",
+            "at": "answer"
+          },
+          {
+            "id": "pic",
+            "kind": "icon",
+            "icon": "emoji:💬",
+            "x": 50,
+            "y": 30,
+            "w": 22,
+            "at": "answer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s3",
+      "line": "Put the plain answer in your first two sentences.",
+      "pop": [
+        "first two sentences"
+      ],
+      "style": "calm, explaining to a friend",
+      "avatar": {
+        "layout": "corner",
+        "position": "right",
+        "gesture": "open-palm",
+        "expression": "neutral",
+        "beats": [
+          {
+            "at": "two",
+            "gesture": "count"
+          }
+        ]
+      },
+      "visual": {
+        "type": "component",
+        "name": "SerpVsAiAnswer",
+        "props": {
+          "query": "how do ai engines pick sources",
+          "answer": "They quote pages that answer in the first two sentences."
+        }
+      }
+    },
+    {
+      "id": "s4",
+      "line": "Step two, add structure.",
+      "style": "brisk, upbeat",
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "count",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "h2",
+            "kind": "text",
+            "text": "2.) Structure",
+            "x": 50,
+            "y": 10,
+            "size": "md"
+          },
+          {
+            "id": "wave",
+            "kind": "component",
+            "name": "Waveform",
+            "x": 50,
+            "y": 28,
+            "w": 60,
+            "h": 9,
+            "at": "structure",
+            "props": {
+              "bars": 28
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "s5",
+      "line": "Schema markup, plus headings that are real questions.",
+      "style": "matter of fact",
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "point-right",
+        "expression": "neutral",
+        "beats": [
+          {
+            "at": "headings",
+            "gesture": "open-palm",
+            "position": "center"
+          }
+        ]
+      },
+      "visual": {
+        "type": "board",
+        "continue": true,
+        "elements": [
+          {
+            "id": "sch",
+            "kind": "icon",
+            "icon": "line:doc",
+            "x": 30,
+            "y": 46,
+            "w": 16,
+            "label": "Schema",
+            "at": "Schema"
+          },
+          {
+            "id": "plus",
+            "kind": "text",
+            "text": "+",
+            "x": 50,
+            "y": 45,
+            "size": "xl",
+            "at": "plus"
+          },
+          {
+            "id": "q",
+            "kind": "icon",
+            "icon": "line:search",
+            "x": 70,
+            "y": 46,
+            "w": 16,
+            "label": "Question\nheadings",
+            "at": "headings"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s6",
+      "line": "Step three, get mentioned where AI already looks.",
+      "pop": [
+        "AI already looks"
+      ],
+      "style": "building, a little excited",
+      "avatar": {
+        "layout": "corner",
+        "position": "right",
+        "gesture": "count",
+        "expression": "raised",
+        "beats": [
+          {
+            "at": "looks",
+            "gesture": "point-right",
+            "position": "left"
+          }
+        ]
+      },
+      "visual": {
+        "type": "three",
+        "name": "NodeNetwork3D",
+        "props": {
+          "labels": [
+            "Reddit",
+            "YouTube",
+            "Wikipedia",
+            "Forums",
+            "News"
+          ]
+        }
+      }
+    },
+    {
+      "id": "s7",
+      "line": "Answer, structure, mentions. Clear beats clever.",
+      "style": "warm, satisfied",
+      "avatar": {
+        "layout": "corner",
+        "position": "center",
+        "gesture": "thumbs-up",
+        "expression": "raised"
+      },
+      "visual": {
+        "type": "component",
+        "name": "Checklist",
+        "props": {
+          "title": "Clear beats clever",
+          "items": [
+            "Answer first",
+            "Add structure",
+            "Get mentioned"
+          ]
+        }
+      }
+    }
+  ],
+  "cta": {
+    "line": "Comment GEO and I'll send you the checklist.",
+    "visual": "CTAEnd",
+    "props": {
+      "text": "Comment “GEO” for the checklist",
+      "handle": "@thewebguy"
+    }
+  },
+  "voice": {
+    "provider": "gemini",
+    "model": "gemini-3.8-flash-tts",
+    "voiceId": "env:GEMINI_VOICE_ID"
+  }
+}

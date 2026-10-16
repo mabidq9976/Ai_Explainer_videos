@@ -1,0 +1,49 @@
+{
+  "name": "ai-director-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Claude writes and directs; local scripts make the voice, lip sync, footage and final render.",
+  "scripts": {
+    "dashboard": "NODE_OPTIONS=--no-deprecation tsx dashboard/server.ts",
+    "setup:tools": "NODE_OPTIONS=--no-deprecation tsx scripts/setup-tools.ts",
+    "doctor": "NODE_OPTIONS=--no-deprecation tsx scripts/doctor.ts",
+    "new": "NODE_OPTIONS=--no-deprecation tsx scripts/new-brief.ts",
+    "validate": "NODE_OPTIONS=--no-deprecation tsx scripts/validate.ts",
+    "tts": "NODE_OPTIONS=--no-deprecation tsx scripts/tts.ts",
+    "timing": "NODE_OPTIONS=--no-deprecation tsx scripts/timing.ts",
+    "lipsync": "NODE_OPTIONS=--no-deprecation tsx scripts/lipsync.ts",
+    "assets": "NODE_OPTIONS=--no-deprecation tsx scripts/fetch-assets.ts",
+    "render": "NODE_OPTIONS=--no-deprecation tsx scripts/render.ts",
+    "episode": "NODE_OPTIONS=--no-deprecation tsx scripts/episode.ts",
+    "studio": "NODE_OPTIONS=--no-deprecation tsx scripts/studio.ts",
+    "test-render": "remotion render studio/src/index.ts TestCard out/test.mp4",
+    "typecheck": "tsc --noEmit",
+    "mark": "NODE_OPTIONS=--no-deprecation tsx scripts/mark.ts",
+    "timeline": "NODE_OPTIONS=--no-deprecation tsx scripts/timeline.ts",
+    "save": "NODE_OPTIONS=--no-deprecation tsx scripts/save-url.ts",
+    "subtitles": "NODE_OPTIONS=--no-deprecation tsx scripts/subtitles.ts",
+    "avatar:build": "python3 avatar/build-avatar.py",
+    "avatar:sheet": "NODE_OPTIONS=--no-deprecation tsx scripts/avatar-sheet.ts"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.3.0",
+    "@remotion/cli": "4.0.535",
+    "@remotion/google-fonts": "^4.0.535",
+    "@remotion/three": "4.0.535",
+    "ajv": "8.17.1",
+    "dotenv": "17.2.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "4.0.535",
+    "simple-icons": "^16.35.0",
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.3.0",
+    "@types/react": "^19.3.0",
+    "@types/three": "0.180.0",
+    "tsx": "4.20.5",
+    "typescript": "5.9.2"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npx tsx scripts/*)",
+      "Bash(node scripts/*)",
+      "Bash(ls *)",
+      "Read(./**)",
+      "Edit(./episodes/**)",
+      "Edit(./topics/**)",
+      "Edit(./brand/hooks-library.md)",
+      "Edit(./analytics/**)",
+      "Write(./episodes/**)",
+      "Write(./topics/**)",
+      "Bash(mkdir -p episodes/*)",
+      "Bash(mv topics/*)",
+      "Skill",
+      "mcp__magnific__stock_search",
+      "mcp__magnific__stock_get",
+      "mcp__magnific__account_balance",
+      "mcp__magnific__simulate_cost",
+      "mcp__magnific__creations_wait"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./**/*.mp4)",
+      "Read(./**/*.wav)"
+    ]
+  }
+}

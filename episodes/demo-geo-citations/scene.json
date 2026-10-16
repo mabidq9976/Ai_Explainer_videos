@@ -1,0 +1,58 @@
+{
+  "slug": "demo-geo-citations",
+  "title": "Ranking first no longer means you get cited",
+  "pillar": "GEO",
+  "format": "explainer",
+  "length": 30,
+  "hook": { "text": "Ranking first on Google no longer means you get cited.", "pattern": "bold-claim" },
+  "scenes": [
+    {
+      "id": "s1",
+      "line": "Ranking first on Google no longer means you get cited.",
+      "emphasis": ["no longer"],
+      "style": "confident, a little provocative",
+      "avatar": { "layout": "corner", "position": "left", "gesture": "point-right", "expression": "raised" },
+      "visual": { "type": "component", "name": "HookTitle", "props": { "text": "#1 on Google ≠ cited", "emphasis": ["cited"] } }
+    },
+    {
+      "id": "s2",
+      "line": "AI answers pull from pages that state the answer plainly.",
+      "emphasis": ["plainly"],
+      "style": "calm, explaining to a friend",
+      "avatar": { "layout": "corner", "position": "center", "gesture": "open-palm", "expression": "neutral" },
+      "visual": { "type": "component", "name": "SerpVsAiAnswer", "props": { "query": "how do ai engines pick sources", "answer": "They cite pages that answer the question in the first two sentences." } }
+    },
+    {
+      "id": "s3",
+      "line": "Google, ChatGPT and Perplexity <short pause> all read the same page.",
+      "style": "curious, building up",
+      "avatar": { "layout": "corner", "position": "left", "gesture": "count", "expression": "neutral" },
+      "visual": { "type": "component", "name": "Diagram", "props": { "layout": "tree", "root": { "icon": "line:doc", "label": "Your page" }, "nodes": [ { "icon": "logo:google", "label": "Google" }, { "icon": "line:robot", "label": "ChatGPT" }, { "icon": "logo:perplexity", "label": "Perplexity" } ], "connector": "curve" } }
+    },
+    {
+      "id": "s4",
+      "line": "Only one of them gets the citation.",
+      "emphasis": ["one"],
+      "style": "dry, matter of fact",
+      "avatar": { "layout": "corner", "position": "right", "gesture": "thumbs-up", "expression": "raised" },
+      "visual": { "type": "component", "name": "CitationCards", "props": { "sources": ["https://bigbrand.com/guide", "https://yourblog.com/geo", "https://forum.example.com/thread"], "cited": 1 } }
+    },
+    {
+      "id": "s5",
+      "line": "Clear answer, plus schema, plus named entities.",
+      "style": "punchy, listing quickly",
+      "avatar": { "layout": "corner", "position": "left", "gesture": "count", "expression": "neutral" },
+      "visual": { "type": "component", "name": "Diagram", "props": { "layout": "plus", "nodes": [ { "icon": "emoji:💬", "label": "Clear answer" }, { "icon": "line:doc", "label": "Schema" }, { "icon": "line:users", "label": "Entities" } ], "brace": "Gets quoted" } }
+    },
+    {
+      "id": "s6",
+      "line": "Turn that on and the answer engines start quoting you.",
+      "emphasis": ["quoting you"],
+      "style": "warm, a small win",
+      "avatar": { "layout": "corner", "position": "center", "gesture": "open-palm", "expression": "raised" },
+      "visual": { "type": "component", "name": "Toggle", "props": { "label": "Citations", "icon": "logo:google" } }
+    }
+  ],
+  "cta": { "line": "Follow for one GEO tip a day.", "visual": "CTAEnd", "props": { "handle": "@thewebguy" } },
+  "voice": { "provider": "gemini", "model": "gemini-3.8-flash-tts", "voiceId": "env:GEMINI_VOICE_ID" }
+}

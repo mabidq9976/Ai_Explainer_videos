@@ -1,0 +1,17 @@
+{
+  "pivots": {
+    "head": [517, 575],
+    "body": [517, 850],
+    "arm-left": [380, 650],
+    "arm-right": [655, 650]
+  },
+  "aliases": {
+    "point-right": "open-palm",
+    "wave": "open-palm",
+    "thumbs-up": "count",
+    "think": "thinking",
+    "crossed": "arms-crossed"
+  },
+  "flipWhenRight": true,
+  "_notes": "aliases: gesture → pose-<name> to use when the gesture has no art of its own. flipWhenRight: mirror the narrator when it stands on the right so gestures face the content."
+}
