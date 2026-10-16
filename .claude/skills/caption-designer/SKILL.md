@@ -16,14 +16,14 @@ this folder. Run `npm run timeline $ARGUMENTS` for word times. Edit only `captio
    top for the hook scene (`until`: a scene id, default the first scene). It's the thumbnail moment.
 2. **Fact tags** — a scene's `tag: { "text", "at" }`: condensed caps on an orange bar, top strip (under the headline
    while it's up). Only for a hard fact or number worth screenshotting: "71% OF EARTH IS OCEAN", "3 STEPS", "FREE".
-3. **Subtitles** — `captions.subtitles: true`: the spoken words, phrase by phrase in the lower third, ≤ 2 balanced
-   lines, emphasis words in the accent colour. Line breaks and timing are automatic — you control what's emphasised
+3. **Subtitles** — `captions.subtitles: true`: the spoken words in the lower third. `boxed`: one short line in a black
+   box; `editorial`/`bold`: ≤ 2 balanced lines. Emphasis words in the accent colour. Line breaks and timing are automatic — you control what's emphasised
    through each scene's `emphasis`.
 
 ## Decide
-- `preset`: `editorial` (ink on the white page — the default for board videos) or `bold` (white with a dark outline,
-  the reference look — use when the episode is mostly photos/footage or a dark look). Full-frame footage always
-  switches subtitles to `bold` automatically.
+- `preset`: `boxed` (default — small white text on a black rounded box, one short 2–4 word line at a time; clean on
+  any background), `editorial` (larger ink two-line subtitles on the white page) or `bold` (white with outline +
+  shadow, for footage-heavy or dark episodes). With `editorial`, full-frame footage switches subtitles to `bold`.
 - Subtitles on for almost every episode (most viewers watch muted). Off only for the pure reference look when the
   board labels already carry every word.
 - Headline: yes when the hook is a strong claim or question; rewrite it shorter than the spoken hook if needed

@@ -98,7 +98,7 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
 
       {cap.preset !== "off" && title && <TitleCard text={title.text} from={title.from} to={title.to} preset={cap.preset} />}
       {cap.preset !== "off" && cap.tags && <FactTag tags={tags} top={titleOn && title ? TITLE_TOP + title.height + 22 : 34} preset={cap.preset} />}
-      {cap.preset !== "off" && cap.subtitles && <Subtitles words={words} y={L.captionY} preset={stockFull ? "bold" : cap.preset} />}
+      {cap.preset !== "off" && cap.subtitles && <Subtitles words={words} y={L.captionY} preset={stockFull && cap.preset === "editorial" ? "bold" : cap.preset} />}
 
       {props.avatarSvg && (
         <div style={{ position: "absolute", left: L.avatar.x, top: L.avatar.y, width: L.avatar.w, height: L.avatar.h, zIndex: 20, transform: L.facing !== 1 ? `scaleX(${L.facing.toFixed(3)})` : undefined }}>

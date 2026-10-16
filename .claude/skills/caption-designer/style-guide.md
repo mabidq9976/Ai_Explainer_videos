@@ -3,8 +3,9 @@
 **Typography**
 - Two faces only: condensed caps (Anton) for headline + tags; geometric bold (Montserrat ExtraBold) for subtitles.
 - Headline: caps, tight leading (0.98), balanced line lengths, as big as fits 960 px — never a ragged last word.
-- Subtitles: sentence case, 56 px, ≤ 26 characters per line, ≤ 2 lines, balanced; break after commas, never before
-  a one-word last line.
+- Subtitles, `boxed` (default): 44 px Montserrat Bold, white on a black rounded box, one line of 2–4 words (≤ 22 chars).
+- Subtitles, `editorial`/`bold`: sentence case, 56 px, ≤ 26 characters per line, ≤ 2 lines, balanced; break after
+  commas, never before a one-word last line.
 - One accent colour for emphasis (orange on the white page, yellow on dark) — at most one word per line.
 
 **Placement — fixed homes, never wandering**

@@ -298,7 +298,7 @@ function scriptTab(e, catalog) {
         <div class="card flat" style="margin-bottom:12px"><div class="row" style="justify-content:space-between">
           <div style="flex:1;min-width:260px"><b>Hook</b> <span class="pill">${esc(s.hook.pattern)}</span><div class="hint">Scene 1's line must match the hook text.</div>
             <div class="row" style="margin-top:8px;flex-wrap:nowrap"><input type="text" id="cap-title" placeholder="Caption headline, e.g. WHAT IF YOU COULD BREATHE UNDERWATER?" value="${esc(capCfg(s.captions).title?.text ?? "")}"/><input type="text" id="cap-until" style="width:110px" placeholder="until s1" value="${esc(capCfg(s.captions).title?.until ?? "")}"/></div></div>
-          <div class="row"><label class="row hint">cards <select id="card-style" style="width:auto;padding:4px 8px">${["chat", "soft", "line", "brutal"].map((m) => `<option ${(s.cardStyle ?? "chat") === m ? "selected" : ""}>${m}</option>`).join("")}</select></label><label class="row hint"><input type="checkbox" id="cam-toggle" ${s.camera === false ? "" : "checked"}/> camera moves</label><label class="row hint">captions <select id="cap-preset" style="width:auto;padding:4px 8px">${["off", "editorial", "bold"].map((m) => `<option ${capCfg(s.captions).preset === m ? "selected" : ""}>${m}</option>`).join("")}</select></label><label class="row hint"><input type="checkbox" id="cap-subs" ${capCfg(s.captions).subtitles ? "checked" : ""}/> subtitles</label><span class="hint" id="totals"></span></div></div></div>
+          <div class="row"><label class="row hint">cards <select id="card-style" style="width:auto;padding:4px 8px">${["chat", "soft", "line", "brutal"].map((m) => `<option ${(s.cardStyle ?? "chat") === m ? "selected" : ""}>${m}</option>`).join("")}</select></label><label class="row hint"><input type="checkbox" id="cam-toggle" ${s.camera === false ? "" : "checked"}/> camera moves</label><label class="row hint">captions <select id="cap-preset" style="width:auto;padding:4px 8px">${["off", "boxed", "editorial", "bold"].map((m) => `<option ${capCfg(s.captions).preset === m ? "selected" : ""}>${m}</option>`).join("")}</select></label><label class="row hint"><input type="checkbox" id="cap-subs" ${capCfg(s.captions).subtitles ? "checked" : ""}/> subtitles</label><span class="hint" id="totals"></span></div></div></div>
         <div id="scenes">${s.scenes.map((sc, i) => {
           const v = sc.visual;
           return `<div class="scene" data-i="${i}">
@@ -460,7 +460,7 @@ function postTab(e) {
       </form></div></div>`;
 }
 /** scene.json captions (old shorthands or the object form) → { preset, subtitles, tags, title }. */
-const capCfg = (c) => (!c || c === "off" ? { preset: "off", subtitles: false } : c === true || c === "full" ? { preset: "editorial", subtitles: true } : c === "keywords" ? { preset: "editorial", subtitles: false } : { preset: c.preset ?? "editorial", subtitles: c.subtitles ?? true, title: c.title });
+const capCfg = (c) => (!c || c === "off" ? { preset: "off", subtitles: false } : c === true || c === "full" ? { preset: "boxed", subtitles: true } : c === "keywords" ? { preset: "boxed", subtitles: false } : { preset: c.preset ?? "boxed", subtitles: c.subtitles ?? true, title: c.title });
 const mostCommon = (arr) => Object.entries(arr.reduce((a, x) => ((a[x] = (a[x] ?? 0) + 1), a), {})).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "";
 
 // ---------------------------------------------------------------- inbox

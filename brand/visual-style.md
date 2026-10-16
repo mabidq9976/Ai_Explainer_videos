@@ -45,7 +45,8 @@ Compare them: `npx remotion still studio/src/index.ts CardSheet out/card-styles.
 ## Captions
 Designed by `/caption-designer` (rules: `.claude/skills/caption-designer/style-guide.md`):
 headline in condensed caps at the top during the hook, orange fact tags for hard numbers, lower-third subtitles
-in Montserrat ExtraBold. Presets: `editorial` (ink on white) and `bold` (white with dark outline, the reference look).
+Presets: `boxed` (default — small white captions on a black box, one short line), `editorial` (ink on white,
+two lines) and `bold` (white with dark outline, for footage).
 `.srt`/`.vtt` files are exported every time for the platforms.
 
 ## Narrator

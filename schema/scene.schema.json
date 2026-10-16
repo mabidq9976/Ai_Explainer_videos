@@ -136,11 +136,12 @@
           "properties": {
             "preset": {
               "enum": [
+                "boxed",
                 "editorial",
                 "bold",
                 "off"
               ],
-              "description": "editorial = ink on the white page; bold = white with dark outline (the reference look)"
+              "description": "boxed (default) = small white text on a black box; editorial = ink on the white page; bold = white with outline + shadow"
             },
             "subtitles": {
               "type": "boolean"

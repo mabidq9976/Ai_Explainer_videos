@@ -85,16 +85,32 @@ export const FactTag: React.FC<{ tags: Tag[]; top: number; preset: CaptionPreset
 export const Subtitles: React.FC<{ words: CueWord[]; y: number; preset: CaptionPreset }> = ({ words, y, preset }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const cues = useMemo(() => makeCues(words), [words]);
+  const boxed = preset === "boxed";
+  // Boxed captions are one short line (2–4 words); the others are up to two balanced lines.
+  const cues = useMemo(() => makeCues(words, boxed ? { maxLine: 17, maxLines: 1, minDur: 0.5 } : {}), [words, boxed]);
   const t = frame / fps;
   const cue = cues.find((c) => t >= c.start && t < c.end);
   if (!cue) return null;
   const L = LOOK[preset];
   const f0 = Math.round(cue.start * fps), f1 = Math.round(cue.end * fps);
-  const inP = ease(frame - f0, 0, 5);
+  const inP = ease(frame - f0, 0, boxed ? 4 : 5);
   const next = cues[cues.indexOf(cue) + 1];
   const gapAfter = !next || next.start - cue.end > 0.1;
   const outP = gapAfter ? interpolate(frame, [f1 - 4, f1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 0;
+
+  if (boxed) {
+    const text = cue.words;
+    return (
+      <div style={{ position: "absolute", left: 0, width: W, top: y, display: "flex", justifyContent: "center", zIndex: 40, transform: `translateY(-50%) scale(${0.96 + inP * 0.04})`, opacity: inP * (1 - outP) }}>
+        <div style={{ background: (L as any).box, borderRadius: 14, padding: "10px 22px 12px", fontFamily: SUBTITLE, fontWeight: 700, fontSize: 44, lineHeight: 1.15, color: L.fill, whiteSpace: "nowrap", letterSpacing: -0.3 }}>
+          {text.map((w, k) => (
+            <span key={k} style={{ color: w.emphasis ? L.emphasis : L.fill }}>{k === text.length - 1 ? w.text.replace(/[.,;:]+$/, "") : w.text}{k < text.length - 1 ? " " : ""}</span>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   const size = 56;
   return (
     <div style={{ position: "absolute", left: 60, width: W - 120, top: y, transform: `translateY(-50%) translateY(${(1 - inP) * 10}px)`, opacity: inP * (1 - outP), zIndex: 40, textAlign: "center" }}>
