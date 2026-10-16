@@ -20,7 +20,9 @@ Episode: `$ARGUMENTS`. You're the producer: the script is approved, now make the
    with one image element, or keep it and save as `<sceneId>` then set `"src"` on a board element.
 4. **Producer pass** — edit `episodes/<slug>/scene.json` (visuals, avatar beats and `sound` only, never the approved lines):
    - `⚠ … with nothing new on screen` → add an element or a narrator beat timed to a word in that gap.
-   - `⚠ one visual > 4s` on a non-board scene → turn it into a board, or add `until`/new elements.
+   - `⚠ one visual > 3s` on a non-board scene → turn it into a board, or add `until`/new elements.
+   - Check the `cues:` lines: punches and risers/hushes sit on the right words now that times are real
+     (a riser needs ~2 s of runway before its word; a hush needs a word that starts after a breath).
    - Elements bunched on one word → spread them across the next words so they arrive one by one.
    - Narrator: gestures change on meaningful words (point when something appears, count on lists), position moves every few scenes.
    - Need a graphic that doesn't exist? `/component-builder <Name> <what>` then use it.

@@ -15,9 +15,12 @@ export function resolveAt(at: number | string | undefined, block: Block, words: 
   if (typeof at === "number") return block.startFrame + Math.round(at * FPS);
   const target = at.split(/\s+/).map(norm).filter(Boolean);
   const ws = words.filter((w) => w.scene === block.id);
-  for (let i = 0; i < ws.length; i++) {
-    if (target.every((t, k) => ws[i + k] && (norm(ws[i + k].text) === t || norm(ws[i + k].text).startsWith(t)))) {
-      return Math.max(block.startFrame, Math.round(ws[i].start * FPS) - 3); // land just before the word
+  // Exact words first ("Step" ≠ "steps"); fall back to prefixes ("quot" → "quote") only if nothing matches exactly.
+  for (const exact of [true, false]) {
+    for (let i = 0; i < ws.length; i++) {
+      if (target.every((t, k) => ws[i + k] && (exact ? norm(ws[i + k].text) === t : norm(ws[i + k].text).startsWith(t)))) {
+        return Math.max(block.startFrame, Math.round(ws[i].start * FPS) - 3); // land just before the word
+      }
     }
   }
   return fallbackFrame ?? block.startFrame;

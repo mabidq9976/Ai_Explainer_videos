@@ -4,6 +4,11 @@
 - Would a stranger stop scrolling within 2 seconds? Is there a curiosity gap?
 - Clear without jargon? No "In this video"?
 
+**Retention**
+- Is there an open loop in the first two scenes (a promised payoff), and is it paid off?
+- Does the last line before the CTA flow back into the hook, so a replay feels seamless?
+- Something new every ~2 s; nothing important held longer than 3 s.
+
 **Script**
 - One idea per scene; each line earns its place. Cut anything that repeats.
 - Sounds spoken, not written: contractions, short words, no lists of adjectives.
@@ -21,3 +26,4 @@
 - Something new on screen every 2–3 s; nothing important hidden behind the narrator.
 - Narrator: gestures/beats fit the words, position moves every few scenes, never stiff.
 - The look fits the topic (reference vs mixed); 3D only where it earns it.
+- Camera punches and sound cues land on the words that matter, and there aren't so many that they stop meaning anything.

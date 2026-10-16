@@ -7,7 +7,7 @@ import { loadEpisode, totalSeconds } from "./load";
 import type { EpisodeProps } from "./types";
 import { W, H, FPS } from "./theme";
 
-const empty: EpisodeProps = { scene: null, timing: null, mouth: null, manifest: {}, avatarSvg: null, rig: {}, music: null, musicDuration: null, sfx: {}, hasAudio: false, estimated: true };
+const empty: EpisodeProps = { scene: null, timing: null, mouth: null, manifest: {}, avatarSvg: null, rig: {}, music: null, musicDuration: null, sfx: {}, sfxDur: {}, hasAudio: false, estimated: true };
 
 export const Root: React.FC = () => (
   <>

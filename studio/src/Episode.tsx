@@ -9,7 +9,9 @@ import { Avatar } from "./avatar/Avatar";
 import { Board, type PlacedElement } from "./Board";
 import { avatarEvents, resolveAt } from "./timeline";
 import { theme, W } from "./theme";
-import { Sound, sfxEvents } from "./Sound";
+import { Sound, soundCues } from "./Sound";
+import { cameraScale, punchFrames, type Shot } from "./camera";
+import { zones } from "./layout";
 
 type Chain = { start: number; end: number; elements: PlacedElement[] };
 
@@ -54,9 +56,17 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
   const words = props.timing?.words ?? [];
   const { chains } = useMemo(() => buildChains(blocks, words), [blocks, words]);
   const events = useMemo(() => avatarEvents(blocks, words), [blocks, words]);
+  // Camera: shots are board chains (a push carries through continued boards) or single non-board scenes.
+  const shots = useMemo<Shot[]>(() => [
+    ...chains.map((c) => ({ start: c.start, end: c.end })),
+    ...blocks.filter((b) => b.visual?.type !== "board").map((b) => ({ start: b.startFrame, end: b.endFrame })),
+  ], [chains, blocks]);
+  const punches = useMemo(() => (props.scene ? punchFrames(blocks, props.scene.scenes, words) : []), [blocks, props.scene, words]);
   const pops = useMemo(() => (props.scene ? findPops(props.scene.scenes, words) : []), [props.scene, words]);
-  // Whoosh only where the picture actually changes (not when a board continues).
-  const sounds = useMemo(() => sfxEvents(chains, blocks.filter((b) => !(b.visual?.type === "board" && b.visual.continue)).map((b) => b.startFrame)), [chains, blocks]);
+  const sounds = useMemo(
+    () => soundCues({ chains, blocks, scenes: props.scene?.scenes ?? [], words, sfxDur: props.sfxDur, fps: 30 }),
+    [chains, blocks, props.scene, words, props.sfxDur],
+  );
 
   if (!props.scene || !blocks.length) {
     return (
@@ -71,8 +81,11 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
   const stockFull = curBlock.visual?.type === "stock" && curBlock.visual.frame === "full" && !!props.manifest[curBlock.id]?.file;
   const capMode = props.scene.captions === true ? "full" : props.scene.captions || "off";
 
+  const cam = props.scene.camera === false ? 1 : cameraScale(frame, shots, punches);
+  const vz = zones(curBlock.layout, curBlock.position).visual;
   return (
     <AbsoluteFill style={{ background: theme.paper }}>
+      <AbsoluteFill style={{ transform: `scale(${cam.toFixed(4)})`, transformOrigin: `${W / 2}px ${vz.y + vz.h / 2}px` }}>
       {blocks.filter((b) => b.visual?.type !== "board").map((b) => (
         <Sequence key={b.id} from={b.startFrame} durationInFrames={Math.max(1, b.endFrame - b.startFrame)} layout="none">
           <VisualLayer block={b} manifest={props.manifest} />
@@ -83,6 +96,7 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
           <Board elements={c.elements} offset={c.start} manifest={props.manifest} />
         </Sequence>
       ))}
+      </AbsoluteFill>
 
       {capMode === "full" && <Captions words={words} y={L.captionY} onImage={stockFull} />}
       {capMode === "keywords" && <KeywordPops pops={pops} {...popAnchor(L.avatar, L.cur.layout, L.captionY)} />}
@@ -94,7 +108,7 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
       )}
 
       {props.hasAudio && <Audio src={staticFile("audio/voice.wav")} />}
-      <Sound music={props.music} musicDuration={props.musicDuration} words={words} sfx={props.sfx} events={sounds}
+      <Sound music={props.music} musicDuration={props.musicDuration} words={words} sfx={props.sfx} events={sounds.events} hushes={sounds.hushes}
         useMusic={props.scene.sound?.music ?? true} useSfx={props.scene.sound?.sfx ?? true}
         musicVolume={props.scene.sound?.musicVolume} sfxVolume={props.scene.sound?.sfxVolume} />
 

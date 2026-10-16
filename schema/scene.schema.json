@@ -161,6 +161,10 @@
           "maximum": 1
         }
       }
+    },
+    "camera": {
+      "type": "boolean",
+      "description": "slow push-ins + word punch-ins on the graphics (default true)"
     }
   },
   "definitions": {
@@ -384,6 +388,39 @@
             "type": "string"
           },
           "description": "keywords mode: words/phrases from the line that pop up (default: emphasis)"
+        },
+        "punch": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "words where the camera punches in"
+        },
+        "sfx": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "at",
+              "kind"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "at": {
+                "$ref": "#/definitions/at"
+              },
+              "kind": {
+                "enum": [
+                  "riser",
+                  "scratch",
+                  "ding",
+                  "pop",
+                  "whoosh",
+                  "hush"
+                ]
+              }
+            }
+          }
         }
       }
     },

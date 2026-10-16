@@ -297,7 +297,7 @@ function scriptTab(e, catalog) {
       <div class="span2">
         <div class="card flat" style="margin-bottom:12px"><div class="row" style="justify-content:space-between">
           <div><b>Hook</b> <span class="pill">${esc(s.hook.pattern)}</span><div class="hint">Scene 1's line must match the hook text.</div></div>
-          <div class="row"><label class="row hint">captions <select id="cap-mode" style="width:auto;padding:4px 8px">${["off", "keywords", "full"].map((m) => `<option ${(s.captions === true ? "full" : s.captions || "off") === m ? "selected" : ""}>${m}</option>`).join("")}</select></label><span class="hint" id="totals"></span></div></div></div>
+          <div class="row"><label class="row hint"><input type="checkbox" id="cam-toggle" ${s.camera === false ? "" : "checked"}/> camera moves</label><label class="row hint">captions <select id="cap-mode" style="width:auto;padding:4px 8px">${["off", "keywords", "full"].map((m) => `<option ${(s.captions === true ? "full" : s.captions || "off") === m ? "selected" : ""}>${m}</option>`).join("")}</select></label><span class="hint" id="totals"></span></div></div></div>
         <div id="scenes">${s.scenes.map((sc, i) => {
           const v = sc.visual;
           return `<div class="scene" data-i="${i}">
@@ -307,7 +307,9 @@ function scriptTab(e, catalog) {
                 <div class="field"><label class="f">Spoken line (read verbatim — only &lt;short pause&gt; &lt;breath&gt; &lt;laugh&gt;)</label><textarea data-k="line" rows="2">${esc(sc.line)}</textarea></div>
                 <div class="grid g2" style="gap:8px"><div><label class="f">Delivery style (≤ 8 words)</label><input type="text" data-k="style" value="${esc(sc.style)}"/></div>
                 <div><label class="f">Emphasis (comma-separated)</label><input type="text" data-k="emphasis" value="${esc((sc.emphasis ?? []).join(", "))}"/></div>
-                <div class="span2"><label class="f">Pop-up words (keywords captions, comma-separated)</label><input type="text" data-k="pop" value="${esc((sc.pop ?? []).join(", "))}"/></div></div>
+                <div class="span2"><label class="f">Pop-up words (keywords captions, comma-separated)</label><input type="text" data-k="pop" value="${esc((sc.pop ?? []).join(", "))}"/></div>
+                <div><label class="f">Camera punch-in words</label><input type="text" data-k="punch" value="${esc((sc.punch ?? []).join(", "))}" placeholder="e.g. ChatGPT"/></div>
+                <div><label class="f">Sound cues (kind@word)</label><input type="text" data-k="sfx" value="${esc((sc.sfx ?? []).map((c) => `${c.kind}@${c.at}`).join(", "))}" placeholder="riser@three, hush@Clear"/></div></div>
               </div>
               <div>
                 <label class="f">Narrator</label>
@@ -369,11 +371,20 @@ function collectScene() {
     if (em.length) sc.emphasis = em; else delete sc.emphasis;
     const pops = g("pop").split(",").map((x) => x.trim()).filter(Boolean);
     if (pops.length) sc.pop = pops; else delete sc.pop;
+    const punch = g("punch").split(",").map((x) => x.trim()).filter(Boolean);
+    if (punch.length) sc.punch = punch; else delete sc.punch;
+    const cues = g("sfx").split(",").map((x) => x.trim()).filter(Boolean).map((c) => {
+      const [kind, ...at] = c.split("@");
+      if (!["riser", "scratch", "ding", "pop", "whoosh", "hush"].includes(kind.trim()) || !at.length) throw new Error(`${sc.id}: sound cue "${c}" — use kind@word with kind riser | hush | scratch | ding | pop | whoosh`);
+      return { at: at.join("@").trim(), kind: kind.trim() };
+    });
+    if (cues.length) sc.sfx = cues; else delete sc.sfx;
     sc.avatar = { ...sc.avatar, layout: g("layout"), position: g("position"), gesture: g("gesture"), expression: g("expression") };
     try { sc.visual = JSON.parse(g("visual")); } catch { throw new Error(`${sc.id}: visual JSON is invalid`); }
   });
   s.cta.line = $("#cta-line").value.trim();
   s.hook.text = s.scenes[0].line.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+  if ($("#cam-toggle").checked) delete s.camera; else s.camera = false;
   const cap = $("#cap-mode").value;
   if (cap === "off") delete s.captions; else s.captions = cap;
   return s;

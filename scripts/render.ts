@@ -46,7 +46,9 @@ export async function prepareRender(slug: string) {
     fs.copyFileSync(path.join(manual, f), path.join(dir, "sfx", f));
     sfx[f.replace(/^sfx-/, "").replace(/\.[^.]+$/, "")] = `_render/sfx/${f}`;
   }
-  fs.writeFileSync(path.join(dir, "info.json"), JSON.stringify({ music, musicDuration, sfx, avatarIsPlaceholder: !svg.endsWith("avatar/avatar.svg") }));
+  const sfxDur: Record<string, number> = {};
+  for (const [k, rel] of Object.entries(sfx)) sfxDur[k] = await probeDuration(ep(slug, rel)).catch(() => 1);
+  fs.writeFileSync(path.join(dir, "info.json"), JSON.stringify({ music, musicDuration, sfx, sfxDur, avatarIsPlaceholder: !svg.endsWith("avatar/avatar.svg") }));
 }
 
 export async function render(slug: string, opts: { preview?: boolean } = {}) {

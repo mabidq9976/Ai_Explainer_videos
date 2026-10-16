@@ -33,6 +33,10 @@ export type SceneDef = {
   emphasis?: string[];
   /** Words/phrases from the line that pop up in "keywords" caption mode (default: emphasis). */
   pop?: string[];
+  /** Words where the camera punches in (quick zoom). */
+  punch?: string[];
+  /** Sound cues on words: riser (builds up to the word), scratch, ding, pop, whoosh, hush (music drops out just before the word). */
+  sfx?: { at: number | string; kind: "riser" | "scratch" | "ding" | "pop" | "whoosh" | "hush" }[];
   style: string;
   avatar: { layout: Layout; position?: "left" | "center" | "right"; gesture?: string; expression?: string; beats?: Beat[] };
   visual: Visual;
@@ -50,6 +54,8 @@ export type SceneFile = {
   /** Sound design: music bed level and UI sound effects (pop on element entrances, whoosh on scene changes). */
   sound?: { music?: boolean; musicVolume?: number; sfx?: boolean; sfxVolume?: number };
   look?: "reference" | "mixed";
+  /** Slow push-ins + word punch-ins on the graphics (default true). */
+  camera?: boolean;
   scenes: SceneDef[];
   cta: { line: string; style?: string; visual: string; props?: Record<string, any> };
   voice: { provider: string; model?: string; voiceId?: string };
@@ -88,6 +94,7 @@ export type EpisodeProps = {
   music: string | null;
   musicDuration: number | null;
   sfx: Record<string, string>;
+  sfxDur: Record<string, number>;
   hasAudio: boolean;
   estimated: boolean;
 };

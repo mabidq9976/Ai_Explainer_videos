@@ -15,7 +15,7 @@ const LOGOS = new Set((Object.values(simpleIcons) as any[]).filter((v) => v?.slu
 const WPM = 150;
 const MAX_WORDS_PER_LINE = 20;
 const MAX_STYLE_WORDS = 8;
-const MAX_VISUAL_SECONDS = 4;
+const MAX_VISUAL_SECONDS = 3;
 
 export function validateScene(data: unknown): { errors: string[]; warnings: string[]; stats: Record<string, number> } {
   const errors: string[] = [];
@@ -66,7 +66,9 @@ export function validateScene(data: unknown): { errors: string[]; warnings: stri
     if (v.type === "stock" && !cat[v.fallback]) errors.push(`${sc.id}: stock fallback "${v.fallback}" is not in the catalog.`);
     const secs = (words(sc.line).length / WPM) * 60;
     const boardBeats = v.type === "board" ? v.elements.filter((e: any) => e.kind !== "arrow" && e.kind !== "badge").length : 1;
-    if (secs / Math.max(1, boardBeats) > MAX_VISUAL_SECONDS + 0.5) warnings.push(`${sc.id}: ~${secs.toFixed(1)}s on one visual (aim for a change every ${MAX_VISUAL_SECONDS}s).`);
+    // Self-animating graphics (components, 3D) can hold a little longer than a still image.
+    const limit = v.type === "stock" ? MAX_VISUAL_SECONDS : v.type === "board" ? MAX_VISUAL_SECONDS : MAX_VISUAL_SECONDS + 1;
+    if (secs / Math.max(1, boardBeats) > limit + 0.5) warnings.push(`${sc.id}: ~${secs.toFixed(1)}s on one visual (aim for a change every ${limit}s).`);
     for (const e of sc.emphasis ?? []) if (!sc.line.toLowerCase().includes(e.toLowerCase())) errors.push(`${sc.id}: emphasis "${e}" is not in the line.`);
     for (const e of (sc as any).pop ?? []) if (!sc.line.toLowerCase().includes(e.toLowerCase())) errors.push(`${sc.id}: pop "${e}" is not in the line.`);
     if ((sc as any).pop?.length > 2) warnings.push(`${sc.id}: ${(sc as any).pop.length} pop words — 1–2 per scene keeps them special.`);
@@ -82,6 +84,8 @@ export function validateScene(data: unknown): { errors: string[]; warnings: stri
   let boardIds = new Set<string>();
   s.scenes.forEach((sc, idx) => {
     for (const b of sc.avatar.beats ?? []) if (!anchorOk(b.at, sc.line)) errors.push(`${sc.id}: beat at "${b.at}" — that word isn't in the line.`);
+    for (const w of (sc as any).punch ?? []) if (!anchorOk(w, sc.line)) errors.push(`${sc.id}: punch "${w}" — that word isn't in the line.`);
+    for (const c of (sc as any).sfx ?? []) if (!anchorOk(c.at, sc.line)) errors.push(`${sc.id}: sfx ${c.kind} at "${c.at}" — that word isn't in the line.`);
     const v = sc.visual as any;
     if (v.type !== "board") { boardIds = new Set(); return; }
     if (v.continue && (idx === 0 || (s.scenes[idx - 1].visual as any).type !== "board")) errors.push(`${sc.id}: "continue" needs the previous scene to be a board.`);
@@ -146,6 +150,14 @@ export function validateScene(data: unknown): { errors: string[]; warnings: stri
     if (!drawn.has(`pose-${g}`) && !drawn.has(`arm-left-${g}`) && !drawn.has(`arm-right-${g}`) && !(g === "wave" && (drawn.has("arm-right-open-palm") || drawn.has("arm-left-open-palm"))))
       warnings.push(`${sc.id}: avatar has no "${g}" gesture or pose-${g} — it will show rest.`);
   }
+
+  // Engagement cues: keep them special.
+  const punches = s.scenes.reduce((n, x) => n + ((x as any).punch?.length ?? 0), 0);
+  if (punches > Math.max(3, Math.round(s.scenes.length / 2))) warnings.push(`${punches} camera punches — more than ~1 every other scene stops feeling like emphasis.`);
+  const hushes = s.scenes.reduce((n, x) => n + ((x as any).sfx ?? []).filter((c: any) => c.kind === "hush").length, 0);
+  if (hushes > 2) warnings.push(`${hushes} music hushes — keep it to 1–2 per video (the payoff, maybe the hook).`);
+  const risers = s.scenes.reduce((n, x) => n + ((x as any).sfx ?? []).filter((c: any) => c.kind === "riser").length, 0);
+  if (risers > 2) warnings.push(`${risers} risers — 1–2 per video, before the payoff.`);
 
   const threeCount = s.scenes.filter((x) => x.visual.type === "three").length;
   if (threeCount > 1) warnings.push(`${threeCount} 3D scenes — keep to one per video, 3D is the slowest part of a render.`);

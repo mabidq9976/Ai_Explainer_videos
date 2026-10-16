@@ -44,7 +44,22 @@ Default to a **board** (`"type": "board"`). For each spoken line ask: what would
 - `full` layout for the hook or a personal aside; `corner` most of the time; `hidden` almost never.
 - Keep board elements out of the narrator's area (y > 63 in corner layout) unless placing a prop beside them on purpose.
 
-## 4. Captions
+## 4. Camera and sound cues (engagement)
+The camera slowly pushes in on every shot automatically (`"camera": false` at the top level turns it off).
+You add the accents, timed to words:
+- `punch`: words where the camera snaps in ~8% and eases back — the hook's key word, the payoff, a big number.
+  About one every other scene at most.
+- `sfx`: `[{ "at": "<word>", "kind": "…" }]` on a scene —
+  `riser` (builds up and ends exactly on the word: before a reveal/payoff, 1–2 per video),
+  `hush` (music drops out for ~0.5 s right before the word — the single most important line, 1–2 per video),
+  `scratch` (myth-bust / "wrong"), `ding` (a win), `pop` / `whoosh` (extra accents).
+  Automatic already: whoosh on picture changes, pops when board items land, dings on checklist ticks,
+  typing under the AI-answer card — don't duplicate those.
+- Pacing: something new on screen every ~2 s (`npm run timeline` flags gaps > 2.5 s and single visuals > 3 s).
+- Pattern interrupt about every 8 s: something visually different from the last few beats (a real photo after icons,
+  the one 3D moment, a full-layout aside, a stock clip).
+
+## 5. Captions
 Set top-level `captions`:
 - `"keywords"` (good default for engagement) — only key words pop up big beside the narrator as they're spoken.
   Give each scene 0–2 `pop` entries: words/phrases from the line that carry the punch ("free", "10M views", "first two sentences").
@@ -53,11 +68,11 @@ Set top-level `captions`:
 - `"off"` — the pure reference look.
 `.srt`/`.vtt` subtitle files are always exported for the platforms, whatever you pick here.
 
-## 5. When the library lacks a graphic
+## 6. When the library lacks a graphic
 If a moment truly needs a new motion graphic (e.g. a "loading bar filling", "phone notification stack"):
 invoke `/component-builder <Name> <what it shows>` to build it now, then use it. Otherwise note it in
 `episodes/$ARGUMENTS/component-requests.md` and use the closest existing option.
 
-## 6. Finish
+## 7. Finish
 `npm run validate $ARGUMENTS` until it passes, then `npm run timeline $ARGUMENTS` and fix any ⚠.
 Reply with one line per scene: `id — what's on screen — narrator`.

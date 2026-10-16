@@ -20,6 +20,14 @@ scene format in `schema/scene.schema.json`. If `scene.json` exists, keep its vis
 - `emphasis`: 0–2 exact substrings of the line.
 - Every factual line traces to the brief's evidence.
 
+## Retention rules
+- **Open loop:** within the first two scenes, promise the payoff so viewers wait for it — "…and the third one is the
+  one nobody does", "stick around for the one that actually moved the needle". Then pay it off near the end.
+- **Loop ending:** write the last scene (before the CTA) so it flows back into the hook — e.g. hook "Ranking first
+  no longer means you get cited." … ending "…because ranking first" → replay lands on "no longer means you get cited".
+  A seamless replay counts as a rewatch on Shorts/Reels.
+- **One beat every ~2 s:** 8–14 words per scene; split anything longer.
+
 ## Structure like the reference videos
 - Tutorials/listicles: numbered sections ("Step one…", "Number two…") — each section 2–4 short scenes.
 - One concrete noun per scene the director can show (a tool, a person, a place, a number). Abstract lines are hard to film.

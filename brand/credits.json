@@ -16,5 +16,29 @@
     "source": "magnific",
     "credit": "Magnific · ElevenLabs SFX · airy whoosh (generated)",
     "savedAt": "2026-10-16T06:35:42.327Z"
+  },
+  "sfx/riser": {
+    "file": "sfx/riser.mp3",
+    "source": "magnific",
+    "credit": "Magnific · ElevenLabs SFX · soft tension riser (generated)",
+    "savedAt": "2026-10-16T09:36:12.111Z"
+  },
+  "sfx/ding": {
+    "file": "sfx/ding.mp3",
+    "source": "magnific",
+    "credit": "Magnific · ElevenLabs SFX · soft UI ding (generated)",
+    "savedAt": "2026-10-16T09:36:12.677Z"
+  },
+  "sfx/typing": {
+    "file": "sfx/typing.mp3",
+    "source": "magnific",
+    "credit": "Magnific · ElevenLabs SFX · quiet laptop typing loop (generated)",
+    "savedAt": "2026-10-16T09:36:13.178Z"
+  },
+  "sfx/scratch": {
+    "file": "sfx/scratch.mp3",
+    "source": "magnific",
+    "credit": "Magnific · ElevenLabs SFX · playful record scratch (generated)",
+    "savedAt": "2026-10-16T09:36:13.730Z"
   }
 }

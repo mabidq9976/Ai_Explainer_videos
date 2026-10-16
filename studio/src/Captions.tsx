@@ -66,7 +66,8 @@ export function findPops(scenes: { id: string; pop?: string[]; emphasis?: string
     const ws = words.filter((w) => w.scene === sc.id);
     for (const phrase of sc.pop ?? sc.emphasis ?? []) {
       const t = phrase.split(/\s+/).map(nw).filter(Boolean);
-      const i = ws.findIndex((_, k) => t.every((x, j) => ws[k + j] && nw(ws[k + j].text).startsWith(x)));
+      let i = ws.findIndex((_, k) => t.every((x, j) => ws[k + j] && nw(ws[k + j].text) === x));
+      if (i < 0) i = ws.findIndex((_, k) => t.every((x, j) => ws[k + j] && nw(ws[k + j].text).startsWith(x)));
       if (i < 0) continue;
       const last = ws[i + t.length - 1];
       out.push({ text: phrase.replace(/[.,!?;:]+$/, ""), start: ws[i].start, end: last.end + 0.9, scene: sc.id });

@@ -15,6 +15,7 @@ Read `episodes/$ARGUMENTS/brief.md` and `brand/hooks-library.md` (including its 
 - Open with the viewer's problem or a surprising fact. Never open with "In this video".
 - No jargon in the first line. Explain GEO or AIO later in the script.
 - Make no claim the brief's sources don't support.
+- At least two of the five should set up an **open loop** (a promise the video pays off later: "the last one surprised me").
 - If the library has proven winners, at least one hook reuses a winning pattern.
 
 ## Score each hook from 1 to 5 on

@@ -27,6 +27,8 @@ export type Scene = {
   line: string;
   emphasis?: string[];
   pop?: string[];
+  punch?: string[];
+  sfx?: { at: number | string; kind: string }[];
   style: string;
   avatar: { layout: "full" | "corner" | "hidden"; position?: string; gesture?: string; expression?: string; beats?: { at: number | string; gesture?: string; expression?: string; position?: string; layout?: string }[] };
   visual: any;

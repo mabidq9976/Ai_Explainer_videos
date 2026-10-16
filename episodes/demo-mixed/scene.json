@@ -20,6 +20,9 @@
     {
       "id": "s1",
       "line": "Here's how to get ChatGPT to quote your website.",
+      "punch": [
+        "ChatGPT"
+      ],
       "pop": [
         "ChatGPT"
       ],
@@ -72,7 +75,7 @@
     },
     {
       "id": "s2",
-      "line": "Step one, answer first.",
+      "line": "Three steps, and nobody does the last one. Step one, answer first.",
       "style": "clear, steady",
       "avatar": {
         "layout": "corner",
@@ -84,12 +87,34 @@
         "type": "board",
         "elements": [
           {
+            "id": "steps",
+            "kind": "text",
+            "text": "3 steps",
+            "x": 50,
+            "y": 14,
+            "size": "xl",
+            "weight": 800,
+            "until": "Step"
+          },
+          {
+            "id": "hush",
+            "kind": "icon",
+            "icon": "emoji:🤫",
+            "x": 50,
+            "y": 30,
+            "w": 20,
+            "label": "the one nobody does",
+            "at": "nobody",
+            "until": "Step"
+          },
+          {
             "id": "h1",
             "kind": "text",
             "text": "1.) Answer first",
             "x": 50,
             "y": 10,
-            "size": "md"
+            "size": "md",
+            "at": "Step"
           },
           {
             "id": "a1",
@@ -231,6 +256,15 @@
     {
       "id": "s6",
       "line": "Step three, get mentioned where AI already looks.",
+      "sfx": [
+        {
+          "at": "three",
+          "kind": "riser"
+        }
+      ],
+      "punch": [
+        "mentioned"
+      ],
       "pop": [
         "AI already looks"
       ],
@@ -265,6 +299,15 @@
     {
       "id": "s7",
       "line": "Answer, structure, mentions. Clear beats clever.",
+      "sfx": [
+        {
+          "at": "Clear",
+          "kind": "hush"
+        }
+      ],
+      "punch": [
+        "Clear"
+      ],
       "style": "warm, satisfied",
       "avatar": {
         "layout": "corner",

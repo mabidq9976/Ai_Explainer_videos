@@ -33,6 +33,11 @@ changes pose every beat, and simple graphics that build up piece by piece. Calm,
 - New beat every 1.5–3 s; elements arrive on their word with a short pop, arrows draw on.
 - No transitions between scenes beyond the pop-in. No shaky zooms.
 
+## Camera & sound
+- Every shot pushes in slowly (about 3.5%); punch-ins (about 8%) land on 2–4 key words per video.
+- Music ducks under the voice and drops out completely ("hush") before the single most important line.
+- Risers build into reveals; dings reward wins; a scratch marks a myth. Keep each special: 1–2 per video.
+
 ## Captions
 Per episode, `captions` in scene.json:
 - `"keywords"` — 1–2 key words per scene pop up big (black on marker-yellow, slight tilt) beside the narrator as

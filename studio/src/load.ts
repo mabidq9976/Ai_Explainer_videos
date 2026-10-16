@@ -35,6 +35,7 @@ export async function loadEpisode(): Promise<EpisodeProps> {
     music: info?.music ?? null,
     musicDuration: info?.musicDuration ?? null,
     sfx: info?.sfx ?? {},
+    sfxDur: info?.sfxDur ?? {},
     hasAudio,
     estimated: !hasAudio,
   };

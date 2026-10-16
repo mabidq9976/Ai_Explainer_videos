@@ -31,7 +31,8 @@ const at = (sceneId: string, a: unknown): string => {
   if (typeof a === "number") return `${(sc.start + a).toFixed(2)}`;
   const t = String(a).split(/\s+/).map(normWord);
   const sw = ws.filter((w) => w.scene === sceneId);
-  const i = sw.findIndex((_, k) => t.every((x, j) => sw[k + j] && normWord(sw[k + j].text).startsWith(x)));
+  let i = sw.findIndex((_, k) => t.every((x, j) => sw[k + j] && normWord(sw[k + j].text) === x));
+  if (i < 0) i = sw.findIndex((_, k) => t.every((x, j) => sw[k + j] && normWord(sw[k + j].text).startsWith(x)));
   return i >= 0 ? `${sw[i].start.toFixed(2)}` : `?? ("${a}" not spoken)`;
 };
 
@@ -41,15 +42,18 @@ for (const s of [...scene.scenes, { id: "cta", line: scene.cta.line, visual: { t
   const sc = scenes.find((x) => x.id === s.id);
   if (!sc) continue;
   const dur = sc.end - sc.start;
-  console.log(`[${s.id}] ${sc.start.toFixed(2)}–${sc.end.toFixed(2)} (${dur.toFixed(1)}s)${dur > 4 && s.visual.type !== "board" ? "  ⚠ one visual > 4s" : ""}`);
+  console.log(`[${s.id}] ${sc.start.toFixed(2)}–${sc.end.toFixed(2)} (${dur.toFixed(1)}s)${s.visual.type !== "board" && s.id !== "cta" && dur > (s.visual.type === "stock" ? 3 : 4) ? `  ⚠ one visual > ${s.visual.type === "stock" ? 3 : 4}s` : ""}`);
   console.log(`  words: ${ws.filter((w) => w.scene === s.id).map((w) => `${w.text}@${w.start.toFixed(2)}`).join(" ")}`);
+  const cues = [...((s as any).punch ?? []).map((w: string) => `punch@${at(s.id, w)}`), ...((s as any).sfx ?? []).map((c: any) => `${c.kind}@${at(s.id, c.at)}`)];
+  if (cues.length) console.log(`  cues: ${cues.join(" ")}`);
   const a = s.avatar;
   console.log(`  narrator: ${a.layout}/${a.position ?? "left"} ${a.gesture ?? "rest"} ${a.expression ?? ""}${(a.beats ?? []).map((b: any) => ` | @${at(s.id, b.at)} ${[b.gesture, b.expression, b.position, b.layout].filter(Boolean).join(" ")}`).join("")}`);
   const v = s.visual;
   if (v.type === "board") {
     const gaps: number[] = [];
     let lastT = sc.start;
-    for (const el of v.elements) {
+    const ordered = [...v.elements].sort((a: any, b: any) => parseFloat(at(s.id, a.at)) - parseFloat(at(s.id, b.at)));
+    for (const el of ordered) {
       const t = at(s.id, el.at);
       const m = manifest[`${s.id}.${el.id}`];
       const asset = el.kind === "image" ? (el.src ? ` src ${el.src}` : m?.file ? ` ✓ ${m.source}` : m ? " ✗ no asset" : " (not fetched)") : "";
@@ -59,7 +63,7 @@ for (const s of [...scene.scenes, { id: "cta", line: scene.cta.line, visual: { t
     }
     gaps.push(sc.end - lastT);
     const maxGap = Math.max(...gaps);
-    if (maxGap > 3.5) console.log(`  ⚠ ${maxGap.toFixed(1)}s with nothing new on screen`);
+    if (maxGap > 2.5) console.log(`  ⚠ ${maxGap.toFixed(1)}s with nothing new on screen (aim ≤ 2.5 s)`);
   } else {
     const m = manifest[s.id];
     console.log(`  visual: ${v.type} ${v.name ?? ""}${v.query ? ` q:"${v.query}" ${m?.file ? `✓ ${m.source}` : m ? `✗ → ${v.fallback}` : ""}` : ""}`);

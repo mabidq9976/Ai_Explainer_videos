@@ -24,6 +24,18 @@ Set `"captions"` in scene.json: `"keywords"` (1–2 key words per scene pop up b
 scene with `"pop": [...]`), `"full"` (running captions) or `"off"`. Word timings come from whisper.cpp (open source,
 runs locally); `.srt`/`.vtt` subtitle files are exported for every episode to upload as platform captions.
 
+## Engagement pack
+
+- **Camera:** every shot slowly pushes in; `"punch": ["word"]` on a scene snaps the camera in on that word. `"camera": false` turns it off.
+- **Sound cues:** automatic whooshes, pops, checklist dings and typing; directed `"sfx": [{ "at": "word", "kind": "riser" | "hush" | "scratch" | "ding" }]`.
+  `hush` drops the music out just before a key line; a `riser` ends exactly on its word.
+- **Script rules:** open loop in the first two scenes, last line flows back into the hook, a new beat every ~2 s.
+- **Pacing:** `npm run timeline` flags gaps over 2.5 s and single visuals over 3 s (4 s for animated graphics).
+
+**Going back:** the state before this pack is saved in git.
+`git switch main` returns to it, and `git switch engagement-pack` comes back. To discard the pack for good, run
+`git switch main && git branch -D engagement-pack`. Re-render after switching, because rendered videos aren't in git.
+
 ## Per episode
 
 | Step | Where | Claude? |
