@@ -3,8 +3,8 @@ import type { Block, Word } from "./types";
 import { resolveAt } from "./timeline";
 
 const PUSH = 0.035; // slow push-in across a shot
-const PUNCH = 0.08; // quick zoom on a key word
-const IN = 4, HOLD = 6, OUT = 16; // punch timing in frames
+const PUNCH = 0.06; // gentle zoom on a key word
+const IN = 7, HOLD = 10, OUT = 24; // punch timing in frames
 
 export type Shot = { start: number; end: number };
 

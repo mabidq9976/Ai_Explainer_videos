@@ -44,7 +44,7 @@ export const VisualLayer: React.FC<{ block: Block; manifest: Record<string, Mani
   // Leave room for the caption headline when it's on screen.
   const zone: Rect = topInset > base.y ? { ...base, y: topInset, h: Math.max(300, base.h - (topInset - base.y)) } : base;
   const dur = block.endFrame - block.startFrame;
-  const enter = spring({ frame, fps, config: { damping: 15, mass: 0.6 } });
+  const enter = spring({ frame, fps, config: { damping: 18, mass: 0.8 } });
 
   const place = (r: Rect, children: React.ReactNode) => (
     <div style={{ position: "absolute", left: r.x, top: r.y, width: r.w, height: r.h, opacity: enter, transform: `scale(${0.94 + enter * 0.06})` }}>{children}</div>

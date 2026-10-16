@@ -96,7 +96,7 @@
         "name": "SearchBar3D",
         "props": {
           "query": "your service site:reddit.com",
-          "typeAt": "add"
+          "typeAt": "your"
         }
       }
     },
@@ -136,7 +136,7 @@
               "title": "How much should a site cost?",
               "age": "3d",
               "flair": "Help",
-              "at": "sell"
+              "at": "exactly"
             }
           ]
         }
@@ -276,7 +276,7 @@
       "line": "Put the quick answer right at the top. People want it fast.",
       "tag": {
         "text": "Quick answer up top",
-        "at": "quick"
+        "at": "top"
       },
       "style": "clear, helpful",
       "avatar": {
@@ -313,7 +313,7 @@
             "kind": "badge",
             "text": "FAST",
             "on": "br",
-            "at": "fast"
+            "at": "People"
           }
         ]
       }
@@ -372,7 +372,7 @@
             "from": "sv",
             "to": "ld",
             "style": "straight",
-            "at": "leads"
+            "at": "become"
           },
           {
             "id": "ld",
@@ -382,7 +382,7 @@
             "y": 30,
             "w": 15,
             "label": "Leads",
-            "at": "leads"
+            "at": "become"
           }
         ]
       }

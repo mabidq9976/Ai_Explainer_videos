@@ -96,7 +96,7 @@ export function soundCues(opts: {
     if (name === "SerpVsAiAnswer" && props?.answer) {
       const cardF = typeof props.cardAt === "number" ? Math.round(props.cardAt * fps) : 30;
       const from = typeof props.typeAt === "number" ? Math.round(props.typeAt * fps) : cardF + ((props.look ?? opts.cardStyle) === "chat" ? 22 : 8);
-      ev.push({ frame: start + from, kind: "typing", frames: Math.round(String(props.answer).length * 0.9) });
+      ev.push({ frame: start + from, kind: "typing", frames: Math.round(String(props.answer).length * 1.3) });
     }
   };
   for (const b of blocks) if (b.visual && (b.visual.type === "component" || b.visual.type === "three")) componentCues(b.visual.name, b.visual.props, b.startFrame);

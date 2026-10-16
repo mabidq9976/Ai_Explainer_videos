@@ -19,5 +19,7 @@ Episode: `$ARGUMENTS`. Needs `audio/timing.json` (word times snapped to the wave
    - A riser needs ~2 s of runway before its word; a hush needs a word that starts after a breath.
 3. **Rules:** the renderer already leads each visual ~0.1 s before its word — never anchor earlier than the word.
    Establishing shots (a scene's first image/header) may sit at the scene start. Nothing appears more than ~0.4 s
-   before the word that names it.
+   before the word that names it — except when that word is the scene's last (< 0.8 s before the cut): then anchor
+   it to an earlier word of the same sentence so it's on screen ≥ 0.7 s (the checker allows up to ~1.2 s early).
+   Typing/animated graphics must finish ≥ 0.5 s before the cut.
 4. `npm run validate $ARGUMENTS`. Reply with: sync score before → after, and anything you couldn't anchor.

@@ -17,7 +17,7 @@ export const SerpVsAiAnswer: React.FC<CP<Props>> = ({ query, answer, links, sour
   const card = usePop(cardF);
   // Chat look shows "typing…" dots first, then the text streams in.
   const typeFrom = typeAt !== undefined ? Math.round(typeAt * fps) : cardF + (L === "chat" ? 22 : 8);
-  const typeEnd = typeFrom + answer.length * 0.9;
+  const typeEnd = typeFrom + answer.length * 1.3;
   const chars = Math.floor(interpolate(frame, [typeFrom, typeEnd], [0, answer.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
   const done = frame > typeEnd + 4;
   const chips = sources?.length ? sources : ["yourblog.com", "docs.example.com"];

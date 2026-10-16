@@ -45,9 +45,9 @@ export const RedditFeed: React.FC<CP<{ posts: Post[] }>> = ({ posts = [], box })
         <div style={{ fontSize: 46 * s, fontWeight: 800, color: "#1A1A1B", letterSpacing: -0.5 }}>reddit</div>
       </div>
       {list.map((p, i) => {
-        const inP = spring({ frame: frame - starts[i], fps, config: { damping: 15, mass: 0.6 } });
+        const inP = spring({ frame: frame - starts[i], fps, config: { damping: 18, mass: 0.85 } });
         // Each later card that has arrived pushes this one down by one slot (feed behaviour, newest on top).
-        const later = list.filter((_, k) => k > i && frame >= starts[k]).map((_, k) => spring({ frame: frame - starts[i + 1 + k], fps, config: { damping: 15, mass: 0.6 } })).reduce((a, b) => a + b, 0);
+        const later = list.filter((_, k) => k > i && frame >= starts[k]).map((_, k) => spring({ frame: frame - starts[i + 1 + k], fps, config: { damping: 18, mass: 0.85 } })).reduce((a, b) => a + b, 0);
         const y = box.h * 0.16 + later * (CARD_H + GAP);
         const color = subColor(p.sub);
         return (

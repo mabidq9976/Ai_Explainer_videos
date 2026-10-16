@@ -41,7 +41,7 @@ export const SearchBar3D: React.FC<CP<{ query: string; typeAt?: number }>> = ({ 
 
   // Typing on its word; operator part (site:…) shown as a highlighted chip.
   const t0 = typeAt !== undefined ? Math.round(typeAt * fps) : 18;
-  const tEnd = t0 + query.length * 1.5;
+  const tEnd = t0 + query.length * 2.0;
   const chars = Math.floor(interpolate(frame, [t0, tEnd], [0, query.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
   const typed = query.slice(0, chars);
   const opAt = query.search(/\b\w+:/);

@@ -77,7 +77,11 @@ function check(where: string, label: string, at: unknown, sceneId: string, fallb
   const delta = f.time - (s.time - LEAD);
   // In sync if it fires on (about) the first spoken word of its label, or is anchored to any word of its own label.
   const onOwnWord = typeof at === "string" && toks(at).some((t) => s.tokens.some((x) => same(t, x)));
-  const ok = (f.anchored && onOwnWord) || Math.abs(delta) <= TOL;
+  // A word at the very end of a scene: landing on it would flash the visual for a moment before the cut,
+  // so arriving up to ~1.2 s early (still within its sentence) counts as in sync.
+  const sceneEnd = timing?.scenes?.find((x: any) => x.id === sceneId)?.end ?? Infinity;
+  const lateWord = sceneEnd - s.time < 0.8;
+  const ok = (f.anchored && onOwnWord) || Math.abs(delta) <= TOL || (lateWord && f.anchored && delta < 0 && delta >= -1.25);
   if (ok) { inSync++; return; }
   const why = !f.anchored ? "not anchored" : delta < 0 ? `${(-delta).toFixed(1)}s early` : `${delta.toFixed(1)}s late`;
   lines.push(`  ⚠ ${where} "${label}" — ${why}; "${s.word}" is spoken at ${s.time.toFixed(2)}s${FIX ? ` → anchored to "${s.word}"` : ""}`);

@@ -27,8 +27,8 @@ export function zones(layout: Layout, position: Position = "left") {
   }
 }
 
-const MOVE = 20; // frames to glide to a new spot
-const TURN = 10; // frames to turn around when the facing changes
+const MOVE = 26; // frames to glide to a new spot
+const TURN = 14; // frames to turn around when the facing changes
 
 const mix = (a: Rect, b: Rect, t: number): Rect => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, w: a.w + (b.w - a.w) * t, h: a.h + (b.h - a.h) * t });
 

@@ -41,8 +41,8 @@ function useEnter(el: PlacedElement, local: number) {
   const { fps } = useVideoConfig();
   const f = local - el.inF;
   const out = interpolate(local, [el.outF - 6, el.outF], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const s = spring({ frame: f, fps, config: { damping: 14, mass: 0.55 } });
-  const lin = interpolate(f, [0, 8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const s = spring({ frame: f, fps, config: { damping: 18, mass: 0.85 } }); // calm settle, little bounce
+  const lin = interpolate(f, [0, 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   switch (el.enter ?? (el.kind === "text" ? "fade" : "pop")) {
     case "none": return { opacity: out, transform: "" };
     case "fade": return { opacity: lin * out, transform: `translateY(${(1 - lin) * 12}px)` };
@@ -156,7 +156,7 @@ const Arrow: React.FC<{ el: PlacedElement; local: number; manifest: Record<strin
   const bend = el.bend ?? (style === "straight" ? 0 : 0.3);
   const mx = (a.x + b.x) / 2 - (b.y - a.y) * bend, my = (a.y + b.y) / 2 + (b.x - a.x) * bend;
   const d = `M${a.x},${a.y} Q${mx},${my} ${b.x},${b.y}`;
-  const t = interpolate(local - el.inF, [0, 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const t = interpolate(local - el.inF, [0, 15], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const out = interpolate(local, [el.outF - 6, el.outF], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const ang = Math.atan2(b.y - my, b.x - mx);
   const head = 22;

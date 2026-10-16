@@ -5,7 +5,7 @@ import { eventAt } from "../timeline";
 import { blinkFrames, defaultPivots, mouthAt, prepareSvg } from "./rig";
 import { speechEnergy } from "./motion";
 
-const FADE = 7; // frames to crossfade between poses
+const FADE = 10; // frames to crossfade between poses
 const ARM_EASE = 8;
 
 type Props = {
