@@ -53,7 +53,7 @@
   },
   "Checklist": {
     "type": "component",
-    "use": "Hand-drawn checklist (sketched black boxes, doodle checks in the narrator's line style) — each item checks on its spoken word",
+    "use": "Items ticking in one by one",
     "props": {
       "items": "(string | {text, at: '<spoken word>'})[] — ticks on its word",
       "title": "string?"
