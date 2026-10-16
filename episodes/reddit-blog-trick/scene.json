@@ -1,0 +1,408 @@
+{
+  "slug": "reddit-blog-trick",
+  "title": "Your next page-one blog post is on Reddit",
+  "pillar": "SEO",
+  "format": "tutorial",
+  "length": 36,
+  "look": "mixed",
+  "captions": {
+    "preset": "boxed",
+    "subtitles": true,
+    "tags": true,
+    "title": {
+      "text": "Rank with Reddit",
+      "until": "s1"
+    }
+  },
+  "hook": {
+    "text": "Want page one on Google? Your next blog post is on Reddit.",
+    "pattern": "question"
+  },
+  "scenes": [
+    {
+      "id": "s1",
+      "line": "Want page one on Google? Your next blog post is on Reddit.",
+      "punch": [
+        "Google"
+      ],
+      "style": "curious, punchy",
+      "emphasis": [
+        "Reddit"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "thinking",
+        "expression": "raised",
+        "beats": [
+          {
+            "at": "Reddit",
+            "gesture": "open-palm",
+            "expression": "neutral"
+          }
+        ]
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "g",
+            "kind": "icon",
+            "icon": "logo:google",
+            "x": 32,
+            "y": 36,
+            "w": 20,
+            "at": "Google"
+          },
+          {
+            "id": "top",
+            "kind": "badge",
+            "text": "TOP",
+            "on": "g",
+            "at": "Your"
+          },
+          {
+            "id": "rd",
+            "kind": "icon",
+            "icon": "logo:reddit",
+            "x": 68,
+            "y": 36,
+            "w": 20,
+            "at": "Reddit"
+          },
+          {
+            "id": "ar",
+            "kind": "arrow",
+            "from": "g",
+            "to": "rd",
+            "style": "curve",
+            "at": "Reddit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s2",
+      "line": "Google your service, then add site:reddit.com.",
+      "style": "clear, step by step",
+      "avatar": {
+        "layout": "corner",
+        "position": "right",
+        "gesture": "open-palm",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "three",
+        "name": "SearchBar3D",
+        "props": {
+          "query": "your service site:reddit.com",
+          "typeAt": "add"
+        }
+      }
+    },
+    {
+      "id": "s3",
+      "line": "You'll find real people asking real questions about exactly what you sell.",
+      "style": "warm, a little surprised",
+      "emphasis": [
+        "real questions"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "rest",
+        "expression": "raised"
+      },
+      "visual": {
+        "type": "component",
+        "name": "ProfileList",
+        "props": {
+          "header": "logo:reddit",
+          "items": [
+            {
+              "title": "Is a cheap website worth it?",
+              "sub": "r/smallbusiness",
+              "at": "people"
+            },
+            {
+              "title": "Wix or hire a web designer?",
+              "sub": "r/Entrepreneur",
+              "at": "questions"
+            },
+            {
+              "title": "How much should a site cost?",
+              "sub": "r/smallbusiness",
+              "at": "sell"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "s4",
+      "line": "Pick one. That's your next blog post.",
+      "style": "punchy, confident",
+      "avatar": {
+        "layout": "corner",
+        "position": "center",
+        "gesture": "count",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "q",
+            "kind": "icon",
+            "icon": "logo:reddit",
+            "x": 30,
+            "y": 32,
+            "w": 16,
+            "label": "Question",
+            "at": "Pick"
+          },
+          {
+            "id": "arr",
+            "kind": "arrow",
+            "from": "q",
+            "to": "b",
+            "style": "curve",
+            "at": "blog"
+          },
+          {
+            "id": "b",
+            "kind": "icon",
+            "icon": "line:doc",
+            "x": 70,
+            "y": 32,
+            "w": 16,
+            "label": "Blog post",
+            "at": "blog"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s5",
+      "line": "Answer it like you've lived it. Google wants first-hand experience, not recycled advice.",
+      "sfx": [
+        {
+          "at": "recycled",
+          "kind": "scratch"
+        }
+      ],
+      "style": "firm, a bit cheeky",
+      "emphasis": [
+        "first-hand"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "arms-crossed",
+        "expression": "neutral",
+        "beats": [
+          {
+            "at": "recycled",
+            "expression": "frown"
+          }
+        ]
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "me",
+            "kind": "icon",
+            "icon": "emoji:🧠",
+            "x": 30,
+            "y": 30,
+            "w": 18,
+            "label": "First-hand experience",
+            "at": "experience"
+          },
+          {
+            "id": "re",
+            "kind": "icon",
+            "icon": "emoji:♻️",
+            "x": 70,
+            "y": 30,
+            "w": 18,
+            "label": "Recycled advice",
+            "at": "recycled"
+          },
+          {
+            "id": "no",
+            "kind": "badge",
+            "text": "NO",
+            "on": "re",
+            "at": "advice"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s6",
+      "line": "Put the quick answer right at the top. People want it fast.",
+      "tag": {
+        "text": "Quick answer up top",
+        "at": "quick"
+      },
+      "style": "clear, helpful",
+      "avatar": {
+        "layout": "corner",
+        "position": "right",
+        "gesture": "open-palm",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "br",
+            "kind": "component",
+            "name": "BrowserFrame",
+            "x": 50,
+            "y": 31,
+            "w": 80,
+            "h": 34,
+            "props": {
+              "url": "yourblog.com/cheap-website-worth-it",
+              "title": "Quick answer"
+            },
+            "at": "Put"
+          },
+          {
+            "id": "fast",
+            "kind": "badge",
+            "text": "FAST",
+            "on": "br",
+            "at": "fast"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s7",
+      "line": "Then link to your service page. That's where readers become leads.",
+      "style": "brisk, practical",
+      "avatar": {
+        "layout": "corner",
+        "position": "left",
+        "gesture": "point-right",
+        "expression": "neutral"
+      },
+      "visual": {
+        "type": "board",
+        "elements": [
+          {
+            "id": "bp",
+            "kind": "icon",
+            "icon": "line:doc",
+            "x": 20,
+            "y": 30,
+            "w": 15,
+            "label": "Blog post",
+            "at": "Then"
+          },
+          {
+            "id": "l1",
+            "kind": "arrow",
+            "from": "bp",
+            "to": "sv",
+            "style": "straight",
+            "at": "service"
+          },
+          {
+            "id": "sv",
+            "kind": "icon",
+            "icon": "emoji:💼",
+            "x": 50,
+            "y": 30,
+            "w": 15,
+            "label": "Service page",
+            "at": "service"
+          },
+          {
+            "id": "l2",
+            "kind": "arrow",
+            "from": "sv",
+            "to": "ld",
+            "style": "straight",
+            "at": "leads"
+          },
+          {
+            "id": "ld",
+            "kind": "icon",
+            "icon": "emoji:💰",
+            "x": 80,
+            "y": 30,
+            "w": 15,
+            "label": "Leads",
+            "at": "leads"
+          }
+        ]
+      }
+    },
+    {
+      "id": "s8",
+      "line": "Real question, real answer. That's your shot at page one.",
+      "punch": [
+        "page"
+      ],
+      "sfx": [
+        {
+          "at": "Real",
+          "kind": "riser"
+        },
+        {
+          "at": "That's",
+          "kind": "hush"
+        }
+      ],
+      "style": "building, then satisfied",
+      "emphasis": [
+        "page one"
+      ],
+      "avatar": {
+        "layout": "corner",
+        "position": "center",
+        "gesture": "thumbs-up",
+        "expression": "raised"
+      },
+      "visual": {
+        "type": "component",
+        "name": "Checklist",
+        "props": {
+          "title": "Page one recipe",
+          "items": [
+            {
+              "text": "Real question",
+              "at": "question"
+            },
+            {
+              "text": "Real answer",
+              "at": "answer"
+            },
+            {
+              "text": "Link your service",
+              "at": "shot"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cta": {
+    "line": "Follow us and comment SEO for more help ranking.",
+    "visual": "CTAEnd",
+    "props": {
+      "text": "Comment “SEO” for more",
+      "handle": "@thewebguy"
+    }
+  },
+  "voice": {
+    "provider": "magnific",
+    "model": "gemini_v3_1_flash_tts",
+    "voiceId": "env:MAGNIFIC_VOICE_ID"
+  }
+}

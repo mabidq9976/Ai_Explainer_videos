@@ -5,12 +5,13 @@ import { theme } from "../theme";
 import type { CP } from "../components/shared";
 
 /** A 3D search box tilting into view while the query types itself. Flat materials, simple geometry. */
-export const SearchBar3D: React.FC<CP<{ query: string }>> = ({ query, box }) => {
+export const SearchBar3D: React.FC<CP<{ query: string; typeAt?: number }>> = ({ query, typeAt, box }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
   const tilt = interpolate(frame, [0, 24], [0.9, 0.18], { extrapolateRight: "clamp" });
-  const chars = Math.floor(interpolate(frame, [18, 18 + query.length * 1.6], [0, query.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
+  const t0 = typeAt !== undefined ? Math.round(typeAt * 30) : 18; // starts typing on its word when typeAt is set
+  const chars = Math.floor(interpolate(frame, [t0, t0 + query.length * 1.6], [0, query.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
   const typed = query.slice(0, chars);
   return (
     <div style={{ position: "absolute", inset: 0 }}>

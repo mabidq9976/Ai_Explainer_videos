@@ -140,7 +140,8 @@
     "type": "three",
     "use": "A 3D search box typing a query",
     "props": {
-      "query": "string"
+      "query": "string",
+      "typeAt": "word? — typing starts"
     }
   },
   "NodeNetwork3D": {

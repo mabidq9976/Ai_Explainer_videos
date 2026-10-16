@@ -65,7 +65,7 @@ export function validateScene(data: unknown): { errors: string[]; warnings: stri
     }
     if (v.type === "stock" && !cat[v.fallback]) errors.push(`${sc.id}: stock fallback "${v.fallback}" is not in the catalog.`);
     const secs = (words(sc.line).length / WPM) * 60;
-    const boardBeats = v.type === "board" ? v.elements.filter((e: any) => e.kind !== "arrow" && e.kind !== "badge").length : 1;
+    const boardBeats = v.type === "board" ? v.elements.filter((e: any) => e.kind !== "arrow").length : 1; // a sticker popping on is a beat too
     // Self-animating graphics (components, 3D) can hold a little longer than a still image.
     const limit = v.type === "stock" ? MAX_VISUAL_SECONDS : v.type === "board" ? MAX_VISUAL_SECONDS : MAX_VISUAL_SECONDS + 1;
     if (secs / Math.max(1, boardBeats) > limit + 0.5) warnings.push(`${sc.id}: ~${secs.toFixed(1)}s on one visual (aim for a change every ${limit}s).`);
