@@ -32,3 +32,7 @@ header text at (50,10); images at (30,30) and (70,30) with labels, `at` their wo
 **Comment-keyword CTA** (reference ending) — board: text "Comment" (50,8, sm), text "“GEO + your niche”" (50,14, md, weight 700), image/icon of the reward (e.g. `emoji:📘` w 22, label "Guide") at (62,72) beside the narrator, dotted curved arrow from the keyword text to it.
 
 **Mixed look extras** — one `three` scene (NodeNetwork3D for "everything connects", SearchBar3D for "people search for…"), a `stock` video `frame: "card"` for real-world motion, StatCounter for a number that matters.
+
+**Reddit proof (real-looking threads, no fake counts)** — `{ "type": "component", "name": "RedditFeed", "props": { "posts": [ { "sub": "r/smallbusiness", "title": "Is a cheap website worth it?", "age": "5h", "flair": "Question", "at": "people" } ] } }`
+
+**Google search moment (3D)** — `{ "type": "three", "name": "SearchBar3D", "props": { "query": "your service site:reddit.com", "typeAt": "add" } }` — operators (site:, inurl:) are highlighted automatically.

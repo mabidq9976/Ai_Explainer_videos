@@ -138,7 +138,7 @@
   },
   "SearchBar3D": {
     "type": "three",
-    "use": "A 3D search box typing a query",
+    "use": "Google search bar in 3D perspective typing a query (operators like site: highlighted) with Google-coloured shapes behind",
     "props": {
       "query": "string",
       "typeAt": "word? — typing starts"
@@ -158,6 +158,13 @@
       "bars": "number?",
       "from": "color?",
       "to": "color?"
+    }
+  },
+  "RedditFeed": {
+    "type": "component",
+    "use": "Real-looking Reddit post cards stacking in like a feed (no made-up counts) — questions people ask, community proof",
+    "props": {
+      "posts": "[{sub: 'r/smallbusiness', title, age?: '5h', flair?, at?: '<spoken word>'}] (max 4)"
     }
   }
 }

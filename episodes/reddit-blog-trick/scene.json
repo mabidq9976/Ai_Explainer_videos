@@ -115,23 +115,27 @@
       },
       "visual": {
         "type": "component",
-        "name": "ProfileList",
+        "name": "RedditFeed",
         "props": {
-          "header": "logo:reddit",
-          "items": [
+          "posts": [
             {
-              "title": "Is a cheap website worth it?",
               "sub": "r/smallbusiness",
+              "title": "Is a cheap website worth it?",
+              "age": "5h",
+              "flair": "Question",
               "at": "people"
             },
             {
-              "title": "Wix or hire a web designer?",
               "sub": "r/Entrepreneur",
+              "title": "Wix or hire a web designer?",
+              "age": "1d",
               "at": "questions"
             },
             {
-              "title": "How much should a site cost?",
               "sub": "r/smallbusiness",
+              "title": "How much should a site cost?",
+              "age": "3d",
+              "flair": "Help",
               "at": "sell"
             }
           ]

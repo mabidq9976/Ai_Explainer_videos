@@ -14,6 +14,7 @@ import { Toggle } from "./Toggle";
 import { DeviceFrame } from "./DeviceFrame";
 import { ProfileList } from "./ProfileList";
 import { Waveform } from "./Waveform";
+import { RedditFeed } from "./RedditFeed";
 import { SearchBar3D } from "../three/SearchBar3D";
 import { NodeNetwork3D } from "../three/NodeNetwork3D";
 
@@ -34,6 +35,7 @@ export const registry: Record<string, React.FC<any>> = {
   DeviceFrame,
   ProfileList,
   Waveform,
+  RedditFeed,
   SearchBar3D,
   NodeNetwork3D,
 };
