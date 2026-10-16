@@ -10,8 +10,12 @@ allowed-tools: Read Write
 Read `episodes/$ARGUMENTS/brief.md` and `brand/hooks-library.md` (including its Proven winners table).
 
 ## Write five hooks
-- One sentence each, 6 to 14 words, speakable in under 3 seconds.
-- Use five different patterns from the library: bold-claim, myth-bust, number, question, before-after, warning.
+- One line each, 6 to 14 words, speakable in under 3 seconds.
+- Use five different patterns from the library: bold-claim, myth-bust, number, question, before-after, warning,
+  plus the niche favourites specific-result, mistake-callout, contrarian, live-proof and curiosity-gap.
+- At least two of the five use a **niche favourite**. Skip specific-result and live-proof when the brief has no
+  sourced result or real audit to point at; never invent the number, business or audit.
+- Hooks may be two short sentences when the pattern needs it ("Stop paying for SEO. Do this instead."), still under 3 seconds.
 - Open with the viewer's problem or a surprising fact. Never open with "In this video".
 - No jargon in the first line. Explain GEO or AIO later in the script.
 - Make no claim the brief's sources don't support.
