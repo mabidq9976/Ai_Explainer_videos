@@ -13,17 +13,17 @@ export type Position = "left" | "center" | "right";
  *  hidden — visual only, voice continues
  * Everything sits above y≈1640 so Reels/Shorts UI never covers it.
  */
-const AV = 360;
+const AV = 345;
 const cornerX: Record<Position, number> = { left: 50, center: (W - AV) / 2, right: W - AV - 50 };
 
 export function zones(layout: Layout, position: Position = "left") {
   switch (layout) {
     case "full":
-      return { visual: { x: 0, y: 110, w: W, h: 700 }, captionY: 860, avatar: { x: 165, y: 900, w: 750, h: 750 } };
+      return { visual: { x: 0, y: 110, w: W, h: 660 }, captionY: 830, avatar: { x: 190, y: 940, w: 700, h: 700 } };
     case "hidden":
       return { visual: { x: 0, y: 140, w: W, h: 1380 }, captionY: 1560, avatar: { x: cornerX[position], y: H + 80, w: AV, h: AV } };
     default:
-      return { visual: { x: 0, y: 140, w: W, h: 1060 }, captionY: 1122, avatar: { x: cornerX[position], y: 1200, w: AV, h: AV } };
+      return { visual: { x: 0, y: 140, w: W, h: 1060 }, captionY: 1088, avatar: { x: cornerX[position], y: 1240, w: AV, h: AV } };
   }
 }
 

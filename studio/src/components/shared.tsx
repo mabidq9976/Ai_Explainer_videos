@@ -18,19 +18,27 @@ export const usePop = (delay = 0, damping = 14) => {
   return spring({ frame: frame - delay, fps, config: { damping, mass: 0.6 } });
 };
 
-export const Card: React.FC<{ children: React.ReactNode; style?: React.CSSProperties }> = ({ children, style }) => (
-  <div
-    style={{
-      background: theme.card,
-      border: `${theme.stroke}px solid ${theme.ink}`,
-      borderRadius: theme.radius,
-      boxShadow: `10px 10px 0 ${theme.ink}`,
-      ...style,
-    }}
-  >
-    {children}
-  </div>
-);
+export type CardLook = "brutal" | "soft" | "line" | "chat";
+
+/** Episode-wide card style (scene.json `cardStyle`); a component's `look` prop overrides it. */
+export const CardStyleContext = React.createContext<CardLook>("brutal");
+export const useCardLook = (override?: CardLook) => override ?? React.useContext(CardStyleContext);
+
+export const CARD: Record<CardLook, React.CSSProperties> = {
+  // Bold and flat: thick ink border, hard offset shadow (the original look).
+  brutal: { background: theme.card, border: `${theme.stroke}px solid ${theme.ink}`, borderRadius: theme.radius, boxShadow: `10px 10px 0 ${theme.ink}` },
+  // Modern app UI: hairline border, rounded, soft layered shadow.
+  soft: { background: "#FFFFFF", border: "1.5px solid #E7E4DC", borderRadius: 30, boxShadow: "0 2px 4px rgba(0,0,0,0.04), 0 18px 44px rgba(0,0,0,0.10)" },
+  // Editorial: clean ink outline, no shadow.
+  line: { background: "#FFFFFF", border: `3px solid ${theme.ink}`, borderRadius: 22, boxShadow: "none" },
+  // Chat-app bubble: no border, light grey fill.
+  chat: { background: "#F2F1EE", border: "none", borderRadius: 34, boxShadow: "none" },
+};
+
+export const Card: React.FC<{ children: React.ReactNode; style?: React.CSSProperties; look?: CardLook }> = ({ children, style, look }) => {
+  const l = useCardLook(look);
+  return <div style={{ ...CARD[l], ...style }}>{children}</div>;
+};
 
 /** Yellow marker highlight that sweeps in behind a word. */
 export const Marker: React.FC<{ children: React.ReactNode; progress: number; color?: string }> = ({ children, progress, color = theme.marker }) => (

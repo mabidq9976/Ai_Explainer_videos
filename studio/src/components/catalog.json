@@ -13,7 +13,10 @@
     "props": {
       "query": "string",
       "answer": "string",
-      "links": "string[]?"
+      "links": "string[]?",
+      "look": "brutal | soft | line | chat ? (overrides the episode's cardStyle)",
+      "sources": "string[]? (chips under the answer in soft/chat looks)",
+      "label": "string? (default 'AI answer')"
     }
   },
   "CitationCards": {
@@ -21,7 +24,8 @@
     "use": "Source cards stacking, one highlighted as cited",
     "props": {
       "sources": "string[]",
-      "cited": "number (index)"
+      "cited": "number (index)",
+      "look": "brutal | soft | line | chat ? (overrides the episode's cardStyle)"
     }
   },
   "StatCounter": {
@@ -56,7 +60,8 @@
     "use": "A quote with attribution",
     "props": {
       "text": "string",
-      "source": "string"
+      "source": "string",
+      "look": "brutal | soft | line | chat ? (overrides the episode's cardStyle)"
     }
   },
   "BrowserFrame": {
@@ -65,7 +70,8 @@
     "props": {
       "src": "string? (assets/ path)",
       "url": "string",
-      "title": "string?"
+      "title": "string?",
+      "look": "brutal | soft | line | chat ? (overrides the episode's cardStyle)"
     }
   },
   "BigQuestion": {

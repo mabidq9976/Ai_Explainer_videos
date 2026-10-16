@@ -2,6 +2,7 @@ import React from "react";
 import { Composition } from "remotion";
 import { Episode } from "./Episode";
 import { TestCard } from "./TestCard";
+import { CardSheet } from "./CardSheet";
 import { AvatarSheet, loadAvatarSheet, SHEET_W, SHEET_H } from "./AvatarSheet";
 import { loadEpisode, totalSeconds } from "./load";
 import type { EpisodeProps } from "./types";
@@ -26,6 +27,7 @@ export const Root: React.FC = () => (
     />
     <Composition id="AvatarSheet" component={AvatarSheet} width={SHEET_W} height={SHEET_H} fps={FPS} durationInFrames={1} defaultProps={{ svg: null }}
       calculateMetadata={async () => ({ props: await loadAvatarSheet() })} />
+    <Composition id="CardSheet" component={CardSheet} width={4320} height={1100} fps={FPS} durationInFrames={150} />
     <Composition id="TestCard" component={TestCard} width={W} height={H} fps={FPS} durationInFrames={90} />
   </>
 );

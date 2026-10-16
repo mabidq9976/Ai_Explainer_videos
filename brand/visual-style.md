@@ -25,6 +25,10 @@ changes pose every beat, and simple graphics that build up piece by piece. Calm,
 4. **Stock** photo or clip in a `card` (framed) or `cutout`. Rarely `full`.
 5. **3D** (SearchBar3D, NodeNetwork3D) — at most one per video, for a "wow" beat.
 
+## Card styles
+UI graphics share one card design per episode (`cardStyle`): `brutal` (default), `soft`, `line`, `chat`.
+Compare them: `npx remotion still studio/src/index.ts CardSheet out/card-styles.png --frame=125`.
+
 ## Looks
 - `reference` — exactly the reference: boards only, plain-framed photos and screenshots, logos, emoji, arrows, red "FREE" stickers. No 3D.
 - `mixed` — the same base plus, where they earn it: one 3D scene, a custom motion graphic, stock video, device frames, stat counters.

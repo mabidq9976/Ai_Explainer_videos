@@ -18,6 +18,11 @@ Run `npm run timeline $ARGUMENTS` to see each word's time (estimated before the 
 - `mixed` — the reference style plus a few extras where they earn it: one 3D scene, a custom motion graphic, a stock video clip, a DeviceFrame. Use when a concept is abstract or a moment needs a "wow".
 Keep whatever the brief/user asked for. Default `reference`.
 
+Also pick a top-level `cardStyle` for UI graphics (AI answer, quotes, citations, browser frames):
+`brutal` (thick ink border, hard shadow — bold), `soft` (modern app card, soft shadow, source chips),
+`line` (clean outline with an accent edge — editorial), `chat` (grey chat bubble with typing dots — feels like a real AI).
+One per episode for consistency; a single graphic can override with `props.look`.
+
 ## 2. Direct every scene
 Default to a **board** (`"type": "board"`). For each spoken line ask: what would the narrator point at while saying this? Then:
 - Put elements on the board with `at` = the **word** that should make them appear (`"at": "Characters"`). Things arrive *as they're said*, never all at once.

@@ -56,6 +56,8 @@ export type SceneFile = {
   /** Sound design: music bed level and UI sound effects (pop on element entrances, whoosh on scene changes). */
   sound?: { music?: boolean; musicVolume?: number; sfx?: boolean; sfxVolume?: number };
   look?: "reference" | "mixed";
+  /** Card design for UI graphics (AI answer, quotes, citations, browser): brutal | soft | line | chat. */
+  cardStyle?: "brutal" | "soft" | "line" | "chat";
   /** Slow push-ins + word punch-ins on the graphics (default true). */
   camera?: boolean;
   scenes: SceneDef[];

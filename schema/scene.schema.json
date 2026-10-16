@@ -209,6 +209,15 @@
     "camera": {
       "type": "boolean",
       "description": "slow push-ins + word punch-ins on the graphics (default true)"
+    },
+    "cardStyle": {
+      "enum": [
+        "brutal",
+        "soft",
+        "line",
+        "chat"
+      ],
+      "description": "Card design for UI graphics (AI answer, quotes, citations, browser). Default brutal."
     }
   },
   "definitions": {

@@ -73,7 +73,7 @@ export const Sound: React.FC<{
  */
 export function soundCues(opts: {
   chains: { elements: { kind: string; name?: string; inF: number; props?: any }[] }[];
-  blocks: Block[]; scenes: SceneDef[]; words: Word[]; sfxDur: Record<string, number>; fps: number;
+  blocks: Block[]; scenes: SceneDef[]; words: Word[]; sfxDur: Record<string, number>; fps: number; cardStyle?: string;
 }) {
   const { chains, blocks, scenes, words, sfxDur, fps } = opts;
   const ev: SfxEvent[] = [];
@@ -87,7 +87,10 @@ export function soundCues(opts: {
   // Component-driven cues (timings mirror the components' own animation).
   const componentCues = (name: string | undefined, props: any, start: number) => {
     if (name === "Checklist") (props?.items ?? []).forEach((_: unknown, i: number) => ev.push({ frame: start + 6 + i * 12 + 10, kind: "ding" }));
-    if (name === "SerpVsAiAnswer" && props?.answer) ev.push({ frame: start + 38, kind: "typing", frames: Math.round(String(props.answer).length * 0.9) });
+    if (name === "SerpVsAiAnswer" && props?.answer) {
+      const from = (props.look ?? opts.cardStyle) === "chat" ? 52 : 38; // chat look shows typing dots first
+      ev.push({ frame: start + from, kind: "typing", frames: Math.round(String(props.answer).length * 0.9) });
+    }
   };
   for (const b of blocks) if (b.visual && (b.visual.type === "component" || b.visual.type === "three")) componentCues(b.visual.name, b.visual.props, b.startFrame);
   for (const c of chains) for (const e of c.elements) if (e.kind === "component") componentCues(e.name, e.props, e.inF);
