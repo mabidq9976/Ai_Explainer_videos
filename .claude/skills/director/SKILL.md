@@ -48,6 +48,9 @@ Default to a **board** (`"type": "board"`). For each spoken line ask: what would
 - Move the narrator (`position`) every 2–3 scenes, toward the side the eye should go. Never two identical states in a row.
 - `full` layout for the hook or a personal aside; `corner` most of the time; `hidden` almost never.
 - Keep board elements out of the narrator's area (y > 63 in corner layout) unless placing a prop beside them on purpose.
+- Layout hygiene (validate warns; fix every one): no two items overlapping, nothing below y≈53 when subtitles are on
+  (that band belongs to the captions), one clear focal point per moment, the same element type in the same place
+  across a section (headers always y≈10, rows aligned on one y).
 
 ## 4. Camera and sound cues (engagement)
 The camera slowly pushes in on every shot automatically (`"camera": false` at the top level turns it off).

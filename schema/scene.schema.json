@@ -115,6 +115,25 @@
         },
         "voiceId": {
           "type": "string"
+        },
+        "energy": {
+          "enum": [
+            "natural",
+            "upbeat",
+            "high"
+          ],
+          "description": "Magnific voice: how enthusiastic the delivery is"
+        },
+        "stability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Magnific/ElevenLabs: lower = more expressive (0.3 lively, 0.5 balanced, 0.7 steady)"
+        },
+        "speed": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.2
         }
       }
     },

@@ -20,7 +20,7 @@ const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const TEXT_FILES = ["brief.md", "hooks.md", "blog.md", "thread.md", "captions.md", "component-requests.md", "schema.json"];
 const ENV_KEYS = {
   secret: ["GEMINI_API_KEY", "ELEVENLABS_API_KEY", "PEXELS_API_KEY", "PIXABAY_API_KEY", "MAGNIFIC_API_KEY"],
-  plain: ["TTS_PROVIDER", "MAGNIFIC_VOICE_ID", "MAGNIFIC_VOICE_SOURCE", "MAGNIFIC_TTS_MODEL", "GEMINI_TTS_MODEL", "GEMINI_VOICE_ID", "ELEVENLABS_VOICE_ID", "MAGNIFIC_API_BASE", "LOCAL_VOICE"],
+  plain: ["TTS_PROVIDER", "MAGNIFIC_VOICE_ID", "MAGNIFIC_VOICE_SOURCE", "MAGNIFIC_VOICE_ENERGY", "MAGNIFIC_VOICE_STABILITY", "MAGNIFIC_VOICE_SPEED", "MAGNIFIC_TTS_MODEL", "GEMINI_TTS_MODEL", "GEMINI_VOICE_ID", "ELEVENLABS_VOICE_ID", "MAGNIFIC_API_BASE", "LOCAL_VOICE"],
 };
 
 // ---------------------------------------------------------------- helpers

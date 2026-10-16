@@ -126,17 +126,48 @@ async function writeWavParts(parts: Buffer[], outWav: string) {
 // `npm run tts <slug> -- --import "<url>"` converts and caches it. Cached by hash, so re-renders are free.
 export class NeedsClaude extends Error {}
 
-/** ElevenLabs v3 notation: one short [tag] per block from its style; inline tags converted. */
-export function magnificText(blocks: Block[], model: string) {
+export type Energy = "natural" | "upbeat" | "high";
+
+/** Delivery tags nudged up a notch for `upbeat` (unknown tags pass through). */
+const UPBEAT: Record<string, string> = {
+  calm: "warm", clear: "upbeat", steady: "upbeat", neutral: "upbeat", "matter of fact": "confident", dry: "playful",
+  brisk: "energetic", building: "excited", warm: "warm and upbeat", serious: "confident", curious: "curious",
+};
+
+/**
+ * ElevenLabs v3 notation: one short [tag] per block from its style; inline tags converted.
+ * energy: natural = the scene styles as written · upbeat = each style nudged livelier ·
+ * high = enthusiastic throughout, excited on the hook and the last line (which end in "!").
+ */
+export function magnificText(blocks: Block[], model: string, energy: Energy = "natural") {
   const conv = (t: string) =>
     t.replace(/<short pause>/gi, "...").replace(/<breath>/gi, model.startsWith("gemini") ? "[pause 0.3s]" : "[exhales]").replace(/<laugh>/gi, "[laughs]").replace(/\s+/g, " ").trim();
   return blocks
-    .map((b) => {
+    .map((b, i) => {
       const first = (b.style ?? "").split(",")[0].trim().split(/\s+/).filter(Boolean);
-      const tag = (first.length <= 3 ? first : first.slice(0, 1)).join(" ").toLowerCase(); // "matter of fact" stays whole
-      return `${tag ? `[${tag}] ` : ""}${conv(b.text)}`;
+      let tag = (first.length <= 3 ? first : first.slice(0, 1)).join(" ").toLowerCase(); // "matter of fact" stays whole
+      let text = conv(b.text);
+      if (energy === "upbeat") tag = UPBEAT[tag] ?? tag;
+      if (energy === "high") {
+        const edge = i === 0 || i === blocks.length - 1;
+        tag = edge ? "excited" : "enthusiastic";
+        if (edge) text = text.replace(/\.$/, "!");
+      }
+      return `${tag ? `[${tag}] ` : ""}${text}`;
     })
     .join("\n\n");
+}
+
+/** Voice settings: scene.json `voice` wins, then .env, then defaults. */
+export function voiceTuning(scene: SceneFile) {
+  const v: any = scene.voice ?? {};
+  const num = (x: unknown, d: number) => (x === undefined || x === "" || isNaN(Number(x)) ? d : Number(x));
+  const energy = (v.energy ?? env("MAGNIFIC_VOICE_ENERGY", "natural")) as Energy;
+  return {
+    energy: (["natural", "upbeat", "high"].includes(energy) ? energy : "natural") as Energy,
+    stability: Math.min(1, Math.max(0, num(v.stability ?? env("MAGNIFIC_VOICE_STABILITY"), 0.45))),
+    speed: Math.min(1.2, Math.max(0.7, num(v.speed ?? env("MAGNIFIC_VOICE_SPEED"), 1))),
+  };
 }
 
 function magnific(model: string, voice: string): Provider {
@@ -166,7 +197,7 @@ export async function tts(slug: string, opts: { force?: boolean; importUrl?: str
   const blocks: Block[] = spokenBlocks(scene).map((b) => ({ id: b.id, text: applyPronunciations(b.line), style: b.style }));
   const hash = crypto
     .createHash("sha256")
-    .update(JSON.stringify({ p: provider.name, m: provider.model, v: provider.voice, blocks }))
+    .update(JSON.stringify({ p: provider.name, m: provider.model, v: provider.voice, blocks, ...(provider.name === "magnific" ? { tune: voiceTuning(scene) } : {}) }))
     .digest("hex")
     .slice(0, 16);
   const cached = path.join(CACHE, "tts", `${hash}.wav`);
@@ -190,7 +221,8 @@ export async function tts(slug: string, opts: { force?: boolean; importUrl?: str
   } else if (fs.existsSync(cached) && !opts.force) {
     log(`TTS cache hit (${hash}) — no API call`);
   } else if (provider.name === "magnific") {
-    const text = magnificText(blocks, provider.model);
+    const tune = voiceTuning(scene);
+    const text = magnificText(blocks, provider.model, tune.energy);
     writeJson(reqFile, {
       hash,
       provider: "magnific",
@@ -198,6 +230,10 @@ export async function tts(slug: string, opts: { force?: boolean; importUrl?: str
       voiceId: Number(provider.voice),
       // Cloned "My Voices" share ids with the catalog, so Magnific needs source=mine for them.
       ...(env("MAGNIFIC_VOICE_SOURCE") === "mine" ? { source: "mine" } : {}),
+      // Expressiveness: lower stability = more emotional range; speed 0.7–1.2 (ElevenLabs v3).
+      stability: tune.stability,
+      ...(tune.speed !== 1 ? { speed: tune.speed } : {}),
+      energy: tune.energy,
       text,
       chars: text.length,
       ...(provider.model.startsWith("gemini") ? { systemInstruction: "Friendly, confident explainer narrator for short social videos: clear, warm, a little playful, natural pace." } : {}),

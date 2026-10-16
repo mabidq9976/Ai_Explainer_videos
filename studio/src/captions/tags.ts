@@ -18,7 +18,7 @@ export function buildTags(scenes: { id: string; tag?: { text: string; at?: strin
     if (sc.tag?.text) {
       const start = resolveAt(sc.tag.at, b, words) / FPS;
       const end = sc.tag.until !== undefined ? resolveAt(sc.tag.until, b, words) / FPS : start + HOLD;
-      out.push({ text: sc.tag.text, start, end });
+      out.push({ text: sc.tag.text, start, end: Math.min(end, b.endFrame / FPS) }); // never outlives its scene
       continue;
     }
     const ws = words.filter((w) => w.scene === sc.id);
@@ -27,7 +27,7 @@ export function buildTags(scenes: { id: string; tag?: { text: string; at?: strin
       let i = ws.findIndex((_, k) => t.every((x, j) => ws[k + j] && nw(ws[k + j].text) === x));
       if (i < 0) i = ws.findIndex((_, k) => t.every((x, j) => ws[k + j] && nw(ws[k + j].text).startsWith(x)));
       if (i < 0) continue;
-      out.push({ text: phrase.replace(/[.,!?;:]+$/, ""), start: ws[i].start - 0.05, end: ws[i].start + HOLD });
+      out.push({ text: phrase.replace(/[.,!?;:]+$/, ""), start: ws[i].start - 0.05, end: Math.min(ws[i].start + HOLD, b.endFrame / FPS) });
     }
   }
   out.sort((a, b) => a.start - b.start);

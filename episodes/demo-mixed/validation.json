@@ -1,12 +1,14 @@
 {
   "errors": [],
   "warnings": [
-    "s1: ~3.6s on one visual (aim for a change every 3s)."
+    "s1: ~3.6s on one visual (aim for a change every 3s).",
+    "s5.sch overlaps \"wave\" — move one of them (they're on screen together).",
+    "s5.q overlaps \"wave\" — move one of them (they're on screen together)."
   ],
   "stats": {
     "words": 64,
     "seconds": 26,
     "scenes": 7
   },
-  "at": "2026-10-16T11:42:19.637Z"
+  "at": "2026-10-16T11:52:41.041Z"
 }

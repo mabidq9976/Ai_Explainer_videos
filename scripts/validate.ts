@@ -104,6 +104,13 @@ export function validateScene(data: unknown): { errors: string[]; warnings: stri
         else if (cat[el.name].type === "three" && (s as any).look === "reference") warnings.push(`${sc.id}.${el.id}: 3D in a "reference" look episode.`);
       }
       if (el.icon) specs.push(el.icon);
+      // Subtitles sit around y≈57% in the corner layout: keep board items (and their labels) above ~53%.
+      const subsOn = (() => { const c: any = (s as any).captions; return c && c !== "off" && (typeof c !== "object" || (c.preset !== "off" && c.subtitles !== false)); })();
+      if (subsOn && sc.avatar.layout === "corner" && el.kind !== "arrow" && el.kind !== "badge") {
+        const yy = el.y ?? 30, ww = el.w ?? (el.kind === "icon" ? 14 : 50);
+        const half = el.kind === "text" ? 2 : el.kind === "icon" ? (ww * 0.5625) / 2 + (el.label ? 5 : 0) : el.h ? el.h / 2 + (el.label ? 4 : 0) : (ww * 0.35) / 2 + (el.label ? 4 : 0);
+        if (yy + half > 53) warnings.push(`${sc.id}.${el.id}: reaches y≈${Math.round(yy + half)}% — it will crowd the subtitles (keep board items above ~53%).`);
+      }
       const narratorY = sc.avatar.layout === "corner" ? 63 : sc.avatar.layout === "full" ? 46 : 101;
       if (el.kind !== "arrow" && el.kind !== "badge" && (el.y ?? 30) > narratorY && sc.avatar.layout !== "hidden")
         warnings.push(`${sc.id}.${el.id}: y=${el.y} sits in the narrator's area — fine if placed beside it on purpose.`);
@@ -115,6 +122,36 @@ export function validateScene(data: unknown): { errors: string[]; warnings: stri
     }
     local.forEach((id) => boardIds.add(id));
   });
+
+  // Overlaps: estimate each board item's box (in % of the frame) and flag items that would sit on top of each other.
+  // Items that leave (`until`) are skipped; continued boards are checked as one canvas.
+  const boxOf = (el: any) => {
+    const x = el.x ?? 50, y = el.y ?? 30;
+    const px = { sm: 38, md: 52, lg: 70, xl: 96 }[el.size as "sm" | "md" | "lg" | "xl"] ?? 52;
+    let w = 0, h = 0;
+    if (el.kind === "text") { w = Math.min(el.w ?? 88, ((el.text ?? "").length * px * 0.52) / 10.8); h = ((px * 1.2) / 19.2) * Math.max(1, (el.text ?? "").split("\n").length); }
+    else if (el.kind === "icon") { w = el.w ?? 14; h = w * 0.5625 + (el.label ? 5 : 0); }
+    else if (el.kind === "image") { w = el.w ?? 50; h = (el.h ?? w * 0.35) + (el.label ? 4 : 0); }
+    else if (el.kind === "component") { w = el.w ?? 84; h = el.h ?? 26; }
+    else return null;
+    return { id: el.id, l: x - w / 2, r: x + w / 2, t: y - h / 2, b: y + h / 2 };
+  };
+  let canvas: { id: string; l: number; r: number; t: number; b: number }[] = [];
+  for (const sc of s.scenes) {
+    const v: any = sc.visual;
+    if (v.type !== "board") { canvas = []; continue; }
+    if (!v.continue) canvas = [];
+    for (const el of v.elements) {
+      if (el.until !== undefined) continue;
+      const b = boxOf(el);
+      if (!b) continue;
+      for (const o of canvas) {
+        const ix = Math.min(b.r, o.r) - Math.max(b.l, o.l), iy = Math.min(b.b, o.b) - Math.max(b.t, o.t);
+        if (ix > 1 && iy > 1) warnings.push(`${sc.id}.${el.id} overlaps "${o.id}" — move one of them (they're on screen together).`);
+      }
+      canvas.push(b);
+    }
+  }
 
   // Variety: the same component three scenes running is an error; the same type is only a warning,
   // because the reference style is mostly motion graphics.

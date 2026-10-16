@@ -30,7 +30,8 @@ Episode: `$ARGUMENTS`. You're the producer: the script is approved, now make the
    - Need a graphic that doesn't exist? `/component-builder <Name> <what>` then use it.
    - Sound: a music bed from `brand/music/` plays automatically, ducked under the voice; pops/whooshes come from `brand/sfx/`.
      Set `"sound": { "musicVolume": 0.1–0.18 }` to taste. Only generate new music if the user asked or none exists (`magnific.md`).
-5. `npm run validate <slug>` and `npm run timeline <slug>` again — no ⚠ and no missing assets left.
+5. `npm run validate <slug>` and `npm run timeline <slug>` again — no ⚠, no "overlaps" / "crowd the subtitles"
+   warnings, and no missing assets left.
 6. **Render** — `npm run render <slug> -- --preview` (fast, half-res), unless `--final` was passed; then `npm run render <slug>`.
 7. Reply in ≤ 6 lines: output path + duration, what you changed, Magnific credits spent, and:
    "Watch it on the dashboard → approve render (approval point 2)."

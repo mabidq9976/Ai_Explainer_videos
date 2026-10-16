@@ -56,6 +56,8 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
   ], [chains, blocks]);
   const punches = useMemo(() => (props.scene ? punchFrames(blocks, props.scene.scenes, words) : []), [blocks, props.scene, words]);
   const cap = captionConfig(props.scene?.captions);
+  // The CTA card already shows its words — don't repeat them as subtitles.
+  const subWords = useMemo(() => (props.scene?.cta?.visual === "CTAEnd" ? words.filter((w) => w.scene !== "cta") : words), [words, props.scene]);
   const tags = useMemo(() => (props.scene && cap.tags ? buildTags(props.scene.scenes as any, blocks, words) : []), [props.scene, cap.tags, blocks, words]);
   const title = cap.preset !== "off" && cap.title?.text ? { text: cap.title.text, ...titleWindow(cap.title.until, blocks), ...titleLayout(cap.title.text) } : null;
   const sounds = useMemo(
@@ -98,7 +100,7 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
 
       {cap.preset !== "off" && title && <TitleCard text={title.text} from={title.from} to={title.to} preset={cap.preset} />}
       {cap.preset !== "off" && cap.tags && <FactTag tags={tags} top={titleOn && title ? TITLE_TOP + title.height + 22 : 34} preset={cap.preset} />}
-      {cap.preset !== "off" && cap.subtitles && <Subtitles words={words} y={L.captionY} preset={stockFull && cap.preset === "editorial" ? "bold" : cap.preset} />}
+      {cap.preset !== "off" && cap.subtitles && <Subtitles words={subWords} y={L.captionY} preset={stockFull && cap.preset === "editorial" ? "bold" : cap.preset} />}
 
       {props.avatarSvg && (
         <div style={{ position: "absolute", left: L.avatar.x, top: L.avatar.y, width: L.avatar.w, height: L.avatar.h, zIndex: 20, transform: L.facing !== 1 ? `scaleX(${L.facing.toFixed(3)})` : undefined }}>

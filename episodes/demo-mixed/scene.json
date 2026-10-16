@@ -191,7 +191,7 @@
             "kind": "component",
             "name": "Waveform",
             "x": 50,
-            "y": 28,
+            "y": 23,
             "w": 60,
             "h": 9,
             "at": "structure",
@@ -228,7 +228,7 @@
             "kind": "icon",
             "icon": "line:doc",
             "x": 30,
-            "y": 46,
+            "y": 40,
             "w": 16,
             "label": "Schema",
             "at": "Schema"
@@ -238,7 +238,7 @@
             "kind": "text",
             "text": "+",
             "x": 50,
-            "y": 45,
+            "y": 39,
             "size": "xl",
             "at": "plus"
           },
@@ -247,7 +247,7 @@
             "kind": "icon",
             "icon": "line:search",
             "x": 70,
-            "y": 46,
+            "y": 40,
             "w": 16,
             "label": "Question\nheadings",
             "at": "headings"
