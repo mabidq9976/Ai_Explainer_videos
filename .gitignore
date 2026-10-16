@@ -12,3 +12,8 @@ episodes/*/_render/
 .DS_Store
 out/
 dashboard/roadmap-state.json.bak
+
+# Generated per run (rebuilt by validate / shotlist / lipsync)
+episodes/*/validation.json
+episodes/*/shotlist.json
+episodes/*/mouth.json
