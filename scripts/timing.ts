@@ -39,8 +39,11 @@ async function transcribe(wav: string): Promise<Heard[]> {
 
 /** LCS alignment of script words to heard words; unmatched script words are interpolated. */
 function align(script: string[], heard: Heard[], duration: number) {
-  const a = script.map(normWord);
-  const b = heard.map((h) => normWord(h.w));
+  // Whisper often writes numbers as digits ("3 steps", "Step 1"); compare them as words.
+  const NUM = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+  const asWord = (w: string) => { const n = normWord(w); return /^\d+$/.test(n) && +n < NUM.length ? NUM[+n] : n; };
+  const a = script.map(asWord);
+  const b = heard.map((h) => asWord(h.w));
   const n = a.length, m = b.length;
   const dp = Array.from({ length: n + 1 }, () => new Int32Array(m + 1));
   for (let i = n - 1; i >= 0; i--)
