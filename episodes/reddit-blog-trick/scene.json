@@ -211,20 +211,47 @@
         "type": "board",
         "elements": [
           {
+            "id": "hd",
+            "kind": "text",
+            "text": "Your answer",
+            "x": 50,
+            "y": 12,
+            "size": "md",
+            "weight": 600,
+            "at": "Answer"
+          },
+          {
+            "id": "gg",
+            "kind": "icon",
+            "icon": "logo:google",
+            "x": 50,
+            "y": 30,
+            "w": 10,
+            "at": "Google"
+          },
+          {
             "id": "me",
             "kind": "icon",
             "icon": "emoji:🧠",
-            "x": 30,
+            "x": 24,
             "y": 30,
             "w": 18,
             "label": "First-hand experience",
             "at": "experience"
           },
           {
+            "id": "ga",
+            "kind": "arrow",
+            "from": "gg",
+            "to": "me",
+            "style": "curve",
+            "at": "experience"
+          },
+          {
             "id": "re",
             "kind": "icon",
             "icon": "emoji:♻️",
-            "x": 70,
+            "x": 76,
             "y": 30,
             "w": 18,
             "label": "Recycled advice",
@@ -252,7 +279,13 @@
         "layout": "corner",
         "position": "right",
         "gesture": "open-palm",
-        "expression": "neutral"
+        "expression": "neutral",
+        "beats": [
+          {
+            "at": "People",
+            "gesture": "count"
+          }
+        ]
       },
       "visual": {
         "type": "board",
@@ -289,7 +322,14 @@
         "layout": "corner",
         "position": "left",
         "gesture": "point-right",
-        "expression": "neutral"
+        "expression": "neutral",
+        "beats": [
+          {
+            "at": "readers",
+            "gesture": "thumbs-up",
+            "expression": "raised"
+          }
+        ]
       },
       "visual": {
         "type": "board",

@@ -61,7 +61,13 @@ for (const s of [...scene.scenes, { id: "cta", line: scene.cta.line, visual: { t
       const tn = parseFloat(t);
       if (!isNaN(tn)) { gaps.push(tn - lastT); lastT = tn; }
     }
-    gaps.push(sc.end - lastT);
+    // Narrator beats and fact tags are new things on screen too.
+    const extra = [...(a.beats ?? []).map((b: any) => parseFloat(at(s.id, b.at))), ...(s.tag?.at !== undefined ? [parseFloat(at(s.id, s.tag.at))] : [])].filter((x) => !isNaN(x));
+    if (extra.length) {
+      const all = [sc.start, ...ordered.map((el: any) => parseFloat(at(s.id, el.at))).filter((x: number) => !isNaN(x)), ...extra, sc.end].sort((x, y) => x - y);
+      gaps.length = 0;
+      for (let i = 1; i < all.length; i++) gaps.push(all[i] - all[i - 1]);
+    } else gaps.push(sc.end - lastT);
     const maxGap = Math.max(...gaps);
     if (maxGap > 2.5) console.log(`  ⚠ ${maxGap.toFixed(1)}s with nothing new on screen (aim ≤ 2.5 s)`);
   } else {

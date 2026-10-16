@@ -15,7 +15,7 @@ export const SearchBar3D: React.FC<CP<{ query: string; typeAt?: number }>> = ({ 
   const typed = query.slice(0, chars);
   return (
     <div style={{ position: "absolute", inset: 0 }}>
-      <ThreeCanvas width={box.w} height={box.h} camera={{ position: [0, 0, 9], fov: 40 }} style={{ position: "absolute", inset: 0 }}>
+      <ThreeCanvas width={box.w} height={box.h} camera={{ position: [0, 0, 12], fov: 40 }} style={{ position: "absolute", inset: 0 }}>
         <ambientLight intensity={1.4} />
         <directionalLight position={[3, 5, 6]} intensity={1.6} />
         <group rotation={[tilt, Math.sin(t * 0.8) * 0.12, 0]}>
@@ -44,7 +44,7 @@ export const SearchBar3D: React.FC<CP<{ query: string; typeAt?: number }>> = ({ 
         ))}
       </ThreeCanvas>
       {/* Query text as an HTML overlay keeps type crisp and avoids font loading in three.js. */}
-      <div style={{ position: "absolute", left: "50%", top: "50%", transform: `translate(-40%, -50%) perspective(900px) rotateX(${tilt * 57}deg)`, fontFamily: theme.font, fontSize: 46, fontWeight: 700, color: theme.ink, whiteSpace: "nowrap", width: box.w * 0.55 }}>
+      <div style={{ position: "absolute", left: "50%", top: "50%", transform: `translate(-36%, -50%) perspective(900px) rotateX(${tilt * 57}deg)`, fontFamily: theme.font, fontSize: 36, fontWeight: 700, color: theme.ink, whiteSpace: "nowrap", width: box.w * 0.55 }}>
         {typed}
         <span style={{ opacity: frame % 16 < 8 ? 1 : 0 }}>|</span>
       </div>
