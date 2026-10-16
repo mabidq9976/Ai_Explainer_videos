@@ -2,6 +2,7 @@ import React from "react";
 import { Audio, Sequence, interpolate, staticFile, useVideoConfig } from "remotion";
 import type { Block, SceneDef, Word } from "./types";
 import { resolveAt } from "./timeline";
+import { CHECK_MIN } from "./components/Checklist";
 
 export type SfxKind = "pop" | "whoosh" | "riser" | "scratch" | "ding" | "typing";
 export type SfxEvent = { frame: number; kind: SfxKind; frames?: number };
@@ -88,7 +89,8 @@ export function soundCues(opts: {
   const componentCues = (name: string | undefined, props: any, start: number) => {
     // Same timings as the components themselves (word cues already resolved to seconds after `start`).
     if (name === "Checklist") (props?.items ?? []).forEach((it: any, i: number) => {
-      const tick = typeof it === "object" && typeof it.at === "number" ? Math.round(it.at * fps) - 8 + 10 : 6 + i * 12 + 10;
+      const d = Math.max(typeof it === "object" && typeof it.at === "number" ? Math.round(it.at * fps) - 8 : 10 + i * 14, CHECK_MIN(i));
+      const tick = d + 10;
       ev.push({ frame: start + tick, kind: "ding" });
     });
     if (name === "SerpVsAiAnswer" && props?.answer) {
