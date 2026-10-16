@@ -3,7 +3,7 @@ import { theme } from "../theme";
 import { Icon } from "./Icon";
 import { CP, usePop } from "./shared";
 
-type Item = { icon?: string; query?: string; title: string; sub?: string };
+type Item = { icon?: string; query?: string; title: string; sub?: string; at?: number };
 
 /** Header icon + cards appearing one by one (channels, accounts, tools, niches). */
 export const ProfileList: React.FC<CP<{ header?: string; items: Item[]; assets?: Record<string, string> }>> = ({ header, items = [], assets = {}, box }) => {
@@ -13,7 +13,7 @@ export const ProfileList: React.FC<CP<{ header?: string; items: Item[]; assets?:
     <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 26, fontFamily: theme.font }}>
       {header && <div style={{ transform: `scale(${headPop})`, marginBottom: 10 }}><Icon spec={header} size={110} /></div>}
       {items.slice(0, 6).map((it, i) => {
-        const p = usePop(8 + i * 12);
+        const p = usePop(typeof it.at === "number" ? Math.round(it.at * 30) - 4 : 8 + i * 12);
         const src = it.query ? assets[`items.${i}`] : undefined;
         return (
           <div key={i} style={{ width: Math.min(box.w * 0.78, 760), height: cardH, display: "flex", alignItems: "center", gap: 28, padding: "0 30px", border: `4px solid ${theme.line}`, borderRadius: 22, background: theme.card, boxShadow: "0 6px 20px rgba(0,0,0,.06)", opacity: p, transform: `translateY(${(1 - p) * 40}px)` }}>

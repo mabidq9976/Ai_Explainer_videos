@@ -258,7 +258,7 @@ async function episodeView(slug, tab) {
         <button class="btn primary" data-act="produce" data-slug="${slug}" ${e.scene ? "" : "disabled"}>${I.play} Run pipeline</button>
       </div></div>
     <div id="skill-menu" class="card" style="display:none;margin-bottom:14px"><h2>Run a skill with Claude <span class="sub">headless · same as typing it in Claude Code</span></h2><div class="row">
-      ${[["draft", "Full draft"], ["research-brief", "Research brief"], ["hook-writer", "Redo hooks"], ["script-writer", "Redo script"], ["director", "Redo direction"], ["produce", "Producer pass + render"], ["caption-designer", "Design captions"], ["voice", "Make voice-over"], ["critic", "Critic review"], ["repurpose", "Blog · thread · captions"], ["geo-optimizer", "GEO check"]].map(([k, l]) => `<button class="btn sm" data-act="skill" data-skill="${k}" data-slug="${slug}">/${k} <span class="muted">${l}</span></button>`).join("")}
+      ${[["draft", "Full draft"], ["research-brief", "Research brief"], ["hook-writer", "Redo hooks"], ["script-writer", "Redo script"], ["director", "Redo direction"], ["produce", "Producer pass + render"], ["caption-designer", "Design captions"], ["voice", "Make voice-over"], ["sync", "Sync visuals to voice"], ["asset-producer", "Produce assets"], ["critic", "Critic review"], ["repurpose", "Blog · thread · captions"], ["geo-optimizer", "GEO check"]].map(([k, l]) => `<button class="btn sm" data-act="skill" data-skill="${k}" data-slug="${slug}">/${k} <span class="muted">${l}</span></button>`).join("")}
     </div></div>
     <div class="stepper">${STEPS.map((s) => {
       const x = st[s] ?? {};
@@ -278,7 +278,7 @@ async function episodeView(slug, tab) {
   if (tab === "script") T.innerHTML = scriptTab(e, catalog);
   else if (["brief", "hooks", "blog", "thread", "captions"].includes(tab)) T.innerHTML = textTab(e, `${tab}.md`);
   else if (tab === "video") T.innerHTML = videoTab(e);
-  else if (tab === "assets") T.innerHTML = assetsTab(e);
+  else if (tab === "assets") T.innerHTML = (await shotlistCard(e)) + assetsTab(e);
   else if (tab === "post") T.innerHTML = postTab(e);
   else if (tab === "timeline") T.innerHTML = await timelineTab(e);
   bindScriptEditor();
@@ -395,7 +395,8 @@ function collectScene() {
 }
 
 async function timelineTab(e) {
-  const { text } = await api(`/api/episodes/${e.slug}/timeline`);
+  const [{ text }, { text: syncText }] = await Promise.all([api(`/api/episodes/${e.slug}/timeline`), api(`/api/episodes/${e.slug}/sync`)]);
+  const score = +(syncText.match(/sync (\d+)%/)?.[1] ?? 0);
   const scenes = e.timing?.scenes ?? [];
   const total = e.timing?.duration ?? 1;
   const colors = { board: "var(--ink)", component: "var(--info)", three: "var(--accent)", stock: "var(--good)" };
@@ -404,6 +405,9 @@ async function timelineTab(e) {
     ${scenes.length ? `<div style="display:flex;height:46px;border-radius:10px;overflow:hidden;border:1px solid var(--line)">${scenes.map((s) => `<div title="${s.id} ${s.start.toFixed(1)}–${s.end.toFixed(1)}s" style="flex:${s.end - s.start};background:${colors[typeOf(s.id)] ?? "var(--line-2)"};color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;border-right:2px solid var(--panel)">${s.id}</div>`).join("")}</div>
       <div class="row hint" style="margin-top:8px">${Object.entries(colors).map(([k, c]) => `<span><span class="dot" style="background:${c}"></span> ${k}</span>`).join("")}</div>` : '<div class="empty">Run the voice step to get the real cut.</div>'}
     <p class="hint">This is exactly what Claude reads in the producer pass (<span class="kbd">npm run timeline ${e.slug}</span>). ⚠ marks pacing gaps or missing assets.</p></div>
+    <div class="card" style="margin-bottom:14px"><h2>Sync <span class="sub"><span class="pill ${score === 100 ? "good" : score >= 80 ? "warn" : "bad"}">${score}%</span> of named visuals land on their spoken word</span></h2>
+      <pre class="mono" style="white-space:pre-wrap;margin:0 0 10px;line-height:1.55">${esc(syncText.trim())}</pre>
+      <div class="row"><button class="btn sm primary" data-act="job" data-kind="sync-fix" data-slug="${e.slug}" ${score === 100 ? "disabled" : ""}>Fix sync</button><button class="btn sm" data-act="skill" data-skill="sync" data-slug="${e.slug}">${I.claude} /sync (judgement pass)</button><span class="hint">Re-render after fixing.</span></div></div>
     <div class="card"><pre class="mono" style="white-space:pre-wrap;margin:0;line-height:1.55">${esc(text)}</pre></div>`;
 }
 
@@ -429,6 +433,12 @@ function videoTab(e) {
       <h2 style="margin-top:18px">Remotion Studio</h2><p class="hint">Scrub the timeline, nudge props and render from the Studio UI. Opens on port 3100.</p>
       <button class="btn" data-act="studio" data-slug="${e.slug}">Open in Studio</button></div>
   </div>`;
+}
+
+async function shotlistCard(e) {
+  const { text } = await api(`/api/episodes/${e.slug}/shotlist`);
+  return `<div class="card" style="margin-bottom:14px"><h2>Shot list <span class="sub">assets first, then assemble</span></h2><pre class="mono" style="white-space:pre-wrap;margin:0 0 10px;line-height:1.55">${esc(text.trim())}</pre>
+    <div class="row"><button class="btn sm" data-act="step" data-step="assets" data-slug="${e.slug}">Fetch free assets</button><button class="btn sm primary" data-act="skill" data-skill="asset-producer" data-slug="${e.slug}">${I.claude} /asset-producer</button></div></div>`;
 }
 
 function assetsTab(e) {
@@ -669,7 +679,7 @@ document.addEventListener("click", async (ev) => {
       case "step": return runJob(t.dataset.step, slug);
       case "from": return runJob("episode", slug, { from: t.dataset.step });
       case "tts-force": return runJob("tts", slug, { force: true });
-      case "job": return runJob(t.dataset.kind);
+      case "job": return runJob(t.dataset.kind, t.dataset.slug);
       case "skill": return runJob(t.dataset.skill === "draft" ? "draft" : "skill", slug, { skill: t.dataset.skill });
       case "skill-menu": { const m = $("#skill-menu"); m.style.display = m.style.display === "none" ? "" : "none"; return; }
       case "log": return openConsole(t.dataset.id, t.dataset.title);

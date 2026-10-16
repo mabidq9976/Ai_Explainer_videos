@@ -256,6 +256,7 @@ const JOB_KINDS: Record<string, { title: string; needsSlug?: boolean; cmd: (slug
     title: "Claude skill", needsSlug: true, cmd: (s, o) => ["claude", ["-p", `/${o.skill} ${s}`, "--output-format", "stream-json", "--verbose", "--permission-mode", "acceptEdits",
       "--allowedTools", "Skill Read Write Edit Glob Grep WebFetch WebSearch Bash(npm run *) mcp__magnific"]],
   },
+  "sync-fix": { title: "Fix sync", needsSlug: true, cmd: (s) => tsx("sync.ts", s, "--fix") },
   doctor: { title: "Doctor", cmd: () => tsx("doctor.ts") },
   "setup-tools": { title: "Install tools", cmd: () => tsx("setup-tools.ts") },
   "test-render": { title: "Test render", cmd: () => [r("node_modules", ".bin", "remotion"), ["render", "studio/src/index.ts", "TestCard", "out/test.mp4"]] },
@@ -381,10 +382,11 @@ const server = http.createServer(async (req, res) => {
       if (!fs.existsSync(ep(mm[1]))) return send(res, 404, { error: "no such episode" });
       return send(res, 200, detail(mm[1]));
     }
-    if ((mm = m(/^\/api\/episodes\/([a-z0-9-]+)\/timeline$/))) {
+    if ((mm = m(/^\/api\/episodes\/([a-z0-9-]+)\/(timeline|sync|shotlist)$/))) {
       const slug = mm[1];
+      const script = { timeline: "timeline.ts", sync: "sync.ts", shotlist: "shotlist.ts" }[mm[2] as "timeline"];
       const out = await new Promise<string>((resolve) => {
-        const p = spawn(r("node_modules", ".bin", "tsx"), [r("scripts", "timeline.ts"), slug], { cwd: ROOT, env: { ...process.env, NODE_OPTIONS: "--no-deprecation" } });
+        const p = spawn(r("node_modules", ".bin", "tsx"), [r("scripts", script), slug], { cwd: ROOT, env: { ...process.env, NODE_OPTIONS: "--no-deprecation" } });
         let o = "";
         p.stdout.on("data", (d) => (o += d));
         p.stderr.on("data", (d) => (o += d));

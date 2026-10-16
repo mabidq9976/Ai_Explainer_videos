@@ -16,7 +16,9 @@
       "links": "string[]?",
       "look": "brutal | soft | line | chat ? (overrides the episode's cardStyle)",
       "sources": "string[]? (chips under the answer in soft/chat looks)",
-      "label": "string? (default 'AI answer')"
+      "label": "string? (default 'AI answer')",
+      "cardAt": "word? — answer card appears",
+      "typeAt": "word? — typing starts"
     }
   },
   "CitationCards": {
@@ -25,7 +27,8 @@
     "props": {
       "sources": "string[]",
       "cited": "number (index)",
-      "look": "brutal | soft | line | chat ? (overrides the episode's cardStyle)"
+      "look": "brutal | soft | line | chat ? (overrides the episode's cardStyle)",
+      "citedAt": "word? — cited card highlights"
     }
   },
   "StatCounter": {
@@ -36,7 +39,8 @@
       "label": "string",
       "source": "string?",
       "prefix": "string?",
-      "suffix": "string?"
+      "suffix": "string?",
+      "at": "word? — counting starts"
     }
   },
   "KeywordCloud": {
@@ -51,7 +55,7 @@
     "type": "component",
     "use": "Items ticking in one by one",
     "props": {
-      "items": "string[]",
+      "items": "(string | {text, at: '<spoken word>'})[] — ticks on its word",
       "title": "string?"
     }
   },
@@ -99,7 +103,8 @@
     "props": {
       "label": "string",
       "icon": "icon spec?",
-      "on": "boolean?"
+      "on": "boolean?",
+      "flipAt": "word? — switch flips"
     }
   },
   "DeviceFrame": {
@@ -120,7 +125,7 @@
     "use": "Header icon + cards appearing one by one (channels, accounts, tools, niches)",
     "props": {
       "header": "icon spec?",
-      "items": "[{icon?, query?, title, sub?}]"
+      "items": "[{icon?, query?, title, sub?, at?: word}]"
     }
   },
   "CTAEnd": {

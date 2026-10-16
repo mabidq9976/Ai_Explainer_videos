@@ -9,7 +9,7 @@ import { FactTag, Subtitles, TitleCard, TITLE_TOP, titleLayout } from "./caption
 import { buildTags, titleWindow } from "./captions/tags";
 import { Avatar } from "./avatar/Avatar";
 import { Board, type PlacedElement } from "./Board";
-import { avatarEvents, resolveAt } from "./timeline";
+import { avatarEvents, resolveAt, resolveProps } from "./timeline";
 import { theme, W } from "./theme";
 import { CardStyleContext } from "./components/shared";
 import { Sound, soundCues } from "./Sound";
@@ -32,7 +32,8 @@ function buildChains(blocks: Block[], words: Word[]) {
     chain.end = b.endFrame;
     v.elements.forEach((el, k) => {
       const inF = resolveAt(el.at, b, words, b.startFrame + k * 4);
-      chain.elements.push({ ...el, scene: b.id, inF, outF: el.until !== undefined ? resolveAt(el.until, b, words, b.endFrame) : -1 });
+      const props = el.kind === "component" && el.props ? resolveProps(el.props, b, words, inF) : el.props;
+      chain.elements.push({ ...el, props, scene: b.id, inF, outF: el.until !== undefined ? resolveAt(el.until, b, words, b.endFrame) : -1 });
     });
     owner.set(b.id, chain);
     last = chain;

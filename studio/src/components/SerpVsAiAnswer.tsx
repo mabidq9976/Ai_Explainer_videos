@@ -3,18 +3,20 @@ import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { theme } from "../theme";
 import { CP, Card, Fill, usePop, useCardLook, type CardLook } from "./shared";
 
-type Props = { query: string; answer: string; links?: string[]; sources?: string[]; label?: string; look?: CardLook };
+type Props = { query: string; answer: string; links?: string[]; sources?: string[]; label?: string; look?: CardLook; cardAt?: number; typeAt?: number };
 
 /** Classic blue links fade out while an AI answer card types itself in. `look` picks the card design. */
-export const SerpVsAiAnswer: React.FC<CP<Props>> = ({ query, answer, links, sources, label = "AI answer", look, box }) => {
+export const SerpVsAiAnswer: React.FC<CP<Props>> = ({ query, answer, links, sources, label = "AI answer", look, cardAt, typeAt, box }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const L = useCardLook(look);
   const results = links?.length ? links : ["The Ultimate Guide to ...", "10 Tips You Need to Know", "What Experts Say About ..."];
-  const fade = interpolate(frame, [26, 40], [1, 0.25], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const card = usePop(30);
+  // Word cues (seconds after this graphic appears): when the answer card arrives and when it starts typing.
+  const cardF = cardAt !== undefined ? Math.round(cardAt * fps) : 30;
+  const fade = interpolate(frame, [cardF - 4, cardF + 10], [1, 0.25], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const card = usePop(cardF);
   // Chat look shows "typing…" dots first, then the text streams in.
-  const typeFrom = L === "chat" ? 52 : 38;
+  const typeFrom = typeAt !== undefined ? Math.round(typeAt * fps) : cardF + (L === "chat" ? 22 : 8);
   const typeEnd = typeFrom + answer.length * 0.9;
   const chars = Math.floor(interpolate(frame, [typeFrom, typeEnd], [0, answer.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
   const done = frame > typeEnd + 4;
@@ -50,7 +52,7 @@ export const SerpVsAiAnswer: React.FC<CP<Props>> = ({ query, answer, links, sour
     ),
   }[L];
 
-  const dots = L === "chat" && frame < typeFrom && frame > 30 ? (
+  const dots = L === "chat" && frame < typeFrom && frame > cardF ? (
     <div style={{ display: "flex", gap: 10, padding: "14px 4px" }}>
       {[0, 1, 2].map((i) => <div key={i} style={{ width: 14, height: 14, borderRadius: 7, background: theme.muted, opacity: 0.35 + 0.65 * Math.max(0, Math.sin(((frame - i * 4) / fps) * Math.PI * 3)) }} />)}
     </div>

@@ -61,3 +61,23 @@ export function eventAt(events: AvatarEvent[], frame: number) {
   for (let k = 0; k < events.length; k++) if (events[k].frame <= frame) i = k;
   return { cur: events[i], prev: events[i - 1] ?? events[i], index: i };
 }
+
+const AT_KEYS = /^(at|cardAt|typeAt|citedAt|flipAt)$/;
+
+/**
+ * Let a graphic's own animation follow the voice: any `at` / `cardAt` / `typeAt` / `citedAt` / `flipAt` inside a
+ * component's props may name a spoken word; it becomes seconds after the component appears (`originFrame`).
+ * Numbers stay as they are (already seconds from the component's start).
+ */
+export function resolveProps<T>(props: T, block: Block, words: Word[], originFrame: number): T {
+  const walk = (v: any): any => {
+    if (Array.isArray(v)) return v.map(walk);
+    if (!v || typeof v !== "object") return v;
+    const out: any = {};
+    for (const [k, x] of Object.entries(v)) {
+      out[k] = AT_KEYS.test(k) && typeof x === "string" ? Math.max(0, (resolveAt(x, block, words) - originFrame) / FPS) : walk(x);
+    }
+    return out;
+  };
+  return walk(props);
+}

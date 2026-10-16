@@ -1,0 +1,70 @@
+{
+  "at": "2026-10-16T12:13:48.988Z",
+  "budget": 300,
+  "estimatedCredits": 40,
+  "items": [
+    {
+      "key": "s1.img",
+      "scene": "s1",
+      "kind": "photo",
+      "need": "laptop website on screen",
+      "status": "credits",
+      "credits": 40,
+      "how": "Magnific stock_search photo (free license)"
+    },
+    {
+      "key": "s7",
+      "scene": "s7",
+      "kind": "motion",
+      "need": "BigQuestion",
+      "status": "ready",
+      "credits": 0,
+      "how": "catalog"
+    },
+    {
+      "key": "cta",
+      "scene": "cta",
+      "kind": "motion",
+      "need": "CTAEnd",
+      "status": "ready",
+      "credits": 0,
+      "how": "catalog"
+    },
+    {
+      "key": "sfx.whoosh",
+      "scene": "-",
+      "kind": "sfx",
+      "need": "whoosh",
+      "status": "ready",
+      "credits": 0,
+      "how": "brand/sfx/whoosh"
+    },
+    {
+      "key": "sfx.pop",
+      "scene": "-",
+      "kind": "sfx",
+      "need": "pop",
+      "status": "ready",
+      "credits": 0,
+      "how": "brand/sfx/pop"
+    },
+    {
+      "key": "music",
+      "scene": "-",
+      "kind": "music",
+      "need": "music bed",
+      "status": "ready",
+      "credits": 0,
+      "how": "brand/music (rotates)"
+    },
+    {
+      "key": "voice",
+      "scene": "-",
+      "kind": "voice",
+      "need": "55 words",
+      "status": "ready",
+      "credits": 0,
+      "how": "audio/voice.wav (re-check: npm run tts — cache hit = free)"
+    }
+  ]
+}

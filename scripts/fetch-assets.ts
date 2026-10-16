@@ -229,7 +229,9 @@ export async function fetchAssets(slug: string) {
       for (const [k, val] of Object.entries(o)) if (val && typeof val === "object") await walk(val, p ? `${p}.${k}` : k);
     };
     const props = (v as any).props ?? {};
-    if (typeof props.query === "string") {
+    // Only graphics that show media take `query` as a stock search (SerpVsAiAnswer's query is search-bar text).
+    if (!["DeviceFrame", "Diagram", "ProfileList"].includes((v as any).name)) continue;
+    if ((v as any).name === "DeviceFrame" && typeof props.query === "string") {
       const key = `${sc.id}.media`;
       const pick = await find(key, props.query, props.kind === "video" ? "video" : "photo", "card");
       if (pick) place(key, pick, "card");

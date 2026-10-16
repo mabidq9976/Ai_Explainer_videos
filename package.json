@@ -24,7 +24,9 @@
     "save": "NODE_OPTIONS=--no-deprecation tsx scripts/save-url.ts",
     "subtitles": "NODE_OPTIONS=--no-deprecation tsx scripts/subtitles.ts",
     "avatar:build": "python3 avatar/build-avatar.py",
-    "avatar:sheet": "NODE_OPTIONS=--no-deprecation tsx scripts/avatar-sheet.ts"
+    "avatar:sheet": "NODE_OPTIONS=--no-deprecation tsx scripts/avatar-sheet.ts",
+    "sync": "NODE_OPTIONS=--no-deprecation tsx scripts/sync.ts",
+    "shotlist": "NODE_OPTIONS=--no-deprecation tsx scripts/shotlist.ts"
   },
   "dependencies": {
     "@react-three/fiber": "9.3.0",

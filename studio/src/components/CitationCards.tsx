@@ -13,11 +13,12 @@ const citedStyle = (L: CardLook, on: boolean): React.CSSProperties => {
   return { background: "#FFE9DF" };
 };
 
-export const CitationCards: React.FC<CP<{ sources: string[]; cited?: number; look?: CardLook }>> = ({ sources = [], cited = 0, look, box }) => {
+export const CitationCards: React.FC<CP<{ sources: string[]; cited?: number; look?: CardLook; citedAt?: number }>> = ({ sources = [], cited = 0, look, citedAt, box }) => {
   const L = useCardLook(look);
   const frame = useCurrentFrame();
   const list = sources.slice(0, 5);
-  const hl = interpolate(frame, [list.length * 6 + 10, list.length * 6 + 20], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const h0 = citedAt !== undefined ? Math.round(citedAt * 30) : list.length * 6 + 10; // highlight on its word
+  const hl = interpolate(frame, [h0, h0 + 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const cardH = Math.min(170, (box.h * 0.82) / Math.max(1, list.length));
   return (
     <Fill>

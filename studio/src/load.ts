@@ -1,5 +1,6 @@
 import { staticFile } from "remotion";
 import type { EpisodeProps, SceneFile, Timing, Word, Block } from "./types";
+import { resolveProps } from "./timeline";
 import { FPS } from "./theme";
 
 const get = async (p: string, as: "json" | "text") => {
@@ -95,6 +96,11 @@ export function buildBlocks(p: EpisodeProps): Block[] {
     beats: [],
   });
   for (let i = 0; i < blocks.length - 1; i++) blocks[i].endFrame = Math.max(blocks[i].startFrame + 1, blocks[i + 1].startFrame);
+  // Word-timed animation inside graphics (e.g. a checklist item ticking on its word).
+  for (const b of blocks) {
+    const v = b.visual;
+    if (v && (v.type === "component" || v.type === "three") && v.props) b.visual = { ...v, props: resolveProps(v.props, b, p.timing.words, b.startFrame) };
+  }
   return blocks;
 }
 

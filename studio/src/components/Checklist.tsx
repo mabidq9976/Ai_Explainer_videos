@@ -3,14 +3,19 @@ import { interpolate, useCurrentFrame } from "remotion";
 import { theme } from "../theme";
 import { CP, Fill, usePop } from "./shared";
 
-export const Checklist: React.FC<CP<{ items: string[]; title?: string }>> = ({ items = [], title, box }) => {
+type Item = string | { text: string; at?: number };
+
+/** Items tick in one by one — on their spoken word when an item has `at` (a word, resolved to seconds). */
+export const Checklist: React.FC<CP<{ items: Item[]; title?: string }>> = ({ items = [], title, box }) => {
   const frame = useCurrentFrame();
   const gap = 12;
   return (
     <Fill style={{ alignItems: "stretch", padding: `0 ${box.w * 0.09}px` }}>
       {title && <div style={{ fontSize: 64, fontWeight: 900, marginBottom: 36, letterSpacing: -1 }}>{title}</div>}
-      {items.map((it, i) => {
-        const d = 6 + i * gap;
+      {items.map((raw, i) => {
+        const it = typeof raw === "string" ? raw : raw.text;
+        const cue = typeof raw === "object" && typeof raw.at === "number" ? Math.round(raw.at * 30) - 8 : null;
+        const d = cue ?? 6 + i * gap;
         const pop = usePop(d);
         const tick = interpolate(frame, [d + 6, d + 14], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         return (

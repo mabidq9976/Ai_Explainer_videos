@@ -86,9 +86,14 @@ export function soundCues(opts: {
 
   // Component-driven cues (timings mirror the components' own animation).
   const componentCues = (name: string | undefined, props: any, start: number) => {
-    if (name === "Checklist") (props?.items ?? []).forEach((_: unknown, i: number) => ev.push({ frame: start + 6 + i * 12 + 10, kind: "ding" }));
+    // Same timings as the components themselves (word cues already resolved to seconds after `start`).
+    if (name === "Checklist") (props?.items ?? []).forEach((it: any, i: number) => {
+      const tick = typeof it === "object" && typeof it.at === "number" ? Math.round(it.at * fps) - 8 + 10 : 6 + i * 12 + 10;
+      ev.push({ frame: start + tick, kind: "ding" });
+    });
     if (name === "SerpVsAiAnswer" && props?.answer) {
-      const from = (props.look ?? opts.cardStyle) === "chat" ? 52 : 38; // chat look shows typing dots first
+      const cardF = typeof props.cardAt === "number" ? Math.round(props.cardAt * fps) : 30;
+      const from = typeof props.typeAt === "number" ? Math.round(props.typeAt * fps) : cardF + ((props.look ?? opts.cardStyle) === "chat" ? 22 : 8);
       ev.push({ frame: start + from, kind: "typing", frames: Math.round(String(props.answer).length * 0.9) });
     }
   };

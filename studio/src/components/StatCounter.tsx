@@ -3,9 +3,10 @@ import { Easing, interpolate, useCurrentFrame } from "remotion";
 import { theme } from "../theme";
 import { CP, Fill, usePop } from "./shared";
 
-export const StatCounter: React.FC<CP<{ value: number; label: string; source?: string; prefix?: string; suffix?: string }>> = ({ value, label, source, prefix = "", suffix = "", box }) => {
+export const StatCounter: React.FC<CP<{ value: number; label: string; source?: string; prefix?: string; suffix?: string; at?: number }>> = ({ value, label, source, prefix = "", suffix = "", at, box }) => {
   const frame = useCurrentFrame();
-  const v = interpolate(frame, [4, 34], [0, value], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+  const s0 = at !== undefined ? Math.round(at * 30) : 4; // counts up from its word when `at` is set
+  const v = interpolate(frame, [s0, s0 + 30], [0, value], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
   const decimals = Number.isInteger(value) ? 0 : 1;
   const pop = usePop(0);
   const labelIn = usePop(18);

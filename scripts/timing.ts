@@ -72,6 +72,55 @@ function align(script: string[], heard: Heard[], duration: number) {
   return { times: times as { start: number; end: number }[], matched };
 }
 
+/** 10 ms loudness envelope of a 16-bit PCM WAV (0..1, normalised to the loudest frame). */
+function envelope(wavFile: string) {
+  const buf = fs.readFileSync(wavFile);
+  let off = 12, data = -1, size = 0, rate = 24000, channels = 1;
+  while (off < buf.length - 8) {
+    const id = buf.toString("ascii", off, off + 4), len = buf.readUInt32LE(off + 4);
+    if (id === "fmt ") { channels = buf.readUInt16LE(off + 10); rate = buf.readUInt32LE(off + 12); }
+    if (id === "data") { data = off + 8; size = len; break; }
+    off += 8 + len + (len % 2);
+  }
+  if (data < 0) return { env: [] as number[], step: 0.01 };
+  const win = Math.round(rate * 0.01) * channels;
+  const n = Math.floor(Math.min(size, buf.length - data) / 2);
+  const env: number[] = [];
+  for (let i = 0; i < n; i += win) {
+    let sum = 0;
+    for (let k = i; k < Math.min(n, i + win); k++) { const v = buf.readInt16LE(data + k * 2); sum += v * v; }
+    env.push(Math.sqrt(sum / win));
+  }
+  const max = Math.max(...env, 1);
+  return { env: env.map((e) => e / max), step: 0.01 };
+}
+
+/**
+ * Whisper marks a word that follows a pause as starting *inside* the pause, so visuals timed to it land early.
+ * Snap every word to the waveform: a start in silence moves forward to where speech begins; an end in silence
+ * moves back to where speech stops. Never past the word's own span.
+ */
+function snapToSpeech(words: { start: number; end: number }[], wavFile: string) {
+  const { env, step } = envelope(wavFile);
+  if (!env.length) return 0;
+  const SIL = 0.05; // fraction of peak loudness counted as silence
+  const at = (t: number) => env[Math.min(env.length - 1, Math.max(0, Math.round(t / step)))] ?? 0;
+  let moved = 0;
+  for (const w of words) {
+    if (at(w.start) < SIL) {
+      let t = w.start;
+      while (t < w.end - 0.04 && at(t) < SIL) t += step;
+      if (t < w.end - 0.04) { w.start = +t.toFixed(3); moved++; }
+    }
+    if (at(w.end - step) < SIL) {
+      let t = w.end;
+      while (t > w.start + 0.06 && at(t - step) < SIL) t -= step;
+      w.end = +t.toFixed(3);
+    }
+  }
+  return moved;
+}
+
 export async function timing(slug: string) {
   const scene = readJson<SceneFile>(ep(slug, "scene.json"));
   const meta = readJson(ep(slug, "audio", "voice.meta.json"));
@@ -94,6 +143,7 @@ export async function timing(slug: string) {
     emphasis: (emphasisBy[s.scene] ?? []).includes(normWord(s.text)),
   }));
 
+  const snapped = snapToSpeech(words, wav);
   const ids = (meta.blocks as { id: string }[]).map((b) => b.id);
   const scenes = ids.map((id, n) => {
     const ws = words.filter((w) => w.scene === id);
@@ -103,8 +153,8 @@ export async function timing(slug: string) {
   for (let n = 0; n < scenes.length - 1; n++) scenes[n].end = scenes[n + 1].start;
   scenes[scenes.length - 1].end = duration;
 
-  writeJson(ep(slug, "audio", "timing.json"), { duration, words, scenes, matchedRatio: +(matched / script.length).toFixed(2) });
-  log(`timing.json: ${words.length} words, ${Math.round((matched / script.length) * 100)}% matched by whisper`);
+  writeJson(ep(slug, "audio", "timing.json"), { duration, words, scenes, matchedRatio: +(matched / script.length).toFixed(2), snapped });
+  log(`timing.json: ${words.length} words, ${Math.round((matched / script.length) * 100)}% matched by whisper, ${snapped} starts snapped to the waveform`);
   writeSubtitles(slug);
 }
 

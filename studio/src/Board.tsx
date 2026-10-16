@@ -1,5 +1,5 @@
 import React from "react";
-import { Img, Loop, OffthreadVideo, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { Img, Loop, OffthreadVideo, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import type { BoardElement, ManifestEntry } from "./types";
 import { theme, W, H } from "./theme";
 import { Icon } from "./components/Icon";
@@ -59,7 +59,7 @@ const Media: React.FC<{ file: string; isVideo: boolean; fit: "cover" | "contain"
   return duration ? <Loop durationInFrames={Math.max(1, Math.floor(duration * fps))}>{v}</Loop> : v;
 };
 
-const ElementView: React.FC<{ el: PlacedElement; local: number; manifest: Record<string, ManifestEntry>; all: PlacedElement[] }> = ({ el, local, manifest, all }) => {
+const ElementView: React.FC<{ el: PlacedElement; local: number; offset: number; manifest: Record<string, ManifestEntry>; all: PlacedElement[] }> = ({ el, local, offset, manifest, all }) => {
   const anim = useEnter(el, local);
   if (local < el.inF || local > el.outF) return null;
   const b = boxOf(el, manifest);
@@ -84,7 +84,8 @@ const ElementView: React.FC<{ el: PlacedElement; local: number; manifest: Record
   if (el.kind === "component") {
     const C = el.name ? registry[el.name] : undefined;
     const box = { w: b.w, h: b.h };
-    return <div style={{ ...base, height: b.h }}>{C ? <C {...(el.props ?? {})} box={box} /> : <div style={{ color: theme.accent }}>Unknown component {el.name}</div>}</div>;
+    // Its own clock: frame 0 = the moment it appears, so its internal timing (and word cues) line up.
+    return <div style={{ ...base, height: b.h }}><Sequence from={el.inF - offset} layout="none">{C ? <C {...(el.props ?? {})} box={box} /> : <div style={{ color: theme.accent }}>Unknown component {el.name}</div>}</Sequence></div>;
   }
 
   if (el.kind === "badge") {
@@ -180,7 +181,7 @@ export const Board: React.FC<{ elements: PlacedElement[]; offset: number; manife
   return (
     <div style={{ position: "absolute", inset: 0 }}>
       {elements.filter((e) => e.kind === "arrow").map((el) => <Arrow key={`${el.scene}.${el.id}`} el={el} local={local} manifest={manifest} all={elements} />)}
-      {elements.filter((e) => e.kind !== "arrow").map((el) => <ElementView key={`${el.scene}.${el.id}`} el={el} local={local} manifest={manifest} all={elements} />)}
+      {elements.filter((e) => e.kind !== "arrow").map((el) => <ElementView key={`${el.scene}.${el.id}`} el={el} local={local} offset={offset} manifest={manifest} all={elements} />)}
     </div>
   );
 };

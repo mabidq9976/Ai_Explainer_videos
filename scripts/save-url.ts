@@ -1,20 +1,23 @@
 /**
  * Saves a file Claude fetched through the Magnific MCP (signed URLs expire, so save right away).
- *   npm run save -- <slug> <key> "<url>" --credit "Magnific · <title>"   → episodes/<slug>/assets/manual/<key>.<ext>
+ *   npm run save -- <slug> <key> "<url>" --credit "Magnific · <title>" [--query "<search>"]
+ *     → episodes/<slug>/assets/manual/<key>.<ext>; with --query it's also filed in library/ for reuse
  *   npm run save brand <music|sfx/pop|sfx/whoosh> <url>                → brand/music.<ext>, brand/sfx/<name>.<ext>
  * Prints the path to reference: an element's "src", or nothing to do for brand audio (picked up automatically).
  */
 import fs from "node:fs";
 import path from "node:path";
-import { ep, r, readJsonIf, writeJson } from "./lib/paths.ts";
+import { ep, r, readJsonIf, writeJson, LIBRARY } from "./lib/paths.ts";
 
 // npm swallows "--flags" before a bare "--", so accept the credit as `--credit=…`, `--credit …`, or a 4th positional.
 const args = process.argv.slice(2);
 const ci = args.indexOf("--credit");
 const creditArg = args.find((a) => a.startsWith("--credit="))?.slice(9) ?? (ci >= 0 ? args[ci + 1] : undefined);
-const positional = args.filter((a, i) => !a.startsWith("--") && !(ci >= 0 && i === ci + 1));
+const positional = args.filter((a, i) => !a.startsWith("--") && !(ci >= 0 && i === ci + 1) && !(args.indexOf("--query") >= 0 && i === args.indexOf("--query") + 1));
 const [target, key, url, creditPos] = positional;
 const credit = creditArg ?? creditPos;
+const qi = args.indexOf("--query");
+const query = args.find((a) => a.startsWith("--query="))?.slice(8) ?? (qi >= 0 ? args[qi + 1] : undefined);
 if (!target || !key || !/^https?:\/\//.test(url ?? "")) {
   console.error('Usage: npm run save -- <slug|brand> <key> "<url>" --credit "…"');
   process.exit(1);
@@ -59,6 +62,23 @@ const creditsFile = target === "brand" ? r("brand", "credits.json") : ep(target,
 const credits = readJsonIf<Record<string, any>>(creditsFile) ?? {};
 credits[key] = { file: path.relative(target === "brand" ? r("brand") : ep(target), file), source: /freepik|magnific|cdnpk/i.test(url) ? "magnific" : "web", credit: credit ?? null, savedAt: new Date().toISOString() };
 writeJson(creditsFile, credits);
+
+// Paid once, reused forever: file stock media into the shared library so later episodes find it for free
+// (fetch-assets checks the library first; the 30-day reuse rule still applies).
+if (target !== "brand" && query && /^(jpe?g|png|webp|mp4|webm|mov)$/.test(ext)) {
+  const libFile = path.join(LIBRARY, `magnific-${path.basename(file)}`.replace(/^magnific-(s\d+)\./, `magnific-${target}-$1.`));
+  fs.mkdirSync(LIBRARY, { recursive: true });
+  fs.copyFileSync(file, libFile);
+  const idxFile = path.join(LIBRARY, "index.json");
+  const index: any[] = readJsonIf(idxFile) ?? [];
+  const entry = {
+    source: "magnific", id: path.basename(libFile), kind: /^(mp4|webm|mov)$/.test(ext) ? "video" : "photo",
+    author: "", pageUrl: "", license: credit ?? "Magnific (paid plan)", file: path.basename(libFile), query,
+    tokens: [...new Set(query.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length > 2))], used: { [target]: new Date().toISOString() },
+  };
+  writeJson(idxFile, [...index.filter((e) => e.file !== entry.file), entry]);
+  console.log(`library: ${entry.file} (reusable by query "${query}")`);
+}
 
 const rel = target === "brand" ? path.relative(r(), file) : path.relative(ep(target), file);
 console.log(`saved ${(buf.length / 1024).toFixed(0)} KB → ${target === "brand" ? rel : `episodes/${target}/${rel}`}`);

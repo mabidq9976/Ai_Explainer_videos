@@ -34,6 +34,8 @@ Default to a **board** (`"type": "board"`). For each spoken line ask: what would
   Specific product UI or a known image → `url` to an official screenshot you found (WebSearch); it's logged "verify rights".
 - Brands → `icon: "logo:<slug>"` (simple-icons; no OpenAI/LinkedIn/Amazon/Canva/Windows — use an image `url` or `line:robot`).
 - Ideas → emoji or `line:` icons. Relationships → arrows (`straight` for sequence, `curve` for cause, `dotted` for "go here").
+- Graphics follow the voice too: give their moves word cues — Checklist items `{ "text", "at": "<word>" }`,
+  SerpVsAiAnswer `cardAt`/`typeAt`, Toggle `flipAt`, StatCounter `at`, CitationCards `citedAt`, Diagram nodes `at`.
 - A standalone moment that's clearer as one graphic → `component` scene or a `component` element (Toggle, StatCounter, Waveform, Checklist, SerpVsAiAnswer, CitationCards, ProfileList, DeviceFrame…).
 - `mixed` look only: up to one 3D scene (SearchBar3D, NodeNetwork3D) and stock video where motion matters.
 

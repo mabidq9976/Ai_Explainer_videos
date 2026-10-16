@@ -1,0 +1,124 @@
+{
+  "at": "2026-10-16T12:11:27.518Z",
+  "budget": 300,
+  "estimatedCredits": 0,
+  "items": [
+    {
+      "key": "s1.photo",
+      "scene": "s1",
+      "kind": "photo",
+      "need": "assets/manual/s1.photo.jpg",
+      "status": "ready",
+      "credits": 0,
+      "how": "assets/manual/s1.photo.jpg"
+    },
+    {
+      "key": "s3",
+      "scene": "s3",
+      "kind": "motion",
+      "need": "SerpVsAiAnswer",
+      "status": "ready",
+      "credits": 0,
+      "how": "catalog"
+    },
+    {
+      "key": "s4.wave",
+      "scene": "s4",
+      "kind": "motion",
+      "need": "Waveform",
+      "status": "ready",
+      "credits": 0,
+      "how": "catalog"
+    },
+    {
+      "key": "s6",
+      "scene": "s6",
+      "kind": "3D",
+      "need": "NodeNetwork3D",
+      "status": "ready",
+      "credits": 0,
+      "how": "catalog"
+    },
+    {
+      "key": "s7",
+      "scene": "s7",
+      "kind": "motion",
+      "need": "Checklist",
+      "status": "ready",
+      "credits": 0,
+      "how": "catalog"
+    },
+    {
+      "key": "cta",
+      "scene": "cta",
+      "kind": "motion",
+      "need": "CTAEnd",
+      "status": "ready",
+      "credits": 0,
+      "how": "catalog"
+    },
+    {
+      "key": "sfx.whoosh",
+      "scene": "-",
+      "kind": "sfx",
+      "need": "whoosh",
+      "status": "ready",
+      "credits": 0,
+      "how": "brand/sfx/whoosh"
+    },
+    {
+      "key": "sfx.pop",
+      "scene": "-",
+      "kind": "sfx",
+      "need": "pop",
+      "status": "ready",
+      "credits": 0,
+      "how": "brand/sfx/pop"
+    },
+    {
+      "key": "sfx.typing",
+      "scene": "-",
+      "kind": "sfx",
+      "need": "typing",
+      "status": "ready",
+      "credits": 0,
+      "how": "brand/sfx/typing"
+    },
+    {
+      "key": "sfx.riser",
+      "scene": "-",
+      "kind": "sfx",
+      "need": "riser",
+      "status": "ready",
+      "credits": 0,
+      "how": "brand/sfx/riser"
+    },
+    {
+      "key": "sfx.ding",
+      "scene": "-",
+      "kind": "sfx",
+      "need": "ding",
+      "status": "ready",
+      "credits": 0,
+      "how": "brand/sfx/ding"
+    },
+    {
+      "key": "music",
+      "scene": "-",
+      "kind": "music",
+      "need": "music bed",
+      "status": "ready",
+      "credits": 0,
+      "how": "brand/music (rotates)"
+    },
+    {
+      "key": "voice",
+      "scene": "-",
+      "kind": "voice",
+      "need": "64 words",
+      "status": "ready",
+      "credits": 0,
+      "how": "audio/voice.wav (re-check: npm run tts — cache hit = free)"
+    }
+  ]
+}

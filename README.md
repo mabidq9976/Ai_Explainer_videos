@@ -58,6 +58,8 @@ npm run doctor               check tools, keys, avatar layers
 npm run new <slug>           new brief in topics/inbox
 npm run validate <slug>      check scene.json
 npm run timeline <slug>      what lands on which word (what Claude reads as producer)
+npm run sync <slug>          do visuals land on their spoken words? (-- --fix anchors them)
+npm run shotlist <slug>      every asset needed: ready / free / credits / to build, vs the credit budget
 npm run episode <slug>       full media pipeline   (-- --from=assets | --only=tts | --no-render | --preview)
 npm run studio <slug>        Remotion Studio on one episode (port 3100)
 npm run render <slug>        render (-- --preview for half-res)
@@ -65,8 +67,9 @@ npm run subtitles <slug>     write out/captions.srt + .vtt (also automatic after
 npm run setup:tools          (re)install Rhubarb + whisper model
 ```
 
-Skills (`.claude/skills/`): draft · research-brief · hook-writer · script-writer · **director** · critic · repurpose ·
-geo-optimizer · **produce** · component-builder · retro. The plan lives in `AI Director Studio Build Plan.md` (Downloads).
+Skills (`.claude/skills/`): draft · research-brief · hook-writer · script-writer · **director** · caption-designer ·
+critic · repurpose · geo-optimizer · **produce** (voice → **sync** → **asset-producer** → render) · voice · sync ·
+asset-producer · component-builder · retro. The plan lives in `AI Director Studio Build Plan.md` (Downloads).
 
 ## Layout
 

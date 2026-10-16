@@ -5,11 +5,12 @@ import { Icon } from "./Icon";
 import { CP, usePop } from "./shared";
 
 /** A settings switch flipping on (e.g. "Monetization"), optional icon above. */
-export const Toggle: React.FC<CP<{ label: string; icon?: string; on?: boolean }>> = ({ label, icon, on = true, box }) => {
+export const Toggle: React.FC<CP<{ label: string; icon?: string; on?: boolean; flipAt?: number }>> = ({ label, icon, on = true, flipAt, box }) => {
   const frame = useCurrentFrame();
   const pop = usePop(icon ? 6 : 0);
   const iconPop = usePop(0);
-  const flip = interpolate(frame, [16, 24], [on ? 0 : 1, on ? 1 : 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+  const f0 = flipAt !== undefined ? Math.round(flipAt * 30) : 16; // flips on its word when flipAt is set
+  const flip = interpolate(frame, [f0, f0 + 8], [on ? 0 : 1, on ? 1 : 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
   const tw = 150, th = 84;
   return (
     <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 46, fontFamily: theme.font }}>

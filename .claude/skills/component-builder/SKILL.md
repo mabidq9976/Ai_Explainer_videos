@@ -16,6 +16,8 @@ Build it once, reusable: generic props, no episode-specific text baked in.
 2. Create `studio/src/components/<Name>.tsx` (or `studio/src/three/<Name>.tsx` for 3D with `@remotion/three`):
    - Props are plain JSON-serialisable values, plus `box: { w, h }` (the zone it renders in) and optional `assets`
      (files fetched for any prop object with a `query`).
+   - Timed moves take word cues: name the prop `at` (or `<thing>At`, e.g. `revealAt`) — add the key to `AT_KEYS` in
+     `studio/src/timeline.ts`; it arrives as seconds after the component appears. Default to a stagger when absent.
    - Animate only from `useCurrentFrame()` — no `Math.random()`, no timers, no CSS animations. Use `random(seed)` from remotion.
    - Use `theme` colours/font, `usePop` for entrances, `Icon` for any icon spec. White page, ink lines, one accent.
    - Lay out relative to `box` so it works as a full scene and as a `component` element inside a board.
