@@ -7,6 +7,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import { spawn } from "node:child_process";
 import { ep, r, readJson, requireSlug, isMain, CACHE, writeJson } from "./lib/paths.ts";
 import { env } from "./lib/env.ts";
 import { run, log, probeDuration } from "./lib/run.ts";
@@ -155,8 +156,45 @@ export function magnificText(blocks: Block[], model: string, energy: Energy = "n
       }
       return `${tag ? `[${tag}] ` : ""}${text}`;
     })
-    .join("\n\n");
+    .join(model.startsWith("gemini") ? "\n" : "\n\n"); // Gemini pauses long on blank lines
 }
+
+/**
+ * Rebuild the take with every silence (< -38 dB, ≥ 0.3 s) shortened: lead-in to 0.1 s, tail to 0.2 s,
+ * pauses longer than 0.5 s to 0.3 s. Explicit segments (silencedetect + atrim/concat) — predictable on any ffmpeg.
+ */
+async function tighten(input: string, output: string, total: number) {
+  const det = await new Promise<string>((resolve) => {
+    let o = "";
+    const p = spawn("ffmpeg", ["-hide_banner", "-i", input, "-af", "silencedetect=noise=-38dB:d=0.3", "-f", "null", "-"]);
+    p.stderr.on("data", (d) => (o += d));
+    p.on("close", () => resolve(o));
+  });
+  const starts = [...det.matchAll(/silence_start: ([\d.]+)/g)].map((m) => +m[1]);
+  const ends = [...det.matchAll(/silence_end: ([\d.]+)/g)].map((m) => +m[1]);
+  const keep: [number, number][] = [];
+  let cursor = 0;
+  starts.forEach((st, i) => {
+    const en = ends[i] ?? total;
+    const atStart = st <= 0.05, atEnd = en >= total - 0.05;
+    const hold = atStart ? 0.1 : atEnd ? 0.2 : en - st > 0.5 ? 0.3 : en - st;
+    if (atStart) { cursor = Math.max(0, en - hold); return; }
+    keep.push([cursor, st + (atEnd ? hold : hold / 2)]);
+    cursor = atEnd ? total : en - hold / 2;
+  });
+  if (cursor < total) keep.push([cursor, total]);
+  if (!keep.length) return fs.copyFileSync(input, output);
+  const parts = keep.map(([a, b], i) => `[0:a]atrim=${a.toFixed(3)}:${b.toFixed(3)},asetpts=PTS-STARTPTS[s${i}]`).join(";");
+  const filter = `${parts};${keep.map((_, i) => `[s${i}]`).join("")}concat=n=${keep.length}:v=0:a=1[out]`;
+  await run("ffmpeg", ["-y", "-loglevel", "error", "-i", input, "-filter_complex", filter, "-map", "[out]", "-ar", "24000", "-ac", "1", "-sample_fmt", "s16", output], { quiet: true });
+}
+
+/** Gemini's strong channel is a performance note (systemInstruction), written like direction to an actor. */
+const GEMINI_DIRECTION: Record<Energy, string> = {
+  natural: "Read as a friendly, confident explainer narrator for a short social video: clear, warm, conversational, natural pace.",
+  upbeat: "Read as an upbeat, enthusiastic creator talking straight to camera in a short social video: bright energy, smiling voice, punchy pacing, lift on key words, never shouty. Every word crisp and clear.",
+  high: "Read as a high-energy, excited creator in a fast short-form video: big enthusiasm, quick confident pace, real excitement on the hook and the ending, every word still crisp and clear.",
+};
 
 /** Voice settings: scene.json `voice` wins, then .env, then defaults. */
 export function voiceTuning(scene: SceneFile) {
@@ -222,6 +260,7 @@ export async function tts(slug: string, opts: { force?: boolean; importUrl?: str
     log(`TTS cache hit (${hash}) — no API call`);
   } else if (provider.name === "magnific") {
     const tune = voiceTuning(scene);
+    const gemini = provider.model.startsWith("gemini");
     const text = magnificText(blocks, provider.model, tune.energy);
     writeJson(reqFile, {
       hash,
@@ -231,12 +270,12 @@ export async function tts(slug: string, opts: { force?: boolean; importUrl?: str
       // Cloned "My Voices" share ids with the catalog, so Magnific needs source=mine for them.
       ...(env("MAGNIFIC_VOICE_SOURCE") === "mine" ? { source: "mine" } : {}),
       // Expressiveness: lower stability = more emotional range; speed 0.7–1.2 (ElevenLabs v3).
-      stability: tune.stability,
-      ...(tune.speed !== 1 ? { speed: tune.speed } : {}),
+      // ElevenLabs takes stability/speed; Gemini is directed by a performance note instead.
+      ...(gemini ? {} : { stability: tune.stability, ...(tune.speed !== 1 ? { speed: tune.speed } : {}) }),
       energy: tune.energy,
       text,
       chars: text.length,
-      ...(provider.model.startsWith("gemini") ? { systemInstruction: "Friendly, confident explainer narrator for short social videos: clear, warm, a little playful, natural pace." } : {}),
+      ...(gemini ? { systemInstruction: GEMINI_DIRECTION[tune.energy] } : {}),
       importWith: `npm run tts ${slug} -- --import "<url>"`,
     });
     throw new NeedsClaude(`Voice needed: audio/tts-request.json is ready. Ask Claude to run /voice ${slug} (Magnific MCP), or /produce ${slug}.`);
@@ -244,7 +283,13 @@ export async function tts(slug: string, opts: { force?: boolean; importUrl?: str
     log(`TTS: ${provider.name} · ${provider.model} · voice ${provider.voice} · ${blocks.length} blocks`);
     await provider.synth(blocks, cached);
   }
-  fs.copyFileSync(cached, out);
+  // Tighten: trim dead air at the start/end and shorten any pause > 0.5 s to 0.3 s (short-form pacing).
+  // The cache keeps the untouched take; VOICE_TIGHTEN=off skips this.
+  if (env("VOICE_TIGHTEN", "on") !== "off") {
+    const before = await probeDuration(cached);
+    await tighten(cached, out, before);
+    log(`tightened pauses: ${before.toFixed(2)}s → ${(await probeDuration(out)).toFixed(2)}s`);
+  } else fs.copyFileSync(cached, out);
   const duration = await probeDuration(out);
   writeJson(ep(slug, "audio", "voice.meta.json"), {
     provider: provider.name,

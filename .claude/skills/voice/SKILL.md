@@ -7,6 +7,10 @@ allowed-tools: Read Bash(npm run tts *) mcp__magnific__audio_voices_list mcp__ma
 
 # Voice (Magnific)
 
+Models: ElevenLabs v3 (default; works with the user's cloned voice — `source: "mine"`) or Gemini
+(`gemini_v3_1_flash_tts` / `gemini_v2_5_pro`) which needs a Google voice (714 Puck upbeat, 702 Charon clear) and is
+directed through `systemInstruction`. A cloned ElevenLabs voice cannot be used with Gemini — say so if asked.
+
 Episode: `$ARGUMENTS`.
 
 1. `npm run tts $ARGUMENTS` — if it prints a cache hit, the voice already exists: stop and say so.
