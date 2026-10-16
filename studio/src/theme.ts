@@ -16,6 +16,8 @@ export const theme = {
   stroke: 6,
   radius: 28,
   font: fontFamily,
+  /** Default card design for UI graphics (episode `cardStyle` overrides). */
+  cardStyle: "chat" as "brutal" | "soft" | "line" | "chat",
 };
 
 export const W = 1080;

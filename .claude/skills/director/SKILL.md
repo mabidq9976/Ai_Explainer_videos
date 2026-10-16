@@ -19,8 +19,8 @@ Run `npm run timeline $ARGUMENTS` to see each word's time (estimated before the 
 Keep whatever the brief/user asked for. Default `reference`.
 
 Also pick a top-level `cardStyle` for UI graphics (AI answer, quotes, citations, browser frames):
-`brutal` (thick ink border, hard shadow — bold), `soft` (modern app card, soft shadow, source chips),
-`line` (clean outline with an accent edge — editorial), `chat` (grey chat bubble with typing dots — feels like a real AI).
+`chat` (default — grey chat bubble with typing dots, feels like a real AI), `brutal` (thick ink border, hard shadow — bold), `soft` (modern app card, soft shadow, source chips),
+`line` (clean outline with an accent edge — editorial).
 One per episode for consistency; a single graphic can override with `props.look`.
 
 ## 2. Direct every scene

@@ -21,7 +21,7 @@ export const usePop = (delay = 0, damping = 14) => {
 export type CardLook = "brutal" | "soft" | "line" | "chat";
 
 /** Episode-wide card style (scene.json `cardStyle`); a component's `look` prop overrides it. */
-export const CardStyleContext = React.createContext<CardLook>("brutal");
+export const CardStyleContext = React.createContext<CardLook>(theme.cardStyle);
 export const useCardLook = (override?: CardLook) => override ?? React.useContext(CardStyleContext);
 
 export const CARD: Record<CardLook, React.CSSProperties> = {

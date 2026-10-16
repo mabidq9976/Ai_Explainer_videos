@@ -217,7 +217,7 @@
         "line",
         "chat"
       ],
-      "description": "Card design for UI graphics (AI answer, quotes, citations, browser). Default brutal."
+      "description": "Card design for UI graphics (AI answer, quotes, citations, browser). Default chat."
     }
   },
   "definitions": {

@@ -26,7 +26,7 @@ changes pose every beat, and simple graphics that build up piece by piece. Calm,
 5. **3D** (SearchBar3D, NodeNetwork3D) — at most one per video, for a "wow" beat.
 
 ## Card styles
-UI graphics share one card design per episode (`cardStyle`): `brutal` (default), `soft`, `line`, `chat`.
+UI graphics share one card design per episode (`cardStyle`): `chat` (default), `soft`, `line`, `brutal`.
 Compare them: `npx remotion still studio/src/index.ts CardSheet out/card-styles.png --frame=125`.
 
 ## Looks

@@ -59,7 +59,7 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
   const tags = useMemo(() => (props.scene && cap.tags ? buildTags(props.scene.scenes as any, blocks, words) : []), [props.scene, cap.tags, blocks, words]);
   const title = cap.preset !== "off" && cap.title?.text ? { text: cap.title.text, ...titleWindow(cap.title.until, blocks), ...titleLayout(cap.title.text) } : null;
   const sounds = useMemo(
-    () => soundCues({ chains, blocks, scenes: props.scene?.scenes ?? [], words, sfxDur: props.sfxDur, fps: 30, cardStyle: props.scene?.cardStyle }),
+    () => soundCues({ chains, blocks, scenes: props.scene?.scenes ?? [], words, sfxDur: props.sfxDur, fps: 30, cardStyle: props.scene?.cardStyle ?? theme.cardStyle }),
     [chains, blocks, props.scene, words, props.sfxDur],
   );
 
@@ -81,7 +81,7 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
   const cam = props.scene.camera === false ? 1 : cameraScale(frame, shots, punches);
   const vz = zones(curBlock.layout, curBlock.position).visual;
   return (
-    <CardStyleContext.Provider value={props.scene.cardStyle ?? "brutal"}>
+    <CardStyleContext.Provider value={props.scene.cardStyle ?? theme.cardStyle}>
     <AbsoluteFill style={{ background: theme.paper }}>
       <AbsoluteFill style={{ transform: `scale(${cam.toFixed(4)})`, transformOrigin: `${W / 2}px ${vz.y + vz.h / 2}px` }}>
       {blocks.filter((b) => b.visual?.type !== "board").map((b) => (
