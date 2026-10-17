@@ -7,6 +7,17 @@ Style: a white page, a small line-drawn narrator (your avatar) who talks with li
 graphics that arrive on the exact word that names them — photos, screenshots, logos, arrows, stickers, plus
 motion graphics, a little 3D and stock footage where they earn it.
 
+## Samples
+
+<table>
+<tr>
+<td align="center"><a href="docs/samples/reddit-blog-trick.mp4"><img src="docs/samples/reddit-blog-trick.jpg" width="270" alt="Your Next Ranking Blog Post Is on Reddit"></a><br><b>Your Next Ranking Blog Post Is on Reddit</b></td>
+<td align="center"><a href="docs/samples/geo-seo-tool-stack.mp4"><img src="docs/samples/geo-seo-tool-stack.jpg" width="270" alt="GEO vs SEO: Buy the Right Tool"></a><br><b>GEO vs SEO: Buy the Right Tool</b></td>
+</tr>
+</table>
+
+Voice: AI-generated.
+
 ## Start
 
 ```bash
