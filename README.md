@@ -104,17 +104,14 @@ Not in git (rebuilt per machine or copied by hand): `.env`, `tools/`, `library/`
 `audio/`, `assets/` and `_render/`. To bring an episode's media across, copy those folders (plus `.cache/tts` so
 voices aren't paid for twice); otherwise `/produce <slug>` rebuilds them.
 
-## Publishing new versions
+## Security
 
-```bash
-git add -A && git commit -m "What changed"
-git push                                   # main on GitHub
-npm version minor -m "Release %s"          # bumps package.json and tags vX.Y.0 (patch / minor / major)
-git push --follow-tags
-gh release create v0.2.0 --generate-notes  # GitHub release page from the commits since the last tag
-```
-
-On the other machine: `git pull && npm install`.
+- API keys live only in `.env` (gitignored); `.env.example` lists the names with empty values. MCP connections
+  (Magnific) are set up in Claude, not in this repo, so no MCP credentials are stored here.
+- A pre-commit hook (`.githooks/`, switched on by `npm install`) blocks commits containing keys, tokens, signed URLs,
+  email addresses or home-folder paths.
+- The dashboard listens on 127.0.0.1 only and refuses requests from other hosts or other websites.
+- Found a problem? Open a private security advisory on GitHub (Security → Report a vulnerability).
 
 ## License
 

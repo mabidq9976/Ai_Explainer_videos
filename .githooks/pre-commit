@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Blocks commits that would publish secrets or personal data. Installed for every clone by `npm install`
+# (package.json "prepare" sets core.hooksPath). Bypass only for a confirmed false positive: git commit --no-verify
+set -euo pipefail
+
+fail=0
+say() { printf '\033[31m✖ %s\033[0m\n' "$1"; fail=1; }
+
+# 1. Files that must never be committed.
+while IFS= read -r f; do
+  case "$f" in
+    .env|.env.*) [ "$f" = ".env.example" ] || say "$f — environment files hold API keys" ;;
+    .mcp.json|*settings.local.json|*.pem|*.key|*.p12|credentials*.json|service-account*.json|.npmrc) say "$f — credentials / machine-local config" ;;
+  esac
+done < <(git diff --cached --name-only --diff-filter=ACMR)
+
+# 2. Added lines that look like secrets or personal data (media and lockfiles skipped).
+added=$(git diff --cached -U0 --diff-filter=ACMR -- . ':(exclude)package-lock.json' ':(exclude)*.svg' ':(exclude)*.mp3' ':(exclude)*.mp4' ':(exclude)*.png' ':(exclude)*.jpg' | grep -E '^\+[^+]' || true)
+check() { # label, extended regex
+  local hit; hit=$(printf '%s\n' "$added" | grep -oE "$2" | grep -vE "$ALLOW" | head -3 || true)
+  [ -n "$hit" ] && say "$1: $(printf '%s' "$hit" | sed -E 's/(.{6}).*/\1…/' | tr '\n' ' ')"
+  return 0
+}
+ALLOW='noreply@anthropic\.com|users\.noreply\.github\.com|@example\.(com|org)|\$\{|process\.env|env\('
+check "API key / token"            '(AIza[0-9A-Za-z_-]{30,}|sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|xox[abprs]-[A-Za-z0-9-]{10,}|AKIA[0-9A-Z]{16}|FPSX[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)'
+check "secret assigned a value"    '[A-Z_]*(API_KEY|TOKEN|SECRET|PASSWORD)[A-Z_]*=[^ "$]{12,}'
+check "bearer / auth header value" '(Bearer|Basic) [A-Za-z0-9._~+/=-]{20,}'
+check "signed / keyed URL"         'https?://[^ "]*[?&](X-Amz-[A-Za-z]+|Signature|signature|token|access_token|sig|key|api_key)=[A-Za-z0-9%._-]{12,}'
+check "email address"              '[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z.]{2,}'
+check "local home path"            '/(Users|home)/[A-Za-z0-9._-]+/'
+
+if [ "$fail" = 1 ]; then
+  echo "Commit blocked: remove the items above (keys belong in .env, which is gitignored)."
+  exit 1
+fi

@@ -370,6 +370,11 @@ const server = http.createServer(async (req, res) => {
     // Only accept requests addressed to this machine (guards against DNS rebinding).
     const host = (req.headers.host ?? "").split(":")[0];
     if (!["localhost", "127.0.0.1", "[::1]"].includes(host)) return send(res, 403, { error: "forbidden host" });
+    // Only accept requests from the dashboard's own page — another website open in the browser must not be able to
+    // change settings or start Claude jobs here (cross-site request forgery).
+    const origin = req.headers.origin;
+    if (req.headers["sec-fetch-site"] === "cross-site" || (origin && !/^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(origin)))
+      return send(res, 403, { error: "forbidden origin" });
 
     if (p === "/api/overview") {
       const eps = listSlugs().map(summary).sort((a, b) => b.updatedAt - a.updatedAt);
