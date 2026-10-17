@@ -4,6 +4,11 @@
   "private": true,
   "type": "module",
   "description": "Claude writes and directs; local scripts make the voice, lip sync, footage and final render.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mabidq9976/Ai_Explainer_videos.git"
+  },
   "scripts": {
     "dashboard": "NODE_OPTIONS=--no-deprecation tsx dashboard/server.ts",
     "setup:tools": "NODE_OPTIONS=--no-deprecation tsx scripts/setup-tools.ts",

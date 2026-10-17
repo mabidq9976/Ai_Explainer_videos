@@ -83,3 +83,41 @@ scripts/           validate, tts, timing, lipsync, fetch-assets, render, episode
 dashboard/         local dashboard (server.ts + public/)
 library/           shared stock cache (30-day reuse rule)
 ```
+
+## Set up on a new machine
+
+Needs Node.js 18+, ffmpeg, Python 3 (avatar builds only) and [Claude Code](https://claude.com/claude-code).
+
+```bash
+git clone https://github.com/mabidq9976/Ai_Explainer_videos.git
+cd Ai_Explainer_videos
+npm install
+cp .env.example .env     # add your keys (or fill them later on the dashboard's Setup page)
+npm run setup:tools      # downloads whisper.cpp + model and Rhubarb into tools/
+npm run doctor           # checks everything
+npm run dashboard        # http://localhost:4400
+```
+
+Then connect the Magnific MCP in Claude (voice, stock, music, SFX) and open this folder in Claude Code.
+
+Not in git (rebuilt per machine or copied by hand): `.env`, `tools/`, `library/`, and each episode's `out/`,
+`audio/`, `assets/` and `_render/`. To bring an episode's media across, copy those folders (plus `.cache/tts` so
+voices aren't paid for twice); otherwise `/produce <slug>` rebuilds them.
+
+## Publishing new versions
+
+```bash
+git add -A && git commit -m "What changed"
+git push                                   # main on GitHub
+npm version minor -m "Release %s"          # bumps package.json and tags vX.Y.0 (patch / minor / major)
+git push --follow-tags
+gh release create v0.2.0 --generate-notes  # GitHub release page from the commits since the last tag
+```
+
+On the other machine: `git pull && npm install`.
+
+## License
+
+Code: [MIT](LICENSE). Bundled audio in `brand/` was generated through Magnific (Google Lyria, ElevenLabs SFX);
+check those services' terms before reusing it commercially. The narrator art in `avatar/` is the author's character —
+swap in your own (see `avatar/README.md`).
